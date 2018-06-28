@@ -35,6 +35,22 @@ Page({
     // 页面关闭
 
   },
+  seeorder() {
+    wx.redirectTo({
+      url: '/pages/ucenter/order/order',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  content() {
+    wx.switchTab({
+      url: '/pages/index/index',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
   payOrder() {
     pay.payOrder(parseInt(this.data.orderId)).then(res => {
       this.setData({

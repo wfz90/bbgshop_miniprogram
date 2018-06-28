@@ -42,6 +42,7 @@ Page({
         that.setData({
           currentCategory: res.data.currentCategory
         });
+        wx.hideLoading()
       });
   },
   onReady: function () {
@@ -66,9 +67,17 @@ Page({
       });
   },
   switchCate: function (event) {
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
     var that = this;
     var currentTarget = event.currentTarget;
     if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
+      wx.hideLoading()
       return false;
     }
 

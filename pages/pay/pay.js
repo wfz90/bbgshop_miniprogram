@@ -27,11 +27,27 @@ Page({
   },
   onHide: function () {
     // 页面隐藏
-
+    console.log('页面隐藏')
   },
   onUnload: function () {
     // 页面关闭
-
+    console.log('页面关闭')
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '订单已生成，你真的要取消支付吗 ？',
+    //   success: function(res) {
+    //     if(res.confirm){
+    //       return true
+    //       console.log('确认')
+    //     }
+    //     if(res.cancel){
+    //       return false
+    //       console.log('取消')
+    //     }
+    //   },
+    //   fail: function(res) {},
+    //   complete: function(res) {},
+    // })
   },
   //向服务请求支付参数
   requestPayParam() {
@@ -94,65 +110,86 @@ Page({
   startPay() {
     var that = this
     wx.showLoading({
-      title: '价格核实...',
+      title: '核实是否支付...',
     })
-    console.log(that.data.orderId)
-    if (parseInt(that.data.actualPrice * 100) == 0){
-      // console.log("9999999999999999999999")
-      wx.showLoading({
-        title: '核实异常...',
-      })
-      util.request(api.CheckErrPrice,{
-        orderId: that.data.orderId
-      },'POST').then(res =>{
-        console.log(res)
-        if(res.errno === 217){
-          wx.hideLoading()
-          wx.showToast({
-            title: '价格已核实！',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            success: function (res) {
-              var status = 201
-              util.request(api.SetOrder, {
-                orderId: that.data.orderId,
-                status: status
-              }).then(function (res) {
-                if (res.errno === 0) {
-                  console.log(res.data);
-                  wx.redirectTo({
-                    url: '/pages/payResult/payResult?status=true',
-                  })
-                }else{
-                  wx.redirectTo({
-                    url: '/pages/payResult/payResult?status=false',
-                  })
-                }
-              });
-              
-             },
-            fail: function (res) { },
-            complete: function (res) { },
+    util.request(api.CheckOrderIsPay,{
+      orderId: that.data.orderId
+    },'POST').then(rees => {
+      console.log(rees)
+          if(rees.errno === 17){
+            wx.showLoading({
+          title: '价格核实...',
+        })
+        console.log(that.data.orderId)
+        if (parseInt(that.data.actualPrice * 100) == 0){
+          // console.log("9999999999999999999999")
+          wx.showLoading({
+            title: '核实异常...',
+          })
+          util.request(api.CheckErrPrice,{
+            orderId: that.data.orderId
+          },'POST').then(res =>{
+            console.log(res)
+            if(res.errno === 217){
+              wx.hideLoading()
+              wx.showToast({
+                title: '价格已核实！',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+                success: function (res) {
+                  var status = 201
+                  util.request(api.SetOrder, {
+                    orderId: that.data.orderId,
+                    status: status
+                  }).then(function (res) {
+                    if (res.errno === 0) {
+                      console.log(res.data);
+                      wx.redirectTo({
+                        url: '/pages/payResult/payResult?status=true',
+                      })
+                    }else{
+                      wx.redirectTo({
+                        url: '/pages/payResult/payResult?status=false',
+                      })
+                    }
+                  });
+
+                },
+                fail: function (res) { },
+                complete: function (res) { },
+              })
+
+            } else if (res.errno === 503){
+              wx.hideLoading()
+              wx.showToast({
+                title: '价格异常！',
+                icon: 'none',
+                duration: 3000,
+                mask: true,
+                success: function(res) {},
+                fail: function(res) {},
+                complete: function(res) {},
+              })
+            }
           })
 
-        } else if (res.errno === 503){
-          wx.hideLoading()
-          wx.showToast({
-            title: '价格异常！',
-            icon: 'none',
-            duration: 3000,
-            mask: true,
-            success: function(res) {},
-            fail: function(res) {},
-            complete: function(res) {},
-          })
+        }else {
+          that.requestPayParam();
         }
-      })
-
-    }else {
-      that.requestPayParam();
-    }
+      }else {
+        wx.showToast({
+          title: '此订单已支付 ！',
+          icon: 'none',
+          duration: 2000,
+          mask: true,
+          success: function(res) {},
+          fail: function(res) {},
+          complete: function(res) {},
+        })
+      }
+    })
+    
     
   }
 })

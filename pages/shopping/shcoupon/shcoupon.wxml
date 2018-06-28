@@ -38,6 +38,6 @@
       <view class='List_item_right_btn'>点击使用</view>
     </view> 
    </view> 
-<button style='font-size:14px;margin-bottom:30rpx;margin-top:30rpx;' bindtap='nocoupon'>不使用优惠券</button>
+<button style='font-size:14px;margin:50rpx;' bindtap='nocoupon'>不使用优惠券</button>
   
 </view>

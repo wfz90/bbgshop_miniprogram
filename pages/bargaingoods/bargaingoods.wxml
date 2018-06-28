@@ -72,7 +72,7 @@
     <view class='cutfriend_friend' wx:for="{{cutList}}" wx:key="{{cutList.id}}">
       <image class='cutfriend_friend_img' src='{{item.friend_avatar}}'></image>
       <view class='cutfriend_friend_name'>{{item.friend_nick_name}}</view>
-      <view class='cutfriend_friend_ask'>来一起砍价0元拿</view>
+      <view class='cutfriend_friend_ask'>来一起砍价0元拿{{cutList.length}}</view>
       <view class='cutfriend_friend_cut'>
         <!-- <image class='cutfriend_friend_cutImg'></image> -->
         <span class='cutfriend_friend_cutname'>砍掉 <span class="cutfriend_friend_cutpit">{{item.cut_price}}</span> 元</span>

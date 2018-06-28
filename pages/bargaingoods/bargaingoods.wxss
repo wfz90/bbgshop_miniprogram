@@ -146,7 +146,7 @@
 .avted_goods_peopleget {
   position: absolute;
   /* border: 1px solid #000; */
-  top: 115rpx;
+  top: 128rpx;
   right: 20rpx;
   font-size: 20rpx;
   /* font-weight: bold; */

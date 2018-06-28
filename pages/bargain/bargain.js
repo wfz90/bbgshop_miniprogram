@@ -32,117 +32,64 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-              that.getList()
-            }
-          })
-        } else {
-          that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
-        }
-      }
-    })  
-  },
-  getList(){
-    // wx.hideLoading()
-    
-    var that = this
     wx.showLoading({
       title: '登录检测...',
       mask: true
     })
-    user.loginByWeixin().then(res => {
+    if(app.globalData.token == ''){
       that.setData({
-        openidInfo:res.data
+        auth: false
       })
-      app.globalData.userInfo = res.data.userInfo;
-      app.globalData.token = res.data.token;
-      // util.request(api.BargainList).then(function (res) {
-      //   console.log(res)
-        wx.hideLoading()
-      //   if (res.errno == 0) {
-      //     that.setData({
-      //       bargainList: res.data.data
-      //     })
-      //   } else {
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+    }else {
 
-      //   }
+      user.loginByWeixin().then(res => {
+       console.log(res)
+       that.setData({
+         auth: true,
+         openidInfo: res.data
+       })
+      })
+      that.getList()
+    }
+    // wx.getSetting({
+    //   success: function (res) {
+    //     wx.hideLoading()
 
-      //   console.log(that.data.bargainList)
-      // });
-    })
-    // .then((res) => {
-    //   console.log(res)
-    // })
-    .catch((err) => {
-      console.log(err)
-      wx.hideLoading()
-      if (err.errMsg !== "login:ok"){
-        wx.hideLoading()
-        wx.showToast({
-          title: '未授权！',
-          icon: 'none',
-          duration: 2000,
-          mask: true,
-          success: function(res) {
-            wx.switchTab({
-              url: '/pages/cart/cart',
-              success: function(res) {
-                wx.showToast({
-                  title: '请授权！',
-                  icon: 'none',
-                  image: '',
-                  duration: 2000,
-                  mask: true,
-                  success: function(res) {},
-                  fail: function(res) {},
-                  complete: function(res) {},
-                })
-              },
-              fail: function(res) {},
-              complete: function(res) {},
-            })
-          },
-          fail: function(res) {},
-          complete: function(res) {},
-        })
-      }else {
-        // console.log("65487945321")
-        // util.request(api.BargainList).then(function (res) {
-        //   console.log(res)
-        //   wx.hideLoading()
-        //   if (res.errno == 0) {
-        //     that.setData({
-        //       bargainList: res.data.data
-        //     })
-        //   } else {
-
-        //   }
-
-        //   console.log(that.data.bargainList)
-        // });
-      }
-    })
+    //     if (res.authSetting['scope.userInfo']) {
+    //       wx.getUserInfo({
+    //         success: function (res) {
+    //           console.log(res.userInfo)
+    //           //用户已经授权过
+    //           that.setData({
+    //             auth: true
+    //           })
+    //           that.getList()
+    //         }
+    //       })
+    //     } else {
+    //       that.setData({
+    //         auth: false
+    //       })
+    //       wx.showToast({
+    //         title: '未授权！请在“我的”页点击头像授权!',
+    //         icon: 'none',
+    //         duration: 2000,
+    //         mask: true,
+    //       })
+    //     }
+    //   }
+    // })  
+  },
+  getList(){
+    let that = this
     util.request(api.BargainList).then(function (res) { 
       console.log(res)
-      wx.hideLoading()
       if(res.errno == 0){
         that.setData({
           bargainList: res.data.data
@@ -150,10 +97,11 @@ Page({
       }else {
 
       }
+      wx.hideLoading()
       // that.getList()
       console.log(that.data.bargainList)
     });
-    wx.hideLoading()
+    // wx.hideLoading()
   },
   skupriceinfo(barid){
     console.log(barid)
@@ -593,11 +541,15 @@ Page({
         userbargainList: that.data.userbargainList
       })
       // console.log(that.data.userbargainList)
-      if (that.data.showscreen == 0) {
-        clearInterval(loop)
-      }
+
     },1000)
-    
+    // var looptwo = setInterval(function () {
+    //   that.checkouttime()      
+    // },60000)
+    if (that.data.showscreen == 0) {
+      clearInterval(loop)
+      // clearInterval(looptwo)
+    }
     
       // that.setData({
       //   userbargainList:
@@ -688,36 +640,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this
-    // wx.showLoading({
-    //   title: '获取中...',
-    //   mask: true
-    // })
-    // console.log("9999999999999999999999999999999999999999")
-    // clearInterval(loop)
-    util.request(api.BargainList).then(function (res) {
-      console.log(res)
-      // wx.hideLoading()
-      if (res.errno == 0) {
-        that.setData({
-          bargainList: res.data.data
-        })
-        util.request(api.UserBargainList).then(res => {
-          console.log(res)
-          wx.hideLoading()
-          that.setData({
-            userbargainList: res.data.data
-          })
-          that.setTimeloop()
-        })
-      } else {
-
-      }
-    })
-    
-    // this.setData({
-    //   showscreen: 0
-    // })
   },
 
   /**

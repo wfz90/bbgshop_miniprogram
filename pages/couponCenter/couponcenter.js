@@ -253,7 +253,14 @@ Page({
   onReady: function () {
   
   },
-
+  helptip(){
+    wx.showToast({
+      title: '领取后请尽快使用 ！',
+      icon: 'none',
+      duration: 2000,
+      mask: true,
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */

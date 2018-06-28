@@ -17,7 +17,7 @@ textarea {
   padding-top: 40vh;
 }
 .order{
-    margin-top: 10rpx;
+    margin-top: 5rpx;
     background: #fff;
 }
 
@@ -58,14 +58,14 @@ textarea {
 }
 
 .order .goods .img{
-    height:145.83rpx;
-    width:145.83rpx;
+    height:168rpx;
+    width:168rpx;
     background: #f4f4f4;
 }
 
 .order .goods .img image{
-    height:145.83rpx;
-    width:145.83rpx;
+    height:168rpx;
+    width:168rpx;
 }
 
 .order .goods .info{
@@ -79,8 +79,13 @@ textarea {
 .order .goods .name{
     /* border: 1px solid #333; */
     display: block;
-    height: 128rpx; 
+    height: 124rpx; 
     line-height: 40rpx;
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+   -webkit-box-orient: vertical;
     color: #333;
     font-size: 30rpx;
 }
@@ -180,7 +185,7 @@ textarea {
   width: 100vw;
   height: 78rpx;
   background: #fff;
-   border-top: 1px #efefef solid; 
+  border-top: 1px #f4f4f4 solid; 
 }
 .coupon_center_area {
   /* border: 1px solid black; */
@@ -591,7 +596,7 @@ textarea {
   height: 258rpx; 
   overflow: hidden;
   position: fixed;
-  top: 13vh;
+  top: 38vh;
   left: 20vw;
   z-index: 4000;
   background: #fff;

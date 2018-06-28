@@ -203,7 +203,7 @@ page{
     margin-left: 31.25rpx;
     padding-right: 31.25rpx;
     padding-top: 26rpx;
-    border-bottom: 1px solid #d9d9d9;
+    border-bottom: 1px solid #f4f4f4;
 }
 
 .order-box .order-item .l{
@@ -228,13 +228,13 @@ page{
 }
 
 .goods-items{
-    margin-top: 20rpx;
+    margin-top: 10rpx;
     width: 100%;
     height: auto;
     overflow: hidden;
     background: #fff;
     padding-left: 31.25rpx;
-    margin-bottom: 80rpx;
+    margin-bottom: 100rpx;
 }
 
 .goods-items .item{
@@ -242,14 +242,21 @@ page{
     padding-right: 31.25rpx;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(0,0,0,0.10);
 }
 
 .goods-items .item.no-border{
     border-bottom: none;
 }
 
-
+.abcdefg {
+  /* border: 1px solid #333; */
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  font-size: 23rpx;
+  color: #757575;
+}
 .goods-items .item:last-child{
     border-bottom: none;
 }

@@ -7,10 +7,14 @@ App({
     //获取用户的登录信息
     user.checkLogin().then(res => {
       console.log('app login')
+      // console.log(res)
       this.globalData.userInfo = wx.getStorageSync('userInfo');
       this.globalData.token = wx.getStorageSync('token');
+      console.log(this.globalData.token)
     }).catch(() => {
-      
+      console.log('login faild')
+      // this.globalData.token = wx.getStorageSync('token');
+      console.log(this.globalData.token)
     });
   },
   

@@ -17,6 +17,7 @@ Page({
         that.setData({
           collectList: res.data.data
         });
+        wx.hideLoading()
       }
     });
   },
@@ -26,34 +27,58 @@ Page({
       title: '核实中...',
       mask: true,
     })
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-              that.getCollectList();
+    if (app.globalData.token == "") {
+      that.setData({
+        auth: false
+      })
+      wx.hideLoading()
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else {
+      that.setData({
+        auth: true
+      })
+      wx.showLoading({
+        title: '获取数据...',
+        mask: true,
+      })
+      that.getCollectList();
+    }
+    // wx.getSetting({
+    //   success: function (res) {
+    //     wx.hideLoading()
+    //     if (res.authSetting['scope.userInfo']) {
+    //       wx.getUserInfo({
+    //         success: function (res) {
+    //           console.log(res.userInfo)
+    //           //用户已经授权过
+    //           that.setData({
+    //             auth: true
+    //           })
+    //           that.getCollectList();
               
-            }
-          })
-        } else {
-          that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
-        }
-      }
-    })
+    //         }
+    //       })
+    //     } else {
+    //       that.setData({
+    //         auth: false
+    //       })
+    //       wx.showToast({
+    //         title: '未授权！请在“我的”页点击头像授权!',
+    //         icon: 'none',
+    //         duration: 2000,
+    //         mask: true,
+    //       })
+    //     }
+    //   }
+    // })
   },
   onReady: function () {
 

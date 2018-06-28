@@ -102,7 +102,9 @@
                  <text class="number">x{{item.number}}</text>
             </view>
         </view>
+        <view class='abcdefg' wx:if="{{checkedGoodsList.length !== 0}}">共{{checkedGoodsList.length}}件商品</view>
     </view>
+    
      <view wx:if="{{checkedGoodsList.length == 0}}">
       <view class='tip'>因为订单已生成，所以此处没有显示商品</view>
       <view class='tip'>购物车中此商品已删除</view>
@@ -110,7 +112,7 @@
       <view class='tip'>有问题请联系贝堡网络科技有限公司Bug反馈部</view>
       <button class='backindex' bindtap="backindex">返回首页</button>
     </view> 
-    <view class='backindextip' bindtap="backindextip">back</view>
+    <!-- <view class='backindextip' bindtap="backindextip">back</view> -->
     <view class="order-total">
         <view class="l">实付：￥{{actualPrice}}</view>
         <view class="r" bindtap="submitOrder">去付款</view>

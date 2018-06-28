@@ -7,8 +7,8 @@
         <br />
       </view>
       <view class="btns">
-        <navigator class="btn" url="/pages/ucenter/order/order">查看订单</navigator>
-        <navigator class="btn" url="/pages/index/index" open-type="switchTab">继续逛</navigator>
+        <view class="btn" bindtap='seeorder'>查看订单</view>
+        <view class="btn" bindtap='content'>继续逛</view>
       </view>
     </view>
     <view class="error" wx:if="{{paystatues != 'true'}}">
@@ -18,7 +18,7 @@
         <view class="p">否则订单将会被系统取消</view>
       </view>
       <view class="btns">
-        <navigator class="btn" url="/pages/ucenter/order/order" >查看订单</navigator>
+        <view class="btn" bindtap='seeorder' >查看订单</view>
         <view class="btn" bindtap='payOrder'>重新付款</view>
       </view>
     </view>

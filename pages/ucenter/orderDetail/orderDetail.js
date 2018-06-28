@@ -55,6 +55,12 @@ Page({
             // refundsuccess_time: util.timestampToTime(res.data.refundInfo[0].refund_time),
           });
         }
+        if (res.data.refundInfo.length == 0 && res.data.orderInfo.refund_is_success == 1){
+          console.log("32154654987985279")
+          that.setData({
+            refundsuccess_time: util.timestampToTime(res.data.orderInfo.refund_time)
+          })
+        }
         // console.log(that.data.confirLogic_time)
         
         // console.log(that.data.refundInfo)

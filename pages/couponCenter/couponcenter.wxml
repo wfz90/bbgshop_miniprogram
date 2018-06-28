@@ -6,7 +6,7 @@
     </view>
     <button class="add-btn" bindtap='exchangecoupon'>兑换</button>
   </view>
-  <view class="help">使用说明</view>
+  <view class="help" bindtap='helptip'>使用说明</view>
   <!-- wx:for="{{couponList}}" -->
   <view wx:if="{{couponList.length == 0}}" class='couponListnoitem'>没有发布优惠券！</view>
   <view class="coupon_list" wx:for="{{couponList}}" wx:if="{{couponList.length > 0}}" wx:key="{{item.id}}">

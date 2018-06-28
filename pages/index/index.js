@@ -1,35 +1,44 @@
 const util = require('../../utils/util.js');
 const api = require('../../config/api.js');
 const user = require('../../services/user.js');
-
+const app = getApp();
 //获取应用实例
-const app = getApp()
 Page({
   data: {
     newGoods: [],
     // newGoodslist: [],
     hotGoods: [],
     // hotGoodslist: [],
+    luckdraw: [],
     topics: [],
     brands: [],
     floorGoods: [],
     banner: [],
-    channel: []
+    channel: [],
+    auth: false,
+    userinfo: {},
+    Inviter_userid: [],
+    Inviter_laster: '',
+    isdistribution: false,
+    Inviter_locallaster: []
   },
   onShareAppMessage: function () {
+    let that = this
     return {
       title: '贝堡商城',
       desc: '贝堡商城微信小程序',
-      path: '/pages/index/index'
+      path: '/pages/index/index',
+      imageUrl: '../../image/logo.png',
     }
   },
-
   getIndexData: function () {
     let that = this;
     util.request(api.IndexUrl).then(function (res) {
       console.log(res)
+      wx.hideLoading()
       if (res.errno === 0) {
         that.setData({
+          luckdraw: res.data.luckdraw,
           newGoods: res.data.newGoodsList,
           hotGoods: res.data.hotGoodsList,
           topics: res.data.topicList,
@@ -38,76 +47,77 @@ Page({
           banner: res.data.banner,
           channel: res.data.channel
         });
-        // for (var i = 0; i < that.data.newGoodslist.length;i++){
-        //   if (i<4){
-        //     let obj = {}
-        //     obj = that.data.newGoodslist[i]
-        //     // that.setData({
-        //       that.data.newgoods.push(obj)
-        //     // })
-           
-        //   }
-        // }
         util.request(api.GoodsCount).then(function (res) {
           that.setData({
             goodsCount: res.data.goodsCount
           });
         });
+        that.setTime()
       }
     });
   },
-
+  setTime(){
+    let that = this
+    console.log(that.data.luckdraw)
+    for (let i = 0; i < that.data.luckdraw.length; i++){
+      let item = that.data.luckdraw[i]
+      item.open_local_time = util.timestampToTime(item.luck_open_time)
+      item.limit_local_time = util.timestampToTime(item.luck_limit_time)
+      // item.is_out_time_page = Number(item.luck_limit_time) > new Date().getTime() ? '0' : '1'
+      // item.is_open_time_page = Number(item.luck_open_time) > new Date().getTime() ? '0' : '1'
+    }
+    that.setData({
+      luckdraw: that.data.luckdraw
+    })
+  },
+  toluckdrawpage(e){
+    // console.log(e.currentTarget.dataset.id)
+    wx.navigateTo({
+      url: '/pages/luckdraw/luckdraw?id=' + e.currentTarget.dataset.id,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
   onLoad: function (options) {
-    this.getIndexData();
+    let that = this
+    // console.log(options)
+    wx.showLoading({
+      title: '连接服务器...',
+      mask: true,
+    })
+    that.getIndexData();
   },
   onReady: function () {
     // console.log("1111111")
     // 页面渲染完成
+   
   },
-  goLogin() {
-    // user.loginByWeixin().then(res => {
-    //   console.log(res)
-    // })
-    // let code = null
-    // util.login().then((res) => {
-    //   code = res.code;
-    //   console.log(res)
-    // })
-    // user.loginByWeixin().then(res => {
-    //   app.globalData.userInfo = res.data.userInfo;
-    //   app.globalData.token = res.data.token;
-    // }).catch((err) => {
-    //   console.log(err)
-    //   wx.showModal({
-    //     title: '警告',
-    //     content: '拒绝授权会导致未知问题，点击确定重新获取权限！',
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         // console.log('用户点击确定')
-    //         // this.goLogin()
-    //         wx.openSetting({
-    //           success: function(res) {
-    //             console.log(res)
-    //             if (res.authSetting["scope.userInfo"]) {
-
-    //             }
-    //           },
-    //           fail: function(res) {},
-    //           complete: function(res) {},
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
-    //     }
-    //   })
-    // });
-
-  },
-  onShow: function () {
+  onShow: function (op) {
     // 页面显示
-    this.goLogin()
+    let that = this
+    // if(op == '0'){
+    // this.checkauth('1')
+    wx.showLoading({
+      title: '更新中...',
+      mask: true,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+    that.getIndexData();
+
+    // this.onshowaction()
+
+    // }
+    // this.onLoad();
+    // this.goLogin()
+    
     
   },
+  // onshowaction() {
+    // this.checkauth('1')
+  // },
   onHide: function () {
     // 页面隐藏
   },

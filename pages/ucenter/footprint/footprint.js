@@ -56,54 +56,38 @@ Page({
   },
   onLoad: function (options) {
     var that = this
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-              that.getFootprintList();
-            }
-          })
-        } else {
-          that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
-        }
-      }
+    wx.showLoading({
+      title: '授权检测...',
+      mask: true,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
     })
+    if(app.globalData.token == ""){
+      that.setData({
+        auth: false
+      })
+      wx.hideLoading()
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+    }else{
+      //用户已经授权过
+      that.setData({
+        auth: true
+      })
+      wx.hideLoading()
+      that.getFootprintList();
+    }
   },
   onReady: function () {
 
   },
   onShow: function () {
-    wx.getSetting({
-      success: (res) => {
-        console.log(res)
-        if (res.authSetting["scope.userInfo"] == true) {
-          console.log("已授权")
-        } else {
-          console.log("未授权")
-          wx.showToast({
-            title: '获取失败，用户未授权！',
-            icon: 'none',
-            duration: 3000,
-          })
-        }
-
-      }
-    })
+    
   },
   onHide: function () {
     // 页面隐藏

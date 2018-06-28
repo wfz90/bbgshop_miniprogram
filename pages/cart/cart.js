@@ -21,6 +21,10 @@ Page({
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     // console.log(options)
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
 
   },
   onReady: function () {
@@ -29,13 +33,13 @@ Page({
   },
   onShow: function () {
     // 页面显示
-    if (this.data.isEditCart == true) {
-      wx.showToast({
-        title: '处于编辑状态！',
-        icon: 'none',
-        duration: 2000,
-      })
-    }
+    // if (this.data.isEditCart == true) {
+    //   wx.showToast({
+    //     title: '处于编辑状态！',
+    //     icon: 'none',
+    //     duration: 2000,
+    //   })
+    // }
     this.goLogin()
     this.getCartList();
   },
@@ -47,90 +51,38 @@ Page({
   },
   goLogin() {
     let that = this
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-              // that.againmoty()
-              that.data.cartGoods = []
-              that.data.cartTotal = []
-              util.request(api.CartList).then(function (res) {
-                if (res.errno === 0) {
-                  console.log(res.data);
-                  that.setData({
-                    cartGoods: res.data.cartList,
-                    cartTotal: res.data.cartTotal
-                  });
-                }
-
-                that.setData({
-                  checkedAllStatus: that.isCheckedAll()
-                });
-              })
-            }
-          })
-        } else {
+    if (app.globalData.token == "") {
+      that.setData({
+        auth: false
+      })
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+    }else {
+      //用户已经授权过
+      that.setData({
+        auth: true
+      })
+      // that.againmoty()
+      that.data.cartGoods = []
+      that.data.cartTotal = []
+      util.request(api.CartList).then(function (res) {
+        if (res.errno === 0) {
+          console.log(res.data);
           that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
+            cartGoods: res.data.cartList,
+            cartTotal: res.data.cartTotal
+          });
         }
-      }
-    })
-    // user.loginByWeixin().then(res => {
-    //   app.globalData.userInfo = res.data.userInfo;
-    //   app.globalData.token = res.data.token;
-    // }).catch((err) => {
-    //   console.log(err)
-    //   wx.showModal({
-    //     title: '警告!',
-    //     content: '拒绝授权会导致未知问题，点击确定重新获取权限！',
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         wx.openSetting({
-    //           success: function (res) {
-    //             console.log(res)
-    //             if (res.authSetting["scope.userInfo"]) {
-    //               console.log("已授权")
-    //               // this.againmoty()
-    //               // that.data.cartGoods = []
-    //               // that.data.cartTotal = []
-    //               // util.request(api.CartList).then(function (res) {
-    //               //   if (res.errno === 0) {
-    //               //     console.log(res.data);
-    //               //     that.setData({
-    //               //       cartGoods: res.data.cartList,
-    //               //       cartTotal: res.data.cartTotal
-    //               //     });
-    //               //   }
 
-    //               //   that.setData({
-    //               //     checkedAllStatus: that.isCheckedAll()
-    //               //   });
-    //               // });
-    //             }
-    //           },
-    //           fail: function (res) { },
-    //           complete: function (res) { },
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
-    //     }
-    //   })
-    // });
+        that.setData({
+          checkedAllStatus: that.isCheckedAll()
+        });
+      })
+    }
   },
   onUnload: function () {
     // 页面关闭
@@ -156,6 +108,7 @@ Page({
       that.setData({
         checkedAllStatus: that.isCheckedAll()
       });
+      wx.hideLoading()
     });
   },
   isCheckedAll: function () {
@@ -174,6 +127,10 @@ Page({
   // },
   checkedItem: function (event) {
     // console.log(event)
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
     let itemIndex = event.target.dataset.itemIndex ? event.target.dataset.itemIndex : event.currentTarget.dataset.itemIndex;
     // console.log(itemIndex)
     let that = this;
@@ -208,6 +165,7 @@ Page({
         'cartTotal.checkedGoodsCount': that.getCheckedGoodsCount()
       });
     }
+    wx.hideLoading()
   },
   getCheckedGoodsCount: function () {
     let checkedGoodsCount = 0;
@@ -221,7 +179,10 @@ Page({
   },
   checkedAll: function () {
     let that = this;
-
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
     if (!this.data.isEditCart) {
       var productIds = this.data.cartGoods.map(function (v) {
         return v.product_id;
@@ -238,6 +199,7 @@ Page({
         that.setData({
           checkedAllStatus: that.isCheckedAll()
         });
+        wx.hideLoading()
       });
     } else {
       //编辑状态

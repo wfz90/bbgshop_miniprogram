@@ -2,6 +2,7 @@
 const util = require('../../utils/util.js');
 const api = require('../../config/api.js');
 const user = require('../../services/user.js');
+var app = getApp();
 
 Page({
 
@@ -12,7 +13,8 @@ Page({
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     route:'',
-    data:''
+    data:'',
+    // distributionData: '',
   },
 
   /**
@@ -50,6 +52,8 @@ Page({
               user.loginByWeixin().then(res => {
                 console.log(res)
                 console.log(typec)
+                app.globalData.userInfo = res.data.userInfo;
+                app.globalData.token = res.data.token;
                 if (typec == ''){
                   wx.switchTab({
                     url: '/pages/index/index',
@@ -81,9 +85,44 @@ Page({
     if (e.detail.userInfo) {
       console.log("允许授权")
       console.log(e.detail.userInfo)
-      user.loginByWeixin().then(res =>{
+      user.loginByWeixin().then(res => {
         console.log(res)
+        app.globalData.userInfo = res.data.userInfo;
+        app.globalData.token = res.data.token;
+      //   try {
+      //     var value = wx.getStorageSync('invitation')
+      //     console.log(value)
+      //     if (value) {
+      //       console.log("用户授权,读取本地分销缓存")
+      //       that.setData({
+      //         // Inviter_userid: JSON.parse(value)
+      //         distributionData: JSON.parse(value) || ''
+      //       })
+
+            // if (that.data.distributionData !== '') {
+            //   console.log(that.data.distributionData)
+            //   console.log(res)
+            //   util.request(api.SetInviterMaster,{
+            //     nowuser: res.data.userInfo,
+            //     pasteruser: that.data.distributionData
+            //   },'POST').then(res => {
+            //     console.log(res)
+            //   try {
+            //     wx.removeStorageSync('invitation')
+            //   } catch (e) {
+            //     // Do something when catch error
+            //   }
+            //   })
+
+            // } else {
+            //   console.log('没有分销缓存')
+            // }
+          // }
+        // } catch (e) {
+        // }
       })
+
+
       if (that.data.route == ''){
         wx.switchTab({
           url: '/pages/index/index',
@@ -92,13 +131,31 @@ Page({
           complete: function (res) { },
         })
       }else {
-        wx.redirectTo({
-          url: "/" + that.data.route + '?id=' + that.data.data,
-          success: function (res) { },
-          fail: function (res) { },
-          complete: function (res) { },
-        })
-      }
+
+        // if (that.data.route == 'pages/goods/goods' && that.data.distributionData !== ''){
+        //   wx.redirectTo({
+        //     url: "/" + that.data.route + '?id=' + that.data.data + '&ids=' + that.data.distributionData,
+        //     success: function (res) { 
+        //       try {
+        //         wx.removeStorageSync('invitation')
+        //       } catch (e) {
+        //         // Do something when catch error
+        //       }
+        //      }, 
+        //     fail: function (res) { },
+        //     complete: function (res) { },
+        //   })
+
+        // }else {
+          wx.redirectTo({
+            url: "/" + that.data.route + '?id=' + that.data.data,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }
+
+      // }
       //用户按了允许授权按钮
     } else {
       //用户按了拒绝按钮

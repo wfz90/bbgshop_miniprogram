@@ -61,7 +61,6 @@ Page({
     var that = this
     wx.getSetting({
       success: function (res) {
-        wx.hideLoading()
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
             success: function (res) {
@@ -80,6 +79,7 @@ Page({
             }
           })
         } else {
+          wx.hideLoading()
           wx.redirectTo({
             url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route +"&data=" + that.data.id,
             success: function (res) { },
@@ -112,6 +112,7 @@ Page({
 
       that.setTimeloop()
       that.checkopenid()
+      wx.hideLoading()      
       console.log(that.data.userInfo)
     });
   },
@@ -125,6 +126,8 @@ Page({
       bargoods: that.data.bargainInfo
     }, 'POST').then(res => {
       console.log(res)
+      that.friendcutthen()
+      
       if (res.data.data.length > 0){
         console.log("已砍过")
         that.setData({
@@ -168,7 +171,8 @@ Page({
         })
       } else if (res.errno == 0) {
         that.setData({
-          bargainInfo: res.data.data
+          bargainInfo: res.data.data,
+          cutList: res.data.barlist
         })
         console.log(that.data.userInfo_in)        
         console.log(that.data.userInfo)  
@@ -257,7 +261,7 @@ Page({
             showFCPrice: true,
             cutprice: res.data.cutprice
           })
-          that.friendcutthen()
+          that.friendcutthen()          
         }
       })
     } else if (that.data.iscut == '17'){
@@ -283,7 +287,6 @@ Page({
       console.log(res)
       if (res.errno == 0){
         //如果是，获取地址列表
-
         that.getaddressList()
       } else if (res.errno == 6){
         var order = res.data
@@ -347,6 +350,7 @@ Page({
   },
   friendcutthen(){
     var that = this
+    console.log(that.data.bargainInfo)
     util.request(api.FindCutAgain, {
       bargoods: that.data.bargainInfo
     }, 'POST').then(res => {
@@ -356,6 +360,7 @@ Page({
         bargainInfo: res.data.data,
         cutList: res.data.barlist
       })
+      console.log(that.data.cutList)
       if (Number(res.data.data.have_cut_lest) <= Number(res.data.data.goods_lowest_price)){
         // console.log("999999999999999999999999")
         that.setData({
@@ -385,6 +390,8 @@ Page({
   // },
   showModal: function () {
     // 显示遮罩层
+    let that = this
+    // that.friendcutthen()
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -572,6 +579,10 @@ Page({
   setTimeloop() {
     var that = this
      var loop = setInterval(function () {
+      //  console.log(that.data.bargainInfo.end_time)
+      //  console.log(new Date().getTime())
+      
+      //  console.log(parseInt(that.data.bargainInfo.end_time) - new Date().getTime())
       if ((parseInt(that.data.bargainInfo.end_time) - new Date().getTime()) < 0) {
         that.setData({
           isEnd: true
@@ -634,7 +645,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    // this.friendcutthen()
   },
 
   /**

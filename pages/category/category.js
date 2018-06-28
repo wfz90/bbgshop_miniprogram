@@ -18,7 +18,10 @@ Page({
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     var that = this;
-
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
     console.log(options)
     if (options.id) {
       that.setData({
@@ -95,13 +98,24 @@ Page({
   },
   getGoodsList: function () {
     var that = this;
-
-    util.request(api.GoodsList, {categoryId: that.data.id, page: that.data.page, size: that.data.size})
+    util.request(api.GoodsList, {categoryId: that.data.id, page: that.data.page, size: 500})
       .then(function (res) {
         console.log(res)
-        that.setData({
-          goodsList: res.data.goodsList,
-        });
+        if(res.errno === 0){
+          that.setData({
+            goodsList: res.data.goodsList,
+          });
+          wx.hideLoading()
+        }else {
+          wx.hideLoading()
+          wx.showToast({
+            title: '异常 ！',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+          })
+        }
+
       });
   },
   onUnload: function () {
@@ -111,6 +125,10 @@ Page({
     if (this.data.id == event.currentTarget.dataset.id) {
       return false;
     }
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
     var that = this;
     var clientX = event.detail.x;
     var currentTarget = event.currentTarget;

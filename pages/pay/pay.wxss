@@ -12,6 +12,7 @@ page{
   height: 104rpx;
   background: #fff;
   width: 100%;
+  border-bottom: 1px solid #f4f4f4;
   line-height: 104rpx;
   padding-left: 30rpx;
   padding-right: 30rpx;
@@ -105,18 +106,23 @@ page{
     bottom: 0;
     height: 100rpx;
     width: 100%;
+    /* font-size: 28rpx; */
     text-align: center;
     line-height: 100rpx;
     background: #b4282d;
     color: #fff;
-    font-size: 30rpx;
+    font-weight: bold;
+    letter-spacing: 3rpx;
+    font-size: 34rpx;
 }
 
 .tips{
   height: 40rpx;
-  width: 100%;
+  width: 750rpx;
+  text-align: center;
   font-size: 24rpx;
   color: #999;
+  margin-top: 20rpx;
   line-height: 40rpx;
   padding-left: 30rpx;
   padding-right: 30rpx;

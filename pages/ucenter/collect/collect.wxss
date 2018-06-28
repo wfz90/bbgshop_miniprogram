@@ -7,7 +7,12 @@ page{
     background: #f4f4f4;
     min-height: 100%;
 }
-
+.tips {
+  text-align: center;
+  margin-top: 38vh;
+  font-size: 24rpx;
+  color: #757575;
+}
 .collect-list{
   width: 100%;
   height: auto;

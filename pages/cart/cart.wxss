@@ -11,7 +11,7 @@ page{
     overflow: hidden;
 }
 .tip{
-  font-size: 10px;
+  font-size: 22rpx;
   color: #999;
   text-align: center;
 }
@@ -92,7 +92,7 @@ page{
 .cart-view .item{
     height: 164rpx;
     width: 100%;
-    margin-top: 10rpx;
+    margin-top: 1rpx;
     overflow: hidden;
 }
 .cart-view .item .checkbox{
@@ -335,12 +335,19 @@ page{
 }
 
 .cart-bottom .total{
-    height: 34rpx;
+    /* border: 1px solid #333; */
+    height: 56rpx;
+    line-height: 56rpx;
     flex: 1;
-    margin: 33rpx 10rpx;
+    color: #757575;
+    margin: 24rpx 10rpx;
     font-size: 29rpx;
 }
-
+.redprice {
+  font-weight: bold;
+  color: #b4282D;
+  font-size: 40rpx;
+}
 
 .cart-bottom .delete{
     background: #bdbdbd;

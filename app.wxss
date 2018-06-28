@@ -17,3 +17,9 @@ view,text{
   font-size: 29rpx;
   color: #333;
 }
+.comy_tip {
+  margin-bottom: 110rpx;
+  text-align: center;
+  font-size: 19rpx;
+  color: #757575
+}

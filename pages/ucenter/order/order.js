@@ -1,5 +1,7 @@
+const app = getApp();
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
+var user = require('../../../services/user.js');
 const qiniuUploader = require("../../../utils/qiniuUploader");
 
 Page({
@@ -10,7 +12,7 @@ Page({
     refund_resond: '',
     nav_item: ['待付款', '待发货', '待收货', '已完成', '处理中'],
     refund_nologarray: ['全额退款'],
-    refund_logarray: ['全额退款', '部分退款', '退货退款'],
+    refund_logarray: ['全额退款', '部分退款'],
     refund_index: 0,
     refund_logindex: 0,
     refund_resonarray: ['拍错商品', '商品缺货', '与卖家协商一致退款', '未按约定时间发货', '其他'],
@@ -34,31 +36,60 @@ Page({
     showRefundTimeBox: false,
     timestate: 'null',
     auth: false,
+    distributionData: [],
+    userinfo: '',
 
 
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    let that = this
+    // that.setDistriPrice('20180605152025161097')
+    // that.checkisstoragedis('20180605152025161097')
+
     try {
       var tab = wx.getStorageSync('tab');
       // console.log(addressId)
       // if (addressId != '') {
-        this.setData({
-          activeTab: tab
-        });
+      this.setData({
+        activeTab: tab
+      });
       // }
     } catch (e) {
       // Do something when catch error
     }
-    wx.showLoading({
-      title: '获取中...',
-      mask: true,
-      success: function (res) { },
-      fail: function (res) { },
-      complete: function (res) { },
-    })
-    this.getOrderList();
+    console.log(app.globalData.token)
 
+
+
+  },
+  onShow() {
+    let that = this
+    if (app.globalData.token == "") {
+      that.setData({
+        auth: false
+      })
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+    } else {
+      //用户已经授权过
+      that.setData({
+        auth: true
+      })
+      wx.showLoading({
+        title: '获取中...',
+        mask: true,
+        success: function (res) {
+          that.getOrderList();
+         },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    }
   },
   getOrderList() {
     let that = this;
@@ -68,7 +99,7 @@ Page({
       wx.hideLoading()
       if (res.errno === 0) {
         that.setData({
-          orderList: res.data
+          orderList: res.data.reverse()
         });
       }
     });
@@ -112,13 +143,13 @@ Page({
     console.log(e.target.dataset)
     var orderPrice = e.target.dataset
     // let collageType = e.target.dataset.collage_type
-    if (orderPrice.payid == 0){
+    if (orderPrice.payid == 0) {
       wx.navigateTo({
         url: '/pages/pay/pay?Price=' + orderPrice.orderPrice + '&orderId=' + orderPrice.orderId + '&payId= ' + orderPrice.payid,
       })
-    } else if (orderPrice.payid == 1){
+    } else if (orderPrice.payid == 1) {
 
-    } else if (orderPrice.payid == 2){
+    } else if (orderPrice.payid == 2) {
       if (orderPrice.collageType == 1) {
         util.request(api.SnFindOrder, {
           ordersn: orderPrice.orderId
@@ -150,12 +181,13 @@ Page({
         })
       }
     }
-    
+
 
   },
   refund(e) {
     let that = this
     let goods = e.currentTarget.dataset.goods
+    let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
     // console.log(goods)
     let orderid = that.data.refund_orderid
     console.log(orderid)
@@ -201,7 +233,7 @@ Page({
                     });
                     that.hideModal()
                     wx.showToast({
-                      title: '退款申请已提交！',
+                      title: '提交成功！',
                       icon: 'success',
                       duration: 2000,
                       mask: true,
@@ -231,6 +263,7 @@ Page({
         })
       } else { }
       if (that.data.refund_price == '' || that.data.refund_price == 0 || that.data.refund_price > that.data.refund_orderprice) {
+        // console.log(that.data.refund_price * 100)
         wx.showToast({
           title: '价格异常！',
           icon: 'none',
@@ -254,7 +287,19 @@ Page({
         })
         return false
       }
-      console.log(that.data.refund_price)     //退款金额
+      if (!reg.test(that.data.refund_price)){
+        wx.showToast({
+          title: '退款金额最小值为分 ！！',
+          icon: 'none',
+          duration: 2000,
+          mask: true,
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+        return false
+      }
+      console.log((Number(that.data.refund_price) * 100))     //退款金额
 
       wx.showModal({
         title: '警告！',
@@ -505,13 +550,14 @@ Page({
             success: function (res) {
               if (res.confirm) {
                 var status = 301
-                // var orderId = orderid
+                var orderId = orderid
                 util.request(api.SetOrder, {
                   orderId: orderid,
                   status: status
                 }).then(function (res) {
                   if (res.errno === 0) {
                     console.log(res.data);
+                    that.checkisstoragedis(orderid)
                     wx.showToast({
                       title: '确认成功！',
                       icon: 'success',
@@ -539,6 +585,82 @@ Page({
         } else if (res.cancel) {
           // console.log('取消删除订单')
         }
+      }
+    })
+  },
+  checkisstoragedis(sn) {
+    let that = this
+    // let sn = sn
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+    })
+    user.loginByWeixin().then(res => {
+      console.log(res)
+      that.setData({
+        userinfo: res.data.userInfo
+      })
+      util.request(api.CheckIsDistributionHaveFather, {}, 'POST').then(res => {
+        console.log(res)
+        if (res.errno === 555 || res.errno === 444) {
+          try {
+            var value = wx.getStorageSync('invitation')
+            console.log(value)
+            if (value) {
+              console.log("用户没有邀请者,读取本地邀请者缓存")
+              that.setData({
+                distributionData: JSON.parse(value) || ''
+              })
+              that.setDistriInviter(sn, that.data.distributionData)
+            }else {
+              console.log("用户没有邀请者，本地没有邀请者缓存，正常下单流程用户")
+            }
+
+          } catch (e) {
+
+          }
+        } else if(res.errno === 666 || res.errno === 777){
+          that.setDistriPrice(sn)
+        }
+      })
+    })
+
+  },
+  setDistriInviter(sn,pasteruser) {
+    let that = this
+    util.request(api.SetInviterMaster, {
+      nowuser: that.data.userinfo,
+      pasteruser: pasteruser
+    }, 'POST').then(res => {
+      console.log(res)
+      if (res.errno === 11) {
+        that.setDistriPrice(sn)
+        wx.hideLoading()
+        try {
+          wx.removeStorageSync('invitation')
+        } catch (e) {
+          // Do something when catch error
+        }
+      }else {
+        wx.hideLoading()
+        wx.showToast({
+          title: '异常 ！',
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        })
+      }
+    })
+  },
+  setDistriPrice(sn){
+    let that = this
+    util.request(api.AddDistributionPrice,{
+      sn:sn,
+      nowuser: that.data.userinfo,
+    },'POST').then(res => {
+      console.log(res)
+      if(res){
+        wx.hideLoading()
       }
     })
   },
@@ -645,41 +767,6 @@ Page({
   onReady: function () {
     // 页面渲染完成
   },
-  onShow: function () {
-    // 页面显示
-    let that = this
-    // let pages = getCurrentPages();//当前页面
-    // let prevPage = pages[pages.length - 2];//上一页面
-    // console.log(pages)
-    // console.log(prevPage)
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-            }
-          })
-        } else {
-          that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
-        }
-      }
-    })
-    that.onLoad()
-  },
   changetab(e) {
     var that = this
 
@@ -701,7 +788,7 @@ Page({
         console.log(res);
         if (res.errno === 0) {
           that.setData({
-            orderList: res.data
+            orderList: res.data.reverse()
           });
         }
       });
@@ -795,7 +882,7 @@ Page({
           console.log(res)
           let obj = {}
           obj = res
-          obj.img = "http://resource.bbgshop.com/" + res.imageURL
+          obj.img = "https://resource.bbgshop.com" + res.imageURL
           that.data.refund_uploadimg.push(obj)
           that.setData({
             refund_uploadimg: that.data.refund_uploadimg

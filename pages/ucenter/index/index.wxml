@@ -20,12 +20,6 @@
         <text class="txt">我的优惠券</text>
       </navigator>
     </view>
-    <!-- <view class="item no-border">
-      <navigator url="url" class="a">
-        <text class="icon gift"></text>
-        <text class="txt">礼品卡</text>
-      </navigator>
-    </view> -->
     <view class="item">
       <navigator url="/pages/ucenter/collect/collect" class="a">
         <text class="icon gift"></text>
@@ -85,7 +79,19 @@
      <view class="item">
       <navigator url="/pages/couponCenter/couponcenter" class="a">
         <text class="icon coupon"></text>
-        <text class="txt">优惠券中心</text>
+        <text class="txt">领券中心</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="/pages/ucenter/distribution/distribution" class="a">
+        <text class="icon coupon"></text>
+        <text class="txt">分销中心</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="../bingbankcard/bingbankcard" class="a">
+        <text class="icon security"></text>
+        <text class="txt">绑定银行卡</text>
       </navigator>
     </view>
   </view>

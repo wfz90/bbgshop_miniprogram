@@ -2,7 +2,7 @@
   <view wx:if="{{!openAttr}}">
     <swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
       <swiper-item wx:for="{{gallery}}" wx:key="{{item.id}}">
-        <image src="{{item.img_url}}" background-size="cover"></image>
+        <image src="{{item.img_url}}"></image>
       </swiper-item>
     </swiper>
     <!-- <view class="service-policy">
@@ -15,7 +15,7 @@
         <text class="name">{{goods.name}}</text>
         <text class="desc">{{goods.goods_brief}}</text>
         <text class="price">￥{{goods.retail_price}} </text>
-         <view class="asf">￥{{goods.extra_price}}</view> 
+        <view class="asf">￥{{goods.extra_price}}</view>
         <!-- <view class="brand" wx:if="{{brand.name}}">
           <navigator url="../brandDetail/brandDetail?id={{brand.brandId}}">
             <text>{{brand.name}}</text>
@@ -26,12 +26,12 @@
     <view class="section-nav section-attr" bindtap='checkpower' data-type='0'>
       <view class="t">选择：{{checkedSpecText}}</view>
       <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
-    </view> 
-     <view class="section-nav section-attr" bindtap='toindex'>
+    </view>
+    <view class="section-nav section-attr" bindtap='toindex'>
       <image src="../../image/logo.png" class='section-nav_logo'></image>
       <view class="tt">贝堡全球购</view>
       <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
-    </view> 
+    </view>
     <!--<view class="section-nav section-act">
       <view class="t">
         <view class="label">1个促销:</view>
@@ -40,7 +40,7 @@
       </view>
       <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
     </view>-->
-     <view class="comments" wx:if="{{comment.count > 0}}">
+    <view class="comments" wx:if="{{comment.count > 0}}">
       <view class="h">
         <navigator url="../comment/comment?goodsid={{goods.id}}">
           <text class="t">评价({{comment.count > 999 ? '999+' : comment.count}})</text>
@@ -64,7 +64,7 @@
           </view>
         </view>
       </view>
-    </view>   
+    </view>
     <view class="goods-attr">
       <!-- <view class="h">
         <view class="line"></view>
@@ -112,14 +112,13 @@
       <view class="b">
         <view class="item" wx:for="{{relatedGoods}}" wx:key="{{item.id}}">
           <navigator url="/pages/goods/goods?id={{item.id}}">
-            <image class="img" src="{{item.list_pic_url}}" background-size="cover"></image>
+            <image class="img" src="{{item.list_pic_url}}"></image>
             <text class="name">{{item.name}}</text>
             <text class="price">￥{{item.retail_price}}</text>
           </navigator>
         </view>
       </view>
     </view>
-
   </view>
   <!-- <view wx:if="{{openAttr}}" class="attr-pop">
     <view class="img-info">
@@ -150,15 +149,16 @@
     </view>
   </view> -->
 </scroll-view>
+
 <view class="bottom-btn " wx:if="{{collage.length == 0}}">
   <view class="l l-collect {{ openAttr ? 'back' : ''}}" bindtap="closeAttrOrCollect">
     <image class="icon" src="{{ collectBackImage }}"></image>
   </view>
   <view class="l l-cart">
-     <view class="box"> 
+    <view class="box">
       <text class="cart-count">{{cartGoodsCount}}</text>
       <image bindtap="openCartPage" class="icon" src="/static/images/ic_menu_shoping_nor.png"></image>
-     </view> 
+    </view>
   </view>
   <view class="c" bindtap="checkpower" data-type='0'>加入购物车</view>
   <view class="r" bindtap="checkpower" data-type='0'>立即购买</view>
@@ -170,24 +170,25 @@
     <image class="icon" src="{{ collectBackImage }}"></image>
   </view>
   <view class="bottom-btn_collect_cat">
-     <!-- <view class="box">  -->
-       <text class="cart-countt">{{cartGoodsCount}}</text> 
-      <image bindtap="openCartPage" class="icon" src="/static/images/ic_menu_shoping_nor.png"></image>
+    <!-- <view class="box">  -->
+    <text class="cart-countt">{{cartGoodsCount}}</text>
+    <image bindtap="openCartPage" class="icon" src="/static/images/ic_menu_shoping_nor.png"></image>
 
-     <!-- </view>  -->
+    <!-- </view>  -->
   </view>
   <view style='width:calc(100vw - 200rpx)'>
-  <view class="cat" bindtap="checkpower" data-type='0'>加入购物车</view>
-  <view class="get" bindtap="checkpower" data-type='0'>
-   <view class='getlocal'>￥{{goods.retail_price}}</view>
-    <view class='getvalue'>单独购买</view>
+    <view class="cat" bindtap="checkpower" data-type='0'>加入购物车</view>
+    <view class="get" bindtap="checkpower" data-type='0'>
+      <view class='getlocal'>￥{{goods.retail_price}}</view>
+      <view class='getvalue'>单独购买</view>
+    </view>
+    <view class='collage' bindtap="checkpower" data-type='1'>
+      <view class='collocal'>
+        <span style="font-size:22rpx;">￥</span>{{collage[0].collage_price}}</view>
+      <view class='colvalue'>拼团购买</view>
+    </view>
   </view>
-  <view class='collage' bindtap="checkpower" data-type='1'>
-     <view class='collocal'><span style="font-size:22rpx;">￥</span>{{collage[0].collage_price}}</view>
-    <view class='colvalue' >拼团购买</view>
-  </view>
-  </view>
-  
+
 </view>
 
 <!--隐藏区域  -->
@@ -197,11 +198,11 @@
     <image class='sku_box_top_img' src='{{goods.list_pic_url}}'></image>
     <view class='sku_box_top_skuprice' wx:if="{{typec == 0}}">
       ￥{{checkgoodsprice.retail_price}}元
-       <!-- <span class='sku_box_top_skurelprice'>￥{{checkgoodsprice.retail_price}} </span>  -->
+      <!-- <span class='sku_box_top_skurelprice'>￥{{checkgoodsprice.retail_price}} </span>  -->
     </view>
     <view class='sku_box_top_skuprice' wx:if="{{typec == 1}}">
       <span style="font-size:20rpx;font-weight:bold"> 拼团价￥</span>{{collage[0].collage_price}}元
-       <span class='sku_box_top_skurelprice'>￥{{checkgoodsprice.retail_price}} </span> 
+      <span class='sku_box_top_skurelprice'>￥{{checkgoodsprice.retail_price}} </span>
     </view>
     <view class='sku_box_top_skuvalue' wx:if="{{productList.length>0}}">
       已选择：{{checkedSpecText}}
@@ -218,12 +219,12 @@
       </view>
     </view>
     <view class="sku_middle_spec_num" wx:if="{{typec == 0}}">
-       <view class="sku_middle_spec_name">数量</view>
+      <view class="sku_middle_spec_name">数量</view>
       <view class="selnum">
         <view class="cut" bindtap="cutNumber">-</view>
         <input value="{{number}}" class="number" disabled="true" type="number" />
         <view class="add" bindtap="addNumber">+</view>
-      </view> 
+      </view>
     </view>
   </view>
   <!-- <view class='sku_box_bottom'>
@@ -236,3 +237,6 @@
   <view class="collagenow" bindtap="collect" wx:if="{{typec == 1}}">立即拼团</view>
   <!-- <button class='sureBtn' bindtap='skuSure'>确定</button> -->
 </view>
+<button class='shall_buttom' open-type="share" wx:if="{{auth && isdistribution}}">
+  分享商品给好友赚取佣金</button>
+  <view class='comy_tip'>贝堡网络 提供技术支持</view>

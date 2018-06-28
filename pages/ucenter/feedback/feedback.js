@@ -14,7 +14,7 @@ Page({
     textarealength: 0,
   },
   bindPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
     })
@@ -66,43 +66,82 @@ Page({
         })
       }
       console.log(that.data.index)
-      util.request(api.BingPhoneText, {
-        Phone: that.data.mobileinput
-      }, 'POST').then(function (res) {
-        // console.log(res)
-        if (res.errno === 1001) {
-          util.showErrorToast('手机号格式错误');
-        }else {
-          util.request(api.FeedBackExchange,{
-            feedtype: that.data.index,
-            content: that.data.textareainput,
-            phone: that.data.mobileinput
-          },'POST').then(function (res) {
-            console.log(res)
-            if (res.errno === 0){
-              wx.showToast({
-                title: '提交成功！',
-                icon: 'success',
-                image: '',
-                duration: 1500,
-                mask: true,
-                success: function(res) {
-                  
-                },
-                fail: function(res) {},
-                complete: function(res) {},
-              })
-              setTimeout(function(){
-                wx.switchTab({
-                  url: '/pages/ucenter/index/index',
-                })
-              },1500)
+      // util.request(api.BingPhoneText, {
+      //   Phone: that.data.mobileinput
+      // }, 'POST').then(function (res) {
+      //   // console.log(res)
+      //   if (res.errno === 1001) {
+      //     util.showErrorToast('手机号格式错误');
+      //   }else {
+          wx.request({
+            url: api.FeedBackExchange,
+            data: {
+              feedtype: that.data.index,
+              content: that.data.textareainput,
+              phone: that.data.mobileinput
+            },
+            header: {
+              'Content-Type': 'application/json',
+              'X-Nideshop-Token': wx.getStorageSync('token')
+            },
+            method: 'POST',
+            responseType: 'text',
+            success: function (res) {
+              console.log(res)
+              if (res.statusCode === 200) {
+                wx.showToast({
+                  title: '提交成功！',
+                  icon: 'success',
+                  image: '',
+                  duration: 1500,
+                  mask: true,
+                  success: function (res) {
 
-            }
+                  },
+                  fail: function (res) { },
+                  complete: function (res) { },
+                })
+                setTimeout(function () {
+                  wx.switchTab({
+                    url: '/pages/ucenter/index/index',
+                  })
+                }, 1500)
+
+              }
+             },
+            fail: function (res) { },
+            complete: function (res) { },
           })
+          // util.request(api.FeedBackExchange,{
+          //   feedtype: that.data.index,
+          //   content: that.data.textareainput,
+          //   phone: that.data.mobileinput
+          // },'POST').then(function (res) {
+          //   console.log(res)
+          //   if (res.errno === 0){
+          //     wx.showToast({
+          //       title: '提交成功！',
+          //       icon: 'success',
+          //       image: '',
+          //       duration: 1500,
+          //       mask: true,
+          //       success: function(res) {
+                  
+          //       },
+          //       fail: function(res) {},
+          //       complete: function(res) {},
+          //     })
+          //     setTimeout(function(){
+          //       wx.switchTab({
+          //         url: '/pages/ucenter/index/index',
+          //       })
+          //     },1500)
+
+          //   }
+          // })
         }
-      })
-    }
+      // })
+    // }
   },
   onReady: function () {
 

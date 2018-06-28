@@ -24,7 +24,7 @@ page{
     height: 156.55rpx;
     align-items: center;
     display: flex;
-    border-bottom: 1rpx solid #DCD9D9;
+    border-bottom: 1rpx solid #f4f4f4;
 }
 
 .address-list .l{

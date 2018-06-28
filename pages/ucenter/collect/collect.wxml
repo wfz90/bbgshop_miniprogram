@@ -9,4 +9,7 @@
       </view>
     </view>
   </view>
+  <view class='tips' wx:if="{{collectList.length == 0}}">
+  暂无收藏商品 ！
+  </view>
 </view>

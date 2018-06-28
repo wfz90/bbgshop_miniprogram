@@ -31,7 +31,98 @@ Page({
     openAttr: false,
     noCollectImage: "/static/images/icon_collect.png",
     hasCollectImage: "/static/images/icon_collect_checked.png",
-    collectBackImage: "/static/images/icon_collect.png"
+    collectBackImage: "/static/images/icon_collect.png",
+    is_Inviter: 0,
+    auth: false,
+    isdistribution: false,
+    Inviter_locallaster: '',
+    Inviter_laster: '',
+    Inviter_userid: []
+  },
+  onLoad: function (options) {
+    // 页面初始化 options为页面跳转所带来的参数
+    var that = this;
+    console.log(options)
+    wx.showLoading({
+      title: '获取中...',
+      mask: true,
+    })
+    if (options.ids) {
+      console.log('被分享者进入')
+      that.setData({
+        is_Inviter: 1,
+        id: parseInt(options.id),
+        Inviter_userid: JSON.parse(options.ids)
+      });
+      // that.checkdisauth()
+
+    } else {
+      console.log('正常用户进入')
+      that.setData({
+        is_Inviter: 0,
+        id: parseInt(options.id),
+      });
+      // that.noraldisauth()
+    }
+    // if (options.ids) {
+    //   console.log('被分享者进入')
+    //   that.setData({
+    //     id: parseInt(options.id),
+    //     Inviter_userid: JSON.parse(options.ids)
+    //   });
+    //   that.checkdisauth()
+
+    // }else {
+    //   console.log('正常用户进入')
+    //   that.setData({
+    //     id: parseInt(options.id),
+    //   });
+    //   that.noraldisauth()
+    // }
+    // console.log(that.data.Inviter_userid)
+    // let routee = getCurrentPages()
+    // console.log(routee[1].route)
+    that.getGoodsInfo();
+    util.request(api.CartGoodsCount).then(function (res) {
+      if (res.errno === 0) {
+        that.setData({
+          cartGoodsCount: res.data.cartTotal.goodsCount
+        });
+      }
+    });
+
+  },
+  // noraldisauth() {
+  //   let that = this
+  //   // console.log(app.globalData.userInfo)
+  //   if (app.globalData.token == "") {
+  //     // console.log('没有token')
+  //     that.setData({
+  //       power: 0,
+  //       auth: false
+  //     })
+  //   } else {
+  //     user.loginByWeixin().then(resp => {
+  //       console.log(resp)
+  //       that.setData({
+  //         power: 1,
+  //         auth: true,
+  //         userinfo: resp.data.userInfo
+  //       })
+  //       that.share_distribution()
+  //     })
+  //   }
+  // },
+  onShareAppMessage: function () {
+    let that = this
+    console.log(that.data.goods.id)
+    console.log(that.data.Inviter_locallaster)
+    return {
+      title: '贝堡商城',
+      desc: that.data.goods.name,
+      path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+      imageUrl: '../../image/logo.png',
+    }
   },
   getGoodsInfo: function () {
     let that = this;
@@ -62,9 +153,17 @@ Page({
           });
         }
 
+        // if (that.data.is_Inviter == 0){
+        //   that.noraldisauth()
+        //   // that.checkdisauth()
+        // } else if (that.data.is_Inviter == 1){
+        //   that.checkdisauth()
+        // }
+        wx.hideLoading()
         WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
-
         that.getGoodsRelated();
+        that.checkdisauth()
+
       }
     });
 
@@ -78,8 +177,153 @@ Page({
         });
       }
     });
+    wx.hideLoading()
+  },
+  checkdisauth() {
+    // wx.showLoading({
+    //   title: '授权检测...',
+    //   mask: true,
+    // })
+    let that = this
+    console.log(that.data.Inviter_userid)
+    // 查看是否授权
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res.userInfo)
+              // wx.showLoading({
+              //   title: '登录服务器...',
+              //   mask: true,
+              // })
+              user.loginByWeixin().then(resp => {
+                console.log(resp)
+                that.setData({
+                  auth: true,
+                  userinfo: resp.data.userInfo
+                })
+                console.log(that.data.Inviter_userid)
+                if (that.data.is_Inviter == '0') {
+                  that.share_distribution()
+                  console.log('进入用户已授权正常用户')
+                } else if (that.data.is_Inviter == '1') {
+                  try {
+                    wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
+                    console.log('进入用户为被分享者,已授权，分销信息已存入本地')
+                  } catch (e) {
+                    // console.log(e)
+                  }
+                  that.share_distribution()
+                }
+                // if (that.data.Inviter_userid.length == 0){
+                //   try {
+                //     var value = wx.getStorageSync('invitation')
+                //     console.log(value)
+                //     if (value) {
+                //       console.log("用户授权,读取本地分销缓存")
+                //       that.setData({
+                //         Inviter_userid: JSON.parse(value)
+                //       })
+                //     }
+                //   } catch (e) {
+                //   }
+                // }else {
+                //   console.log(that.data.Inviter_userid)
+                // }
+
+
+              })
+            }
+          })
+        } else {
+          console.log("未授权")
+          that.setData({
+            auth: false
+          })
+          console.log(that.data.Inviter_userid)
+          if (that.data.is_Inviter == '0') {
+            that.share_distribution()
+            console.log('进入用户未授权正常用户')
+          } else if (that.data.is_Inviter == '1') {
+            try {
+              wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
+              console.log('进入用户为被分享者,未授权，分销信息已存入本地')
+            } catch (e) {
+              // console.log(e)
+            }
+            that.share_distribution()
+          }
+          // try {
+          //   wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
+          //   console.log('用户未授权，分销信息已存入本地')
+          // } catch (e) {
+          //   // console.log(e)
+          // }
+          // that.share_distribution()          
+        }
+      }
+    })
 
   },
+  share_distribution() {
+    let that = this
+    // console.log(e)
+    if (that.data.auth) {
+      util.request(api.CheckUserIsDistribution, {
+        userid: that.data.userinfo.id
+      }, 'POST').then(res => {
+        console.log(res)
+        if (res.errno == 17) {
+          that.setData({
+            isdistribution: false
+          })
+        } else if (res.errno == 503) {
+          let list = []
+          list[0] = res.data[0].user_id
+          list[1] = res.data[0].farther_distribution_user_id
+          // list[2] = res.data[0].grandpa_distribution_user_id
+          // list[3] = res.data[0].grandfather_distribution_user_id
+          that.setData({
+            isdistribution: true,
+            Inviter_laster: res.data[0],
+            Inviter_locallaster: JSON.stringify(list)
+          })
+
+        }
+      })
+    } else {
+      that.setData({
+        isdistribution: false
+      })
+    }
+    wx.hideLoading()
+    // that.set_Inviter_Action()
+  },
+  // set_Inviter_Action() {
+  //   let that = this
+  //   console.log(that.data.userinfo)
+  //   console.log(that.data.Inviter_userid)
+  //   try {
+  //     wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
+  //     console.log('分销信息已存入本地')
+  //   } catch (e) {
+  //     // console.log(e)
+  //   }
+  //   // util.request(api.SetInviterMaster, {
+  //   //   nowuser: that.data.userinfo,
+  //   //   pasteruser: that.data.Inviter_userid
+  //   // }, 'POST').then(res => {
+  //   //   console.log(res)
+  //   //   try {
+  //   //     wx.removeStorageSync('invitation')
+  //   //   } catch (e) {
+  //   //     // Do something when catch error
+  //   //   }
+  //   // })
+
+  // },
   clickSkuValue: function (event) {
     let that = this;
     let specNameId = event.currentTarget.dataset.nameId;
@@ -183,6 +427,10 @@ Page({
 
     if (checkedValue.length == checkedNameValue.length) {
       console.log("999999")
+      wx.showLoading({
+        title: '获取中...',
+        mask: true,
+      })
       // console.log(this.data.productList)
       var value2 = []
       // var final = ''
@@ -202,6 +450,7 @@ Page({
           //  checkgoodsku:res.data
           //  checkedProduct
         })
+        wx.hideLoading()
         //  console.log(that.data.checkgoodsku)
 
       });
@@ -225,32 +474,10 @@ Page({
       }
     });
   },
-  onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
-    let routee = getCurrentPages()
-    console.log(routee[1].route)
-    this.setData({
-      route: routee[1].route,
-      id: parseInt(options.id)
-      // id: 1181000
-    });
-    var that = this;
-    this.getGoodsInfo();
-
-    util.request(api.CartGoodsCount).then(function (res) {
-      if (res.errno === 0) {
-        that.setData({
-          cartGoodsCount: res.data.cartTotal.goodsCount
-        });
-
-      }
-    });
-
-  },
   power() {
     let that = this
     console.log(app.globalData.userInfo)
-    if (app.globalData.userInfo.username == "login") {
+    if (app.globalData.token == "") {
       that.setData({
         power: 0
       })
@@ -259,7 +486,7 @@ Page({
         power: 1
       })
     }
-
+    that.checkauth()
   },
   showModal: function () {
     // 显示遮罩层
@@ -280,6 +507,7 @@ Page({
         animationData: animation.export()
       })
     }.bind(this), 200)
+    
   },
   hideModal: function () {
     // 隐藏遮罩层
@@ -414,6 +642,30 @@ Page({
         }
       });
   },
+  checkauth() {
+    let that = this
+    if (that.data.power == 0) {
+      wx.hideLoading()
+      wx.navigateTo({
+        url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/goods/goods' + "&data=" + that.data.goods.id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else if (that.data.power == 1) {
+      wx.showLoading({
+        title: '获取信息...',
+        mask: true,
+      })
+      user.loginByWeixin().then(res => {
+        console.log(res)
+        wx.hideLoading()
+        that.showModal()
+      }).catch(res => {
+        console.log(res)
+      })
+    }
+  },
   checkpower(e) {
     var that = this
     console.log(e)
@@ -426,64 +678,34 @@ Page({
       title: '检测授权...',
       mask: true,
     })
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              user.loginByWeixin().then(res => {
-                console.log(res)
-                wx.hideLoading()
-                that.showModal()
-              }).catch(res => {
-                console.log(res)
-              })
-            }
-          })
-        } else {
-          wx.hideLoading()
-          wx.navigateTo({
-            url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
-            success: function (res) { },
-            fail: function (res) { },
-            complete: function (res) { },
-          })
-        }
-      }
-    })
-    // user.loginByWeixin().then(res => {  
-    //   console.log(that.data.typec)
-    //   that.showModal()
-    //   app.globalData.userInfo = res.data.userInfo;
-    //   app.globalData.token = res.data.token;
-    //   wx.hideLoading()
-    // }).catch((err) => {
-    //   console.log(err)
-    //   wx.showModal({
-    //     title: '警告!',
-    //     content: '拒绝授权会导致未知问题，点击确定重新获取权限！',
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         wx.openSetting({
-    //           success: function (res) {
+    this.power()
+    // wx.getSetting({
+    //   success: function (res) {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       wx.getUserInfo({
+    //         success: function (res) {
+    //           console.log(res.userInfo)
+    //           //用户已经授权过
+    //           user.loginByWeixin().then(res => {
     //             console.log(res)
-    //             if (res.authSetting["scope.userInfo"]) {
-    //               console.log("已授权")
-    //                wx.hideLoading()
-    //                that.showModal()
-    //             }
-    //           },
-    //           fail: function (res) { },
-    //           complete: function (res) { },
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
+    //             wx.hideLoading()
+    //             that.showModal()
+    //           }).catch(res => {
+    //             console.log(res)
+    //           })
+    //         }
+    //       })
+    //     } else {
+    //       wx.hideLoading()
+    //       wx.navigateTo({
+    //         url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
+    //         success: function (res) { },
+    //         fail: function (res) { },
+    //         complete: function (res) { },
+    //       })
     //     }
-    //   })
-    // });
+    //   }
+    // })
   },
   collect() {
     var that = this;
@@ -577,157 +799,54 @@ Page({
   closeAttrOrCollect: function () {
     let that = this;
     wx.showLoading({
-      title: '登录检测...',
+      title: '授权检测...',
       mask: true
     })
-    wx.getSetting({
-      success: function (res) {
+    if (app.globalData.token == "") {
+      wx.navigateTo({
+        url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else {
+      util.request(api.CollectAddOrDelete, { typeId: 0, valueId: that.data.id }, "POST").then(function (res) {
+        let _res = res;
         wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              // that.setData({
-              //   auth: true
-              // })
-              util.request(api.CollectAddOrDelete, { typeId: 0, valueId: that.data.id }, "POST")
-                .then(function (res) {
-                  let _res = res;
-                  wx.hideLoading()
-                  if (_res.errno == 0) {
-                    if (_res.data.type == 'add') {
-                      that.setData({
-                        'collectBackImage': that.data.hasCollectImage
-                      });
-                      wx.showToast({
-                        title: '收藏成功！',
-                        icon: 'success',
-                        image: '',
-                        duration: 1000,
-                        mask: true,
-                      })
-                    } else {
-                      wx.showToast({
-                        title: '取消收藏！',
-                        icon: 'loading',
-                        image: '',
-                        duration: 500,
-                        mask: true,
-                      })
-                      that.setData({
-                        'collectBackImage': that.data.noCollectImage
-                      });
-                    }
+        if (_res.errno == 0) {
+          if (_res.data.type == 'add') {
+            that.setData({
+              'collectBackImage': that.data.hasCollectImage
+            });
+            wx.showToast({
+              title: '收藏成功！',
+              icon: 'success',
+              image: '',
+              duration: 1000,
+              mask: true,
+            })
+          } else {
+            wx.showToast({
+              title: '取消收藏！',
+              icon: 'loading',
+              image: '',
+              duration: 500,
+              mask: true,
+            })
+            that.setData({
+              'collectBackImage': that.data.noCollectImage
+            });
+          }
 
-                  } else {
-
-                    wx.showToast({
-                      image: '/static/images/icon_error.png',
-                      title: _res.errmsg,
-                      mask: true
-                    });
-                  }
-                })
-            }
-          })
         } else {
-          // that.setData({
-          //   auth: false
-          // })
           wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-          })
+            image: '/static/images/icon_error.png',
+            title: _res.errmsg,
+            mask: true
+          });
         }
-      }
-    })
-    // user.loginByWeixin().then(res => {
-    //   app.globalData.userInfo = res.data.userInfo;
-    //   app.globalData.token = res.data.token;
-    //   util.request(api.CollectAddOrDelete, { typeId: 0, valueId: this.data.id }, "POST")
-    //     .then(function (res) {
-    //       let _res = res;
-    //       wx.hideLoading()
-    //       if (_res.errno == 0) {
-    //         if (_res.data.type == 'add') {
-    //           that.setData({
-    //             'collectBackImage': that.data.hasCollectImage
-    //           });
-    //           wx.showToast({
-    //             title: '收藏成功！',
-    //             icon: 'success',
-    //             image: '',
-    //             duration: 1000,
-    //             mask: true,
-    //           })
-    //         } else {
-    //           wx.showToast({
-    //             title: '取消收藏！',
-    //             icon: 'loading',
-    //             image: '',
-    //             duration: 500,
-    //             mask: true,
-    //           })
-    //           that.setData({
-    //             'collectBackImage': that.data.noCollectImage
-    //           });
-    //         }
-
-    //       } else {
-
-    //         wx.showToast({
-    //           image: '/static/images/icon_error.png',
-    //           title: _res.errmsg,
-    //           mask: true
-    //         });
-    // }
-
-    // });
-    // }).catch((err) => {
-    //   console.log(err)
-    //   wx.showModal({
-    //     title: '警告!',
-    //     content: '拒绝授权会导致未知问题，点击确定重新获取权限！',
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         wx.openSetting({
-    //           success: function (res) {
-    //             console.log(res)
-    //             if (res.authSetting["scope.userInfo"]) {
-    //               console.log("已授权")
-    //               // this.againmoty()
-    //               // that.data.cartGoods = []
-    //               // that.data.cartTotal = []
-    //               // util.request(api.CartList).then(function (res) {
-    //               //   if (res.errno === 0) {
-    //               //     console.log(res.data);
-    //               //     that.setData({
-    //               //       cartGoods: res.data.cartList,
-    //               //       cartTotal: res.data.cartTotal
-    //               //     });
-    //               //   }
-
-    //               //   that.setData({
-    //               //     checkedAllStatus: that.isCheckedAll()
-    //               //   });
-    //               // });
-    //             }
-    //           },
-    //           fail: function (res) { },
-    //           complete: function (res) { },
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
-    // }
-    // })
-    // });
-
-    // }
-
+      })
+    }
   },
   openCartPage: function () {
     wx.switchTab({
@@ -813,32 +932,6 @@ Page({
         }
 
       });
-    // }).catch((err) => {
-    //   console.log(err)
-    //   wx.showModal({
-    //     title: '警告!',
-    //     content: '拒绝授权会导致未知问题，点击确定重新获取权限！',
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         wx.openSetting({
-    //           success: function (res) {
-    //             console.log(res)
-    //             if (res.authSetting["scope.userInfo"]) {
-    //               console.log("已授权")
-
-    //             }
-    //           },
-    //           fail: function (res) { },
-    //           complete: function (res) { },
-    //         })
-    //       } else if (res.cancel) {
-    //         // console.log('用户点击取消')
-    //       }
-    //     }
-    //   })
-    // });
-    // }
-
   },
   cutNumber: function () {
     this.setData({

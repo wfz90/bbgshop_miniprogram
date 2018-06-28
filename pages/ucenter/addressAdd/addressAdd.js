@@ -63,9 +63,10 @@ Page({
   getAddressDetail() {
     let that = this;
     util.request(api.AddressDetail, { id: that.data.addressId }).then(function (res) {
+      console.log(res)
       if (res.errno === 0) {
         that.setData({
-          address: res.data
+          address: res.data,
         });
       }
     });
@@ -294,7 +295,7 @@ Page({
     let address = that.data.address;
     // console.log(that.data.address.district_id)
 
-    if (that.data.name == '') {
+    if (that.data.address.name == '') {
       util.showErrorToast('请输入姓名');
       return false;
     }
@@ -303,20 +304,20 @@ Page({
       return false;
     }
 
-    if (that.data.full_region == '') {
+    if (that.data.address.full_region == '') {
       util.showErrorToast('请输入详细地址');
       return false;
     }
 
-    if (that.data.mobile == '') {
+    if (that.data.address.mobile == '') {
       util.showErrorToast('请输入手机号码');
       return false;
-    } else if (that.data.mobile.length > 11) {
+    } else if (that.data.address.mobile.length > 11) {
       util.showErrorToast('手机号码错误！');
       return false;
     } else {
       util.request(api.BingPhoneText, {
-        Phone: that.data.mobile
+        Phone: that.data.address.mobile
       }, 'POST').then(function (res) {
         console.log(res)
         if (res.errno === 1001) {
@@ -325,12 +326,12 @@ Page({
         } else {
           util.request(api.AddressSave, {
             id: address.id,
-            name: that.data.name,
-            mobile: that.data.mobile,
+            name: that.data.address.name,
+            mobile: that.data.address.mobile,
             province_id: address.province_id,
             city_id: address.city_id,
             district_id: address.district_id,
-            address: that.data.full_region,
+            address: that.data.address.address,
             is_default: address.is_default,
           }, 'POST').then(function (res) {
             console.log(res)

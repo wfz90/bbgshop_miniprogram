@@ -29,5 +29,5 @@
     </view>
     <view class="tips">小程序只支持微信支付，如需其它支付方式，请在网页版支付</view>
 
-    <view class="pay-btn" bindtap="startPay">确定</view>
+    <view class="pay-btn" bindtap="startPay">支付</view>
 </view>

@@ -5,19 +5,17 @@
     <view class="item-a">下单时间：{{add_time}}</view>
     <view class="item-a" wx:if="{{orderInfo.order_status == 201 || orderInfo.order_status == 300 || orderInfo.order_status == 301 || orderInfo.order_status == 400}}">付款时间：{{pay_time}}</view>
      <view class="item-a" wx:if="{{orderInfo.order_status == 300 || orderInfo.order_status == 301 }}">发货时间：{{logic_time}}</view> 
-     <!-- <view class="item-a" wx:if="{{orderInfo.order_status == 301 }}">确认时间：{{confirLogic_time}}</view>  -->
     <view class="item-a" wx:if="{{refundInfo.length >= 1 }}">退款创建时间：{{refund_time}}</view>   
      <view class="item-a" wx:if="{{refundInfo.length >= 1 && refundInfo[0].isRefund == 1}}">退款成功时间：{{refundsuccess_time}}</view>    
     <view class="item-a" wx:if="{{refundInfo.length >= 1 && refundInfo[0].abled == 1}}">退款取消时间：{{del_time}}</view> 
     <view class="item-a" wx:if="{{orderInfo.order_status == 301 && refundInfo.length >= 1 && refundInfo[0].isRefund == 1}}">确认时间：{{refundsuccess_time}}</view>
-    <view class="item-a" wx:if="{{orderInfo.order_status == 301 && refundInfo.length >= 1 && refundInfo[0].abled == 1}}">确认时间：{{confirLogic_time}}</view>
+    <view class="item-a" wx:if="{{(orderInfo.order_status == 301 && refundInfo.length >= 1 && refundInfo[0].abled == 1) || (orderInfo.order_status == 301 && orderInfo.refund_is_success == 0)}}">确认时间：{{confirLogic_time}}</view>
+    <view class="item-a" wx:if="{{(orderInfo.order_status == 301 && refundInfo.length >= 1 && refundInfo[0].abled == 1) || (orderInfo.order_status == 301 && orderInfo.refund_is_success == 1)}}">完成时间：{{refundsuccess_time}}</view>
     <view class="item-c">
       <view class="l">{{orderInfo.order_status == 0 ? '应付':'实付'}}
         <text class="cost">￥{{orderInfo.actual_price}}</text>
       </view>
       <view class="r">
-        <!-- <navigator url="../order/order">
-             -->
         <view  class="refund_text" wx:if="{{refundInfo.length >= 1 && refundInfo[0].isRefund == 1}}">退款:<text class="cost">￥{{refundInfo[0].refund_price}}</text></view> 
         <view class="refund_text" wx:if="{{refundInfo.length >= 1 && refundInfo[0].isRefund == 1}}">{{refundInfo[0].state_text}}</view>
         <view class="refund_text" bindtap='cancelOrder' wx:if="{{orderInfo.order_status == 0}}">取消订单</view>
@@ -25,8 +23,6 @@
         <view class="refund_text" wx:if="{{orderInfo.order_status == 300}}">未收货</view>
         <view class="refund_text" wx:if="{{orderInfo.order_status == 301}}">已确认</view>
         <view class="refund_text" wx:if="{{orderInfo.order_status == 400}}">处理中</view>
-        <!-- <view class="btn active" bindtap="payOrder">去付款</view>  -->
-        <!-- </navigator> -->
       </view>
     </view>
   </view>

@@ -169,9 +169,7 @@ function timestampToDate(timestamp){
   var localH = H < 10 ? '0' + H : H;
   var localM = M < 10 ? '0' + M : M;
   var localS = S < 10 ? '0' + S : S;
-  return localH + ":" + localM + ":" + localS
-
-  
+  return localH + ":" + localM + ":" + localS  
 }
 function timestampToTime(timestamp){
   var date = new Date(timestamp * 1); //时间戳为10位需*1000，时间戳为13位的话不需乘1000

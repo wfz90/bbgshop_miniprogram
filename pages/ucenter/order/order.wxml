@@ -13,12 +13,15 @@
       <navigator url="../orderDetail/orderDetail?id={{item.id}}" class="order" wx:for="{{orderList}}" wx:key="{{item.id}}">
         <view class="h">
           <view class="l" wx:if="{{item.order_status != 400}}">订单编号：{{item.order_sn}}
-            <span style="font-size:19rpx;color:#dd2c00;font-weight:bold" wx:if="{{item.pay_id == 2 || item.pay_id == 1}}"> {{item.pay_name}} </span>
+            <span style="font-size:19rpx;color:#dd2c00;font-weight:bold" wx:if="{{item.pay_id == 2 || item.pay_id == 1 || item.pay_id == 3}}"> {{item.pay_name}} </span>
+          <!-- <view  wx:if="{{item.refund_is_success === 2}}"></view> -->
+            <span style="font-size:19rpx;color:#dd2c00;font-weight:bold" wx:if="{{item.refund_is_success === 2}}">退款拒绝</span>
           </view>
           <view class="la" wx:if="{{item.order_status === 400}}">退款编号：{{item.refund_sn}}</view>
           <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 0}}">{{item.order_status_text}}</view>
           <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 0}}">拼团中</view>
-           <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1}}">{{item.order_status_text}}</view> 
+          <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 3 }}">{{item.order_status_text}}</view>
+          <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1}}">{{item.order_status_text}}</view>
           <view class="r" wx:if="{{item.order_status != 400 && item.pay_id == 2 && item.collage_is_success == 1 && item.collage_isouttime == 0}}">{{item.order_status_text}}</view>
           <view class="r" wx:if="{{item.order_status === 400}}">{{item.state_text}}</view>
         </view>
@@ -39,14 +42,17 @@
           <view class="l">实付：￥{{item.actual_price}}</view>
           <view class="r">
             <button class="btn" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="payOrder" data-payid='{{item.pay_id}}' data-collage-type='{{item.collage_type}}' wx:if="{{item.order_status === 0}}">去付款</button>
+            <!-- <view class="btn_logis" wx:if="{{item.refund_is_success === 2}}">退款拒绝</view> -->
             <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="refundOrder" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 0}}">申请退款</view>
             <view class="btn_return" data-order-id="{{item.id}}" data-collage-type='{{item.collage_type}}' catchtap="tocollagegoods" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 2 && item.collage_is_success == 0}}">查看拼团</view>
             <view class="btn_return" data-order-id="{{item.id}}" catchtap="tocollagegoods" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 1}}">砍价成功，待发货</view>
+            <view class="btn_return" data-order-id="{{item.id}}" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 3}}">中奖订单，待发货</view>
             <view class="btn_return" catchtap="collagesuccess" wx:if="{{item.order_status === 201 && item.pay_id == 2 && item.collage_is_success == 1}}">拼团成功,待发货</view>
-            <view class="btn_return" wx:if="{{item.order_status === 301 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1}}">拼团失败,超时</view>
+            <view class="btn_return" wx:if="{{item.order_status === 301 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1 && item.refund_is_success == 0}}">拼团失败,超时,退款流程中</view>
+            <view class="btn_return" wx:if="{{item.order_status === 301 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1 && item.refund_is_success == 1}}">拼团失败</view>
             <view class="btn_collect" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="deliveryOrder" wx:if="{{item.order_status === 300}}">确认收货</view>
             <view class="btn_logis" data-order-price="{{item.actual_price}}" data-order-id="{{item.id}}" catchtap="logisOrder" wx:if="{{item.order_status === 300}}">查看物流</view>
-            <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="refundOrder" data-type='1' wx:if="{{item.order_status === 300}}">申请退款</view>
+            <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="refundOrder" data-type='1' wx:if="{{item.order_status === 300 && item.pay_id !== 3 }}">申请退款</view>
             <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.id}}" catchtap="seeOrder" wx:if="{{item.order_status === 301 && item.refund_is_success == 0 &&item.collage_isouttime == 0}}">查看订单</view>
             <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.id}}" catchtap="seeOrder" wx:if="{{item.order_status === 301 && item.refund_is_success == 1}}">退款成功</view>
             <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.id}}" catchtap="commentOrder" wx:if="{{item.order_status === 301 && item.is_comment == 0 && item.refund_is_success == 0 &&item.collage_isouttime == 0}}">发表评论</view>
@@ -80,7 +86,7 @@
   </view>
   <view class='refund_content'>
     <!-- <view class="section"> -->
-    <textarea bindinput="textinput" maxlength="264" style='height:28vh;width:100%;padding:10rpx;' placeholder="请填写理由" placeholder-class='inputplace' auto-focus/>
+    <textarea bindinput="textinput" maxlength="264" style='height:28vh;width:100%;padding:10rpx;' placeholder="请填写理由" placeholder-class='inputplace' />
     <!-- </view> -->
   </view>
   <scroll-view scroll-y wx:if="{{refund_type == 1}}" class='refund_img_area'>

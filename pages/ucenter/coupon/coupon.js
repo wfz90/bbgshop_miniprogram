@@ -1,9 +1,6 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
-
-
-
-var app = getApp();
+const app = getApp();
 
 Page({
   data: {
@@ -26,43 +23,30 @@ Page({
       fail: function(res) {},
       complete: function(res) {},
     })
-    wx.getSetting({
-      success: function (res) {
-        wx.hideLoading()
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              //用户已经授权过
-              that.setData({
-                auth: true
-              })
-              that.getList()              
-            }
-          })
-        } else {
-          that.setData({
-            auth: false
-          })
-          wx.showToast({
-            title: '未授权！请在“我的”页点击头像授权!',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            success: function (res) { },
-            fail: function (res) { },
-            complete: function (res) { },
-          })
-        }
-      }
-    })
-    
+    if (app.globalData.token == ""){
+      that.setData({
+        auth: false
+      })
+      wx.showToast({
+        title: '未授权！请在“我的”页点击头像授权!',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    }else {
+      that.setData({
+        auth: true
+      })
+      that.getList() 
+    }
   },
   getList(){
     let that = this
     util.request(api.UserCouponList).then(function (res) {
         console.log(res.data);
-        wx.hideLoading()
         that.setData({
           couponListget: res.data.ablelist,
           unablecouponListget: res.data.unablelist,
@@ -174,6 +158,8 @@ Page({
       usedcouponList: usedcuplist
     })
     that.setTimeloop()
+    wx.hideLoading()
+    
     // that.setTime()
     // console.log(that.data.couponList)
     // console.log(that.data.unablecouponList)

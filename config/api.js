@@ -1,4 +1,5 @@
-﻿// const ApiRootUrl = 'http://127.0.0.1:8360/api/';
+const ApiRootUrl = 'http://127.0.0.1:8360/api/';
+// const ApiRootUrl = 'http://192.168.2.56:8360/api/';
 
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
@@ -26,7 +27,7 @@ module.exports = {
   CartGoodsCount: ApiRootUrl + 'cart/goodscount', // 获取购物车商品件数
 
   CartAddcopy: ApiRootUrl + 'cart/addcopy',
-  CartCheckeder: ApiRootUrl + 'cart/checkeder', 
+  CartCheckeder: ApiRootUrl + 'cart/checkeder',
   CartCheckout: ApiRootUrl + 'cart/checkout', // 下单前信息确认
   CartCheckSku: ApiRootUrl + 'cart/checksku', // 下单前信息确认
   CartDelChangeSku: ApiRootUrl + 'cart/delchangesku', // 下单前信息确认
@@ -42,10 +43,10 @@ module.exports = {
   CommentList: ApiRootUrl + 'comment/list',  //评论列表
   CommentCount: ApiRootUrl + 'comment/count',  //评论总数
   CommentLunch: ApiRootUrl + 'comment/lunch',   //发表评论
-  CheckComment: ApiRootUrl + 'comment/checkcomment',   
-  ListIsComment: ApiRootUrl + 'comment/listiscomment',  
-  UpdateComment: ApiRootUrl + 'comment/updatecomment',  
-  // ListIsCommented: ApiRootUrl + 'comment/listiscommented',  
+  CheckComment: ApiRootUrl + 'comment/checkcomment',
+  ListIsComment: ApiRootUrl + 'comment/listiscomment',
+  UpdateComment: ApiRootUrl + 'comment/updatecomment',
+  // ListIsCommented: ApiRootUrl + 'comment/listiscommented',
 
   TopicList: ApiRootUrl + 'topic/list',  //专题列表
   TopicDetail: ApiRootUrl + 'topic/detail',  //专题详情
@@ -78,44 +79,45 @@ module.exports = {
   BingPhoneText: ApiRootUrl + 'bingphone/text',  //保存收货地址
 
   FeedBackExchange: ApiRootUrl + 'feedback/exchange',  //保存收货地址 OrderFind
-  
+
   CartFind: ApiRootUrl + 'Cart/find',  //保存收货地址
-  FindValues: ApiRootUrl + 'goods/findvalueprice',  //保存收货地址    
+  FindValues: ApiRootUrl + 'goods/findvalueprice',  //保存收货地址
 
-
-  SetOrder: ApiRootUrl + 'pay/setorder', 
-  SedSode: ApiRootUrl + 'bingphone/sedsode',  
-  CheckSode: ApiRootUrl + 'bingphone/checksode', 
+  CheckOrderIsPay: ApiRootUrl + 'order/checkorderispay',
+  SetOrder: ApiRootUrl + 'pay/setorder',
+  SedSode: ApiRootUrl + 'bingphone/sedsode',
+  CheckSode: ApiRootUrl + 'bingphone/checksode',
 
 
   BargainList: ApiRootUrl + 'bargain/bargainlist',  //获取所有砍价类表
   FindBargain: ApiRootUrl + 'bargain/findbargain',  //按id查找砍价信息
   FindGoodsku: ApiRootUrl + 'bargain/findgoodsku',  //按id查找商品信息
-  FindBarValues: ApiRootUrl + 'bargain/findvalueprice', 
-  SetUserBargain: ApiRootUrl + 'bargain/setuserbargain', 
-  FindUserBargain: ApiRootUrl + 'bargain/finduserbargain', 
-  UserBargainList: ApiRootUrl + 'bargain/userbargainlist', 
-  
+  FindBarValues: ApiRootUrl + 'bargain/findvalueprice',
+  SetUserBargain: ApiRootUrl + 'bargain/setuserbargain',
+  FindUserBargain: ApiRootUrl + 'bargain/finduserbargain',
+  UserBargainList: ApiRootUrl + 'bargain/userbargainlist',
+
   //砍价
-  FindCutList: ApiRootUrl + 'bargain/findcutlist', 
-  Cut: ApiRootUrl + 'bargain/cut', 
-  FindCutAgain: ApiRootUrl + 'bargain/cutagain', 
+  FindCutList: ApiRootUrl + 'bargain/findcutlist',
+  Cut: ApiRootUrl + 'bargain/cut',
+  FindCutAgain: ApiRootUrl + 'bargain/cutagain',
   FindIsCut: ApiRootUrl + 'bargain/iscut',
   FriendCut: ApiRootUrl + 'bargain/friendcut',
-  BarAddressList: ApiRootUrl + 'bargain/addresslist', 
-  BarAddressDetail: ApiRootUrl + 'bargain/addressdetail', 
-  CheckIsLaunch: ApiRootUrl + 'bargain/checkislaunch', 
-  BarsetOrder: ApiRootUrl + 'bargain/barsetorder', 
-  CheckErrPrice: ApiRootUrl + 'pay/checkerrprice', 
-  FindBarOrder: ApiRootUrl + 'bargain/findbarorder', 
-  DelBarOrder: ApiRootUrl + 'bargain/delbarorder', 
-  
+  BarAddressList: ApiRootUrl + 'bargain/addresslist',
+  BarAddressDetail: ApiRootUrl + 'bargain/addressdetail',
+  CheckIsLaunch: ApiRootUrl + 'bargain/checkislaunch',
+  BarsetOrder: ApiRootUrl + 'bargain/barsetorder',
+  CheckErrPrice: ApiRootUrl + 'pay/checkerrprice',
+  FindBarOrder: ApiRootUrl + 'bargain/findbarorder',
+  DelBarOrder: ApiRootUrl + 'bargain/delbarorder',
+  // BargainOutTime: ApiRootUrl + 'bargain/bargainouttime',
+
     //  优惠券中心
   CouponList: ApiRootUrl + 'coupon/list',
-  CouponFind: ApiRootUrl + 'coupon/find',   
-  FindInputCup: ApiRootUrl + 'coupon/findinput',   
-  UserGetCup: ApiRootUrl + 'coupon/userget',   
-  
+  CouponFind: ApiRootUrl + 'coupon/find',
+  FindInputCup: ApiRootUrl + 'coupon/findinput',
+  UserGetCup: ApiRootUrl + 'coupon/userget',
+
   //  用户优惠券
   UserCouponList: ApiRootUrl + 'coupon/userlist',
   RepCupList: ApiRootUrl + 'coupon/repcuplist',
@@ -123,14 +125,14 @@ module.exports = {
   //订单界面优惠券
   CheckCupList: ApiRootUrl + 'coupon/checkcuplist',
 
-  //上传图片到七牛云 
+  //上传图片到七牛云
   GetTooken: ApiRootUrl + 'upload/token', //获取token
 
 
-  // 拼团 
+  // 拼团
   CollageFindGoods: ApiRootUrl + 'collage/findgoods', //查找拼团商品
-  PrepayCollage: ApiRootUrl + 'pay/prepayCollage', //支付拼团订单 
-  setCollageOrder: ApiRootUrl + 'collage/setCollageorder', //写入拼团订单 
+  PrepayCollage: ApiRootUrl + 'pay/prepayCollage', //支付拼团订单
+  setCollageOrder: ApiRootUrl + 'collage/setCollageorder', //写入拼团订单
   PaypayCollageOrder: ApiRootUrl + 'collage/payCollageorder', //拼团订单 付款
   FindCollageUser: ApiRootUrl + 'collage/findCollageuaer', //用户是否已发起过
 
@@ -141,10 +143,40 @@ module.exports = {
 
   //拼团用户进入付款
   ColGoodsPayFind: ApiRootUrl + 'collageuserin_pay/colgoodspay_find',  //查找拼团信息
-  WriteCollageOrder: ApiRootUrl + 'collageuserin_pay/writecollageorder',  //写入拼团订单 
+  WriteCollageOrder: ApiRootUrl + 'collageuserin_pay/writecollageorder',  //写入拼团订单
   PaypayCollageOrderUser: ApiRootUrl + 'collageuserin_pay/paypaycollageorderuser',  //支付拼团订单
 
   //订单界面跳转到拼团界面判断是否为发起者或拼团者
   ColFriendFindMain: ApiRootUrl + 'collagegoods/colfriendfindmain', //拼团者查找拼团主订单
   CollageIsOutTime: ApiRootUrl + 'collagegoods/collage_isouttime', //拼团者查找拼团主订单
+
+  SetDistriUser: ApiRootUrl + 'distribution/bedistribution', //成为分销员
+  ApplyDistribution: ApiRootUrl + 'distribution/applydistribution', //申请成为分销员
+  CheckUserIsDistribution: ApiRootUrl + 'index/checkisdistribution', //判断是否成为分销员
+  SetInviterMaster: ApiRootUrl + 'distribution/setinvitermaster',//设置分销关系
+  FindDistributionInfo: ApiRootUrl + 'distribution/findisdistribution',//查找分销信息
+  AddDistributionPrice: ApiRootUrl + 'distribution/adddistributionprice',//设置分销金额
+  CheckIsDistributionHaveFather: ApiRootUrl + 'distribution/checkisdistributionhavefather',//确认收货时核对是否有邀请者
+  FindDistributionInfoCatch: ApiRootUrl + 'distribution/findisdistribution_catch',//提现时查找分销信息
+  ApplyDistributionCatch: ApiRootUrl + 'distribution/applyisdistribution_catch',//提现时提交申请
+
+  //绑定银行卡
+  FindBingBankCardType: ApiRootUrl + 'bankcard/findbingbankcardtype',//查找银行卡 银行和类型
+  AddBingBankCard: ApiRootUrl + 'bankcard/addbingbankcard',//添加银行卡 写入数据库
+  FindBankCard: ApiRootUrl + 'bankcard/findbankcard',//添加银行卡 写入数据库
+  DelBankCard: ApiRootUrl + 'bankcard/delbankcard',//删除英银行卡
+
+  //抽奖
+  FindLuckDrawInfo: ApiRootUrl + 'luckdraw/findinfo',//进入抽奖页面查询抽奖详情
+  CheckUserIsJoin: ApiRootUrl + 'luckdraw/checkisjoin',//进入抽奖页面检测用户是否参与抽奖
+
+  CheckUserIsJoin: ApiRootUrl + 'luckdraw/checkisjoin',//进入抽奖页面检测用户是否参与抽奖
+  JoinLuckDraw: ApiRootUrl + 'luckdraw/joinluckdraw',//用户加入抽奖
+  FindJoinPeople: ApiRootUrl + 'luckdraw/findjoinpeople',//查找参与的用户
+  SelectAllJoiner: ApiRootUrl + 'luckdraw/selectalljoiner',// 查找所有参与者
+
+  FindLucklyPeople: ApiRootUrl + 'luckdraw/findlucklypeople',// 查找中奖用户
+  CheckIsGet: ApiRootUrl + 'luckdraw/checkisget',//核实用户是否领取过此商品
+  LucksetOrder: ApiRootUrl + 'luckdraw/lucksetorder', //中奖用户生成订单
+
 };

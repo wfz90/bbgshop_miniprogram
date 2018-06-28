@@ -13,7 +13,7 @@ page{
 }
 .coupon_List_title {
   text-align: center;
-  font-size: 18rpx;
+  font-size: 20rpx;
   margin: 20rpx;
   color: #757575;
 }
