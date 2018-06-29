@@ -206,6 +206,7 @@ Page({
       let checkedAllStatus = that.isCheckedAll();
       let tmpCartData = this.data.cartGoods.map(function (v) {
         v.checked = !checkedAllStatus;
+        wx.hideLoading()
         return v;
       });
 

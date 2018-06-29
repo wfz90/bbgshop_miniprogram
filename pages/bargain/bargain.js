@@ -33,76 +33,82 @@ Page({
   onLoad: function (options) {
     var that = this
     wx.showLoading({
-      title: '登录检测...',
+      title: '跳转中...',
       mask: true
     })
-    if(app.globalData.token == ''){
-      that.setData({
-        auth: false
-      })
-      wx.showToast({
-        title: '未授权！请在“我的”页点击头像授权!',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-      })
-    }else {
-
-      user.loginByWeixin().then(res => {
-       console.log(res)
-       that.setData({
-         auth: true,
-         openidInfo: res.data
-       })
-      })
-      that.getList()
-    }
-    // wx.getSetting({
-    //   success: function (res) {
-    //     wx.hideLoading()
-
-    //     if (res.authSetting['scope.userInfo']) {
-    //       wx.getUserInfo({
-    //         success: function (res) {
-    //           console.log(res.userInfo)
-    //           //用户已经授权过
-    //           that.setData({
-    //             auth: true
-    //           })
-    //           that.getList()
-    //         }
-    //       })
-    //     } else {
-    //       that.setData({
-    //         auth: false
-    //       })
-    //       wx.showToast({
-    //         title: '未授权！请在“我的”页点击头像授权!',
-    //         icon: 'none',
-    //         duration: 2000,
-    //         mask: true,
-    //       })
-    //     }
-    //   }
-    // })  
+    // setTimeout(function (){
+      that.loadaction()
+    // },1000)
+  },
+  loadaction() {
+    var that = this
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: function (res) {
+              console.log(res.userInfo)
+              //用户已经授权过
+              wx.showLoading({
+                title: '记录用户...',
+                mask: true
+              })
+              user.loginByWeixin().then(res => {
+                console.log(res)
+                that.setData({
+                  auth: true,
+                  openidInfo: res.data
+                })
+                app.globalData.userInfo = res.data.userInfo;
+                app.globalData.token = res.data.token;
+              })
+              that.getList()
+            }
+          })
+        } else {
+          that.setData({
+            auth: false
+          })
+          wx.navigateTo({
+            url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet',
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }
+      }
+    })   
   },
   getList(){
     let that = this
+    wx.showLoading({
+      title: '获取数据...',
+      mask: true
+    })
     util.request(api.BargainList).then(function (res) { 
       console.log(res)
-      if(res.errno == 0){
+      if(res.errno === 0){
         that.setData({
           bargainList: res.data.data
         })
+        setTimeout(function (){
+          wx.hideLoading()
+        },1000)
       }else {
 
       }
-      wx.hideLoading()
+      // that.checkbar(res)
+      // wx.hideLoading()
       // that.getList()
       console.log(that.data.bargainList)
     });
     // wx.hideLoading()
   },
+  // checkbar(res) {
+  //   if (res.errno === 0){
+  //     // wx.hideLoading()
+  //   }
+  // },
   skupriceinfo(barid){
     console.log(barid)
     var that = this
@@ -490,7 +496,6 @@ Page({
     // clearInterval(loop)
     util.request(api.BargainList).then(function (res) {
       console.log(res)
-      wx.hideLoading()
       if (res.errno == 0) {
         that.setData({
           bargainList: res.data.data
@@ -498,6 +503,8 @@ Page({
       } else {
 
       }
+      wx.hideLoading()
+      
     })
     this.setData({
       showscreen: 0
@@ -511,10 +518,10 @@ Page({
     })
     util.request(api.UserBargainList).then(res => {
       console.log(res)
-      wx.hideLoading()
       that.setData({
         userbargainList:res.data.data
       })
+      wx.hideLoading()
       that.setTimeloop()
     })
     // console.log(that.data.userbargainList[0])

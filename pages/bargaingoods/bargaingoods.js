@@ -68,14 +68,18 @@ Page({
               //用户已经授权过
               user.loginByWeixin().then(res => {
                 console.log(res)
+                wx.showLoading({
+                  title: '记录用户...',
+                  mask: true
+                })
                 that.setData({
                   userInfo_in: res.data
                 })
                 that.getInfo()
               })
-                .catch(res => {
+              .catch(res => {
                   console.log(res)
-                })
+              })
             }
           })
         } else {

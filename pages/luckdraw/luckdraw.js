@@ -147,6 +147,12 @@ Page({
           that.setData({
             auth: false
           })
+          wx.navigateTo({
+            url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet',
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
           wx.hideLoading()
 
         }
@@ -251,6 +257,7 @@ Page({
                     that.setData({
                       luckmain: res.data.luckmain
                     })
+                    that.setTime()
                   }
                 })
               },

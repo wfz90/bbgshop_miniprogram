@@ -71,14 +71,13 @@
         <text class="title">常见问题</text>
       </view> -->
       <view class="t">┈ 商品详情 ┈</view>
-      <view class="l">
+      <!-- <view class="l">
         <view class="item" wx:for="{{attribute}}" wx:key="{{item.name}}">
           <text class="left">{{item.name}}</text>
           <text class="right">{{item.value}}</text>
         </view>
-      </view>
+      </view> -->
     </view>
-
     <view class="detail">
       <import src="../../lib/wxParse/wxParse.wxml" />
       <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />

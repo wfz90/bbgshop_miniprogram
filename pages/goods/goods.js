@@ -134,7 +134,7 @@ Page({
           collage: res.data.collage,
           checkgoodsprice: res.data.info,
           gallery: res.data.gallery,
-          attribute: res.data.attribute,
+          // attribute: res.data.attribute,
           issueList: res.data.issue,
           comment: res.data.comment,
           brand: res.data.brand,
@@ -159,11 +159,10 @@ Page({
         // } else if (that.data.is_Inviter == 1){
         //   that.checkdisauth()
         // }
-        wx.hideLoading()
-        WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
         that.getGoodsRelated();
         that.checkdisauth()
-
+        WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
+        wx.hideLoading()
       }
     });
 

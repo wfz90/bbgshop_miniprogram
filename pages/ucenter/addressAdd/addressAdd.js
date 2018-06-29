@@ -269,8 +269,11 @@ Page({
     // });
   },
   cancelAddress(){
-    wx.navigateTo({
-      url: '/pages/ucenter/address/address',
+    // wx.navigateTo({
+    //   url: '/pages/ucenter/address/address',
+    // })
+    wx.navigateBack({
+      delta: 1,
     })
   },
   saveAddress() {

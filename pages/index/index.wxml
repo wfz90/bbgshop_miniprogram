@@ -33,7 +33,7 @@
       抽奖
     </view>
     <view class='luckdraw_area_one' wx:if="{{luckdraw.length == 1}}">
-      <view class='luckdraw_item_one'>
+      <view class='luckdraw_item_one' bindtap='toluckdrawpage' data-id='{{luckdraw[0].id}}'>
         <!-- <view class='luckdraw_item_tip'></view> -->
         <image class='luckdraw_item_one_image' src='{{luckdraw[0].luck_goods_pic}}'></image>
         <view class='luckdraw_item_one_name'> 奖品 ： {{luckdraw[0].luck_goods_name}}</view>
@@ -43,11 +43,11 @@
         <view wx:if="{{luckdraw[0].is_out_time == 1 && luckdraw[0].is_open == 0 }}" class='luckdraw_item_one_opentime'>开奖时间: {{luckdraw[0].open_local_time}}</view>
         <button wx:if="{{luckdraw[0].is_out_time == 1 && luckdraw[0].is_open == 0 }}" class='luckdraw_item_one_joinbtn' bindtap='toluckdrawpage' data-id='{{luckdraw[0].id}}'>待开奖</button>
         <view wx:if="{{luckdraw[0].is_out_time == 1 && luckdraw[0].is_open == 1 }}" class='luckdraw_item_opentime'>已开奖，奖品已发放 ！</view>
-        <button wx:if="{{luckdraw[0].is_out_time == 1 && luckdraw[0].is_open == 1 }}" class='luckdraw_item_joinbtn' bindtap='toluckdrawpage' data-id='{{item.id}}'>查看抽奖</button>
+        <button wx:if="{{luckdraw[0].is_out_time == 1 && luckdraw[0].is_open == 1 }}" class='luckdraw_item_joinbtn' bindtap='toluckdrawpage' data-id='{{luckdraw[0].id}}'>查看抽奖</button>
       </view>
     </view>
     <scroll-view scroll-x class="luckdraw_area" wx:if="{{luckdraw.length > 1}}">
-      <view class='luckdraw_item' wx:for='{{luckdraw}}' wx:key='{{item.id}}'>
+      <view class='luckdraw_item' wx:for='{{luckdraw}}' wx:key='{{item.id}}' bindtap='toluckdrawpage' data-id='{{item.id}}'>
         <!-- <image class='luckdraw_item_tip' src='../../image/tip.png'></image> -->
         <image class='luckdraw_item_image' src='{{item.luck_goods_pic}}'></image>
         <view class='luckdraw_item_name'> 奖品 ： {{item.luck_goods_name}}</view>

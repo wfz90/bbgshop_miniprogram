@@ -17,8 +17,8 @@
   <import src="../../lib/wxParse/wxParse.wxml" />
   <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
 </view> 
-<view class='luck_join_area' wx:if="{{luckmain.is_open == 0}}">
-  <button disabled='{{button_state == 1 || isout == 1}}' class='luck_join_area_top' bindtap='join_luck'>
+<view class='luck_join_area' wx:if="{{luckmain.is_open == 0 }}">
+  <button disabled='{{button_state == 1 || isout == 1 }}' class='luck_join_area_top' bindtap='join_luck'>
      <span wx:if='{{button_state == 0}}'>参与抽奖</span>
      <span wx:if='{{button_state == 1}}'>您已参与</span>
   </button>

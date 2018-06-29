@@ -7,12 +7,13 @@
   /* border: 1px solid #333; */
   bottom: 120rpx;
   right: 10rpx;
-  font-size: 20rpx;
-  padding:8rpx 15rpx !important;
+  font-size: 22rpx;
+  padding: 5rpx 15rpx;
   border-radius: 12rpx;
   color: #f4f4f4;
-  line-height:25rpx;
-  font-weight: bold;
+  height:44rpx;
+  line-height:34rpx;
+  /* font-weight: bold; */
   background: rgba(244, 67, 54, .8);
   letter-spacing: 1rpx;
 }
