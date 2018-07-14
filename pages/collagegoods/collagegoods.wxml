@@ -1,6 +1,6 @@
 <!--pages/collagegoods/collagegoods.wxml-->
 <view class='all'>
-   <view class='all_help' bindtap='help'>活动规则 ？</view> 
+  <view class='all_help' bindtap='help'>活动规则 ？</view>
   <view class='avted_area'>
     <image class='avted_active_img' src='{{userInfo.avatar}}'></image>
     <view class='avted_active_nikename'>{{userInfo.nickname}}</view>
@@ -15,23 +15,31 @@
     </view>
   </view>
   <view class='middle_area'>
-    <view class='middle_have_cut' wx:if="{{!isEnd&&!isSuccess}}">还差 <span class="goods_have_cut">{{shortPeople}}</span> 人拼团成功
-       <!-- <span class="goods_havent_cut">99</span>元  -->
+    <view class='middle_have_cut' wx:if="{{!isEnd&&!isSuccess}}">还差
+      <span class="goods_have_cut">{{shortPeople}}</span> 人拼团成功
+      <!-- <span class="goods_havent_cut">99</span>元  -->
     </view>
     <view class='middle_have_cut' wx:if="{{isEnd&&!isSuccess}}">
-    拼团失败
-    </view> 
-     <view class='middle_have_cut' wx:if="{{isSuccess}}">
-     拼团成功，商品已进入发货队列！
-    </view> 
-    <button class='share_btn' bindtap='friendpaybtn' wx:if="{{!isEnd&&!isLunch&&!isSuccess}}">支付￥<span style="font-size:40rpx;font-weight:bold;padding:0 5rpx;">{{collageMain.collage_price}}</span>加入拼团</button>
-    <button class='share_btn' bindtap='sharebtn' wx:if="{{!isEnd&&isLunch&&!isSuccess}}"><span style="font-size:30rpx;letter-spacing:5rpx">邀请好友加入拼团</span></button>
-    <button class='share_btn' bindtap='toorderpage' wx:if="{{!isEnd&&isLunch&&isSuccess}}"><span style="font-size:30rpx;letter-spacing:5rpx">拼团成功，点击查看订单</span></button>
+      拼团失败
+    </view>
+    <view class='middle_have_cut' wx:if="{{isSuccess}}">
+      拼团成功，商品已进入发货队列！
+    </view>
+    <button class='share_btn' bindtap='friendpaybtn' wx:if="{{!isEnd&&!isLunch&&!isSuccess}}">支付￥
+      <span style="font-size:40rpx;font-weight:bold;padding:0 5rpx;">{{collageMain.collage_price}}</span>加入拼团</button>
+    <button class='share_btn' bindtap='sharebtn' wx:if="{{!isEnd&&isLunch&&!isSuccess}}">
+      <span style="font-size:30rpx;letter-spacing:5rpx">邀请好友加入拼团</span>
+    </button>
+    <button class='share_btn' bindtap='toorderpage' wx:if="{{!isEnd&&isLunch&&isSuccess}}">
+      <span style="font-size:30rpx;letter-spacing:5rpx">拼团成功，点击查看订单</span>
+    </button>
     <button class='share_btn endtime_btn' wx:if="{{isEnd&&!isSuccess}}" bindtap='exit'>此拼团已过期，点击退出！!</button>
-     <view class='list_time outtime' wx:if="{{isSuccess}}">订单状态已更新！</view> 
+    <view class='list_time outtime' wx:if="{{isSuccess}}">订单状态已更新！</view>
     <view class='list_time'>
-    <span class="list_time_time" wx:if="{{!isEnd}}">{{collageUser.listtime}}</span>
-    <span class="list_time_time" wx:if="{{isEnd}}">已 过 期</span></view>
+      <span class="list_time_time" wx:if="{{!isEnd}}">
+        <span style="font-size:20rpx">剩余：</span> {{collageUser.listtime}} </span>
+      <span class="list_time_time" wx:if="{{isEnd}}">已 过 期</span>
+    </view>
     <!-- <view class='list_time outtime' wx:if="{{isEnd}}">订单状态已更新！</view>  -->
   </view>
   <view class='cutfriend_area'>
@@ -40,13 +48,13 @@
       <view class='cutfriend_friend_avatar_area'>
         <image class='cutfriend_friend_avatar' src='{{userInfo.avatar}}'></image>
         <view class='cutfriend_friend_avatar_view' wx:for="{{collageUserFriend}}">
-        <image class='cutfriend_friend_avatar' src='{{item.user_in_avatar}}'></image>
+          <image class='cutfriend_friend_avatar' src='{{item.user_in_avatar}}'></image>
         </view>
         <view class='cutfriend_friend_avatar_view' wx:for="{{shortPeople}}">
-        <view class='cutfriend_friend_avatar_text'> ? </view>
+          <view class='cutfriend_friend_avatar_text'> ? </view>
         </view>
-        
-         <!-- <image ></image>  -->
+
+        <!-- <image ></image>  -->
       </view>
     </view>
     <!-- <view class='cutfriend_friend' wx:for="{{collageUserFriend}}" wx:key="{{cutList.id}}">
@@ -68,26 +76,24 @@
        4.贝堡商城可在法律法规允许范围内对活动规则进行解释；
     </text>
   </view>
-  <view class="goods_detail">
+  <!-- <view class="goods_detail">
     <view class='goods_detail_title'>┈ 详情 ┈</view>
     <import src="../../lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
-  </view>
+  </view> -->
+  <view class='other_goods_title'>┈ 其他好物 ┈</view>
   <view class='other_goods'>
-    <view class='other_goods_title'>┈ 其他好物 ┈</view>
-    <view class="good-grid">
-      <view class="b">
-        <block wx:for="{{otherGoods}}" wx:key="{{item.id}}">
-          <view class="item">
-            <navigator url="../goods/goods?id={{item.id}}" class="a">
-              <image class="img" src="{{item.list_pic_url}}" background-size="cover"></image>
-              <text class="name">{{item.name}}</text>
-              <text class="price">￥{{item.retail_price}}</text>
-            </navigator>
-          </view>
-        </block>
-      </view>
-    </view>
+  <!-- 213657895204 -->
+     <view class="currency_goods_view_item" wx:if="{{otherGoods.length > 0}}">
+      <navigator class="currency_goods_view_item_a {{(iindex + 1) % 2 == 0 ? 'currency_goods_view_item_b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{otherGoods}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="{{iitem.id}}" wx:key="{{iitem.id}}">
+         <image class="currency_goods_view_item_img" src="{{iitem.list_pic_url}}"></image> 
+        <view class="currency_goods_view_item_name">{{iitem.name}}</view> 
+        <view class="currency_goods_view_item_price">￥
+          <span class="currency_goods_view_item_price_price">{{iitem.retail_price}}</span>
+        </view> 
+      </navigator>
+    </view> 
+    
   </view>
 </view>
 
@@ -104,7 +110,7 @@
       </button>
       <button class='box_actionbtn_item' plain bindtap='share_wechat_qzone' open-type="share">
         <image class='box_actionbtn_item_img' src='../../image/friend.png'></image>
-        <view class='box_actionbtn_item_text' >朋友圈</view>
+        <view class='box_actionbtn_item_text'>朋友圈</view>
       </button>
       <!-- <button class='box_actionbtn_item' plain bindtap='share_qq_friend' open-type="share">
         <image class='box_actionbtn_item_img' src='../../image/qq.png'></image>
@@ -121,12 +127,12 @@
   </view>
 </view>
 
-
-<view class='bottom_reltext'>
+<!-- 
+ <view class='bottom_reltext'>
   贝堡网络提供技术支持
-</view>
+</view> -->
 <view class='bottom_text'>
-  您已经到底啦！
+  贝堡网络 提供技术支持
 </view>
 <view class='other_action_btnarea'>
   <view class='other_action_toindex' bindtap='toindex'>去商城首页</view>

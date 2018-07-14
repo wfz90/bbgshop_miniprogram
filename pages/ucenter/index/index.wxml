@@ -8,29 +8,29 @@
   </view>
 
   <view class="user-menu">
-    <view class="item">
-      <navigator url="/pages/ucenter/order/order" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/order/order'>
+      <view class="a">
         <text class="icon order"></text>
         <text class="txt">我的订单</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="/pages/ucenter/coupon/coupon" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/coupon/coupon'>
+      <view class="a">
         <text class="icon coupon"></text>
         <text class="txt">我的优惠券</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="/pages/ucenter/collect/collect" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/collect/collect'>
+      <view class="a">
         <text class="icon gift"></text>
         <text class="txt">我的收藏</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="../address/address" class="a">
+    <view class="item" bindtap='jumpPage' data-route='../address/address'>
+      <view class="a">
         <text class="icon address"></text>
         <text class="txt">地址管理</text>
-      </navigator>
+      </view>
     </view>
 
     <!-- <view class="item no-border">
@@ -40,23 +40,23 @@
       </navigator>
     </view> -->
 
-    <view class="item">
-      <navigator url="../bingphone/bingphone" class="a">
+    <view class="item" bindtap='jumpPage' data-route='../bingphone/bingphone'>
+      <view class="a">
         <text class="icon security"></text>
         <text class="txt">绑定手机</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="/pages/ucenter/footprint/footprint" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/footprint/footprint'>
+      <view class="a">
         <text class="icon help"></text>
         <text class="txt">我的足迹</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item ">
-      <navigator url="../customer/customer" class="a">
+    <view class="item" bindtap='jumpPage' data-route='../customer/customer'>
+      <view class="a">
         <text class="icon kefu"></text>
         <text class="txt">联系客服</text>
-      </navigator>
+      </view>
     </view>
     <!-- <view class="item ">
       <navigator url="../helpcenter/helpcenter" class="a">
@@ -64,37 +64,44 @@
         <text class="txt">帮助中心</text>
       </navigator>
     </view> -->
-    <view class="item">
-      <navigator url="/pages/ucenter/feedback/feedback" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/feedback/feedback'>
+      <view class="a">
         <text class="icon feedback"></text>
         <text class="txt">意见反馈</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
+    <!-- <view class="item">
       <navigator url="/pages/bargain/bargain" class="a">
         <text class="icon coupon"></text>
         <text class="txt">砍价</text>
       </navigator>
+    </view> -->
+    <view class="item" bindtap='jumpPage' data-route='/pages/Resagin_bargain/Resagin_bargain'>
+      <view class="a">
+        <text class="icon coupon"></text>
+        <text class="txt">砍价</text>
+      </view>
     </view>
-     <view class="item">
-      <navigator url="/pages/couponCenter/couponcenter" class="a">
+     <view class="item" bindtap='jumpPage' data-route='/pages/couponCenter/couponcenter'>
+      <view class="a">
         <text class="icon coupon"></text>
         <text class="txt">领券中心</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="/pages/ucenter/distribution/distribution" class="a">
+    <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/distribution/distribution'>
+      <view class="a">
         <text class="icon coupon"></text>
         <text class="txt">分销中心</text>
-      </navigator>
+      </view>
     </view>
-    <view class="item">
-      <navigator url="../bingbankcard/bingbankcard" class="a">
+    <view class="item" bindtap='jumpPage' data-route='../bingbankcard/bingbankcard'>
+      <view class="a">
         <text class="icon security"></text>
         <text class="txt">绑定银行卡</text>
-      </navigator>
+      </view>
     </view>
   </view>
 
   <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
 </view>
+<button wx:if="{{!auth}}" class='auth_btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"></button>

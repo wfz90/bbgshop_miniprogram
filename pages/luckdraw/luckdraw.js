@@ -14,7 +14,7 @@ Page({
     id: 0,
     luckmain: {},
     userinfo: {},
-    auth: false,
+    // auth: false,
     button_state: 1,
     join_list: [],
     isout: 0,
@@ -28,7 +28,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.showLoading({
       title: '跳转中...',
       mask: true,
@@ -40,6 +40,42 @@ Page({
       })
     }
     this.getluckInfo()
+    this.checkauth()
+  },
+  checkauth() {
+    wx.showLoading({
+      title: '检测授权...',
+      mask: true,
+    })
+    let that = this
+    try {
+      var value = wx.getStorageSync('auth')
+      console.log(value)
+      if (value) {
+        that.setData({
+          auth: true
+        })
+        user.loginByWeixin().then(res => {
+          console.log(res)
+          that.setData({
+            userinfo: res.data
+          })
+          that.checkisjoin()
+          wx.hideLoading()
+          app.globalData.userInfo = res.data.userInfo;
+          app.globalData.token = res.data.token;
+        })
+        // Do something with return value
+      } else {
+        that.setData({
+          auth: false
+        })
+        that.selectjoinpeople()
+        wx.hideLoading()
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
   },
   getluckInfo() {
     wx.showLoading({
@@ -65,7 +101,7 @@ Page({
         })
         WxParse.wxParse('goodsDetail', 'html', res.data.luckmain.luck_goods_detail, that);
         that.setTime()
-        that.checkauth()
+        
       }
     })
   },
@@ -79,18 +115,19 @@ Page({
     that.setData({
       luckmain: that.data.luckmain
     })
-    if (item.is_out_time === 1){
+    if (item.is_out_time === 1) {
       that.setData({
         isout: 1
       })
     }
-    if (item.is_open === 1){
+    if (item.is_open === 1) {
       that.findluck_people()
     }
+    // that.findluck_people()
   },
   findluck_people() {
     let that = this
-    if (that.data.luckmain.luck_draw_user_id == ''){
+    if (that.data.luckmain.luck_draw_user_id == '') {
       wx.showToast({
         title: '抽奖异常 ！',
         icon: 'none',
@@ -98,66 +135,57 @@ Page({
         mask: true,
       })
     }
-    util.request(api.FindLucklyPeople,{
+    util.request(api.FindLucklyPeople, {
       luckid: that.data.luckmain.luck_draw_user_id,
       id: that.data.id
-    },'POST').then(res => {
+    }, 'POST').then(res => {
       console.log(res)
-      if(res.errno === 0){
+      if (res.errno === 0) {
         that.setData({
           luckly_list: res.data
         })
       }
     })
   },
-  checkauth() {
+  bindGetUserInfo: function(e) {
+    let that = this
     wx.showLoading({
-      title: '检测授权...',
+      title: '加载中...',
       mask: true,
     })
-    let that = this
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              wx.showLoading({
-                title: '登录服务器...',
-                mask: true,
-              })
-              user.loginByWeixin().then(resp => {
-                console.log(resp)
-                wx.showLoading({
-                  title: '记录用户...',
-                  mask: true,
-                })
-                that.setData({
-                  auth: true,
-                  userinfo: resp.data
-                })
-                that.checkisjoin()
-              })
-            }
-          })
-        } else {
-          console.log("未授权")
-          that.setData({
-            auth: false
-          })
-          wx.navigateTo({
-            url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet',
-            success: function (res) { },
-            fail: function (res) { },
-            complete: function (res) { },
-          })
-          wx.hideLoading()
-
-        }
-      }
-    })
+    if (e.detail.userInfo) {
+      console.log("允许授权")
+      // console.log(e.detail.userInfo)
+      try {
+        wx.setStorageSync('auth', 'true')
+      } catch (e) {}
+      //缓存到本地已授权
+      that.setData({
+        auth: true
+      })
+      // that.getGoodsInfo()
+      user.loginByWeixin().then(res => {
+        console.log(res)
+        that.setData({
+          userinfo: res.data
+        })
+        that.checkisjoin()
+        wx.hideLoading()
+        app.globalData.userInfo = res.data.userInfo;
+        app.globalData.token = res.data.token;
+      })
+      //用户按了允许授权按钮
+    } else {
+      //用户按了拒绝按钮
+      console.log("拒绝授权")
+      that.setData({
+        auth: false
+      })
+      try {
+        wx.setStorageSync('auth', 'false')
+      } catch (e) {} //缓存到本地未授权
+      wx.hideLoading()
+    }
   },
   checkisjoin() {
     wx.showLoading({
@@ -165,23 +193,24 @@ Page({
       mask: true,
     })
     let that = this
-    util.request(api.CheckUserIsJoin,{
+    that.selectjoinpeople()
+    
+    util.request(api.CheckUserIsJoin, {
       userinfo: that.data.userinfo,
       drawid: that.data.id
-    },'POST').then(res => {
+    }, 'POST').then(res => {
       console.log(res)
       wx.hideLoading()
-      if(res.errno === 0){
+      if (res.errno === 0) {
         that.setData({
           button_state: 0
         })
-      } else if (res.errno === 17){
+      } else if (res.errno === 17) {
         that.setData({
           button_state: 1
         })
       }
     })
-    that.selectjoinpeople()
   },
   selectjoinpeople() {
     let that = this
@@ -189,11 +218,11 @@ Page({
       title: '查找参与者...',
       mask: true,
     })
-    util.request(api.FindJoinPeople,{
+    util.request(api.FindJoinPeople, {
       id: that.data.id
-    },'POST').then(res => {
+    }, 'POST').then(res => {
       console.log(res)
-      if(res.errno === 0){
+      if (res.errno === 0) {
         that.setData({
           join_list: res.data
         })
@@ -207,79 +236,79 @@ Page({
     })
     let that = this
     if (that.data.auth) {
-      if (that.data.luckmain.have_join_people_num >= that.data.luckmain.luck_people_num) {
-        wx.hideLoading()
-        wx.showToast({
-          title: '参与人数已达最大值 ！',
-          icon: 'none',
-          duration: 2000,
-          mask: true,
-        })
-      }else {
-        wx.showLoading({
-          title: '参与中...',
-          mask: true,
-        })
-        util.request(api.JoinLuckDraw,{
-          userinfo: that.data.userinfo,
-          drawid: that.data.id
-        },'POST').then(res => {
-          console.log(res)
-          if(res.errno === 0){
-            wx.hideLoading()
-            wx.showToast({
-              title: '参与成功 !',
-              icon: 'none',
-              duration: 1500,
-              mask: true,
-              success: function(res) {
-                that.setData({
-                  button_state: 1
-                })
-                wx.showLoading({
-                  title: '刷新中...',
-                  mask: true,
-                })
-                that.selectjoinpeople()
-                util.request(api.FindLuckDrawInfo, {
-                  id: that.data.id
-                }, 'POST').then(res => {
-                  if (res.errno === 17) {
-                    wx.hideLoading()
-                    wx.showToast({
-                      title: '抽奖不存在 !',
-                      icon: 'none',
-                      duration: 2000,
-                      mask: true,
-                    })
-                  } else {
-                    wx.hideLoading()
-                    that.setData({
-                      luckmain: res.data.luckmain
-                    })
-                    that.setTime()
-                  }
-                })
-              },
-              fail: function(res) {},
-              complete: function(res) {},
-            })
-          }
-        })
-      }
+      // if (that.data.luckmain.have_join_people_num >= that.data.luckmain.luck_people_num) {
+      //   wx.hideLoading()
+      //   wx.showToast({
+      //     title: '参与人数已达最大值 ！',
+      //     icon: 'none',
+      //     duration: 2000,
+      //     mask: true,
+      //   })
+      // }else {
+      wx.showLoading({
+        title: '参与中...',
+        mask: true,
+      })
+      util.request(api.JoinLuckDraw, {
+        userinfo: that.data.userinfo,
+        drawid: that.data.id
+      }, 'POST').then(res => {
+        console.log(res)
+        if (res.errno === 0) {
+          wx.hideLoading()
+          wx.showToast({
+            title: '参与成功 !',
+            icon: 'none',
+            duration: 1500,
+            mask: true,
+            success: function(res) {
+              that.setData({
+                button_state: 1
+              })
+              wx.showLoading({
+                title: '刷新中...',
+                mask: true,
+              })
+              that.selectjoinpeople()
+              util.request(api.FindLuckDrawInfo, {
+                id: that.data.id
+              }, 'POST').then(res => {
+                if (res.errno === 17) {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '抽奖不存在 !',
+                    icon: 'none',
+                    duration: 2000,
+                    mask: true,
+                  })
+                } else {
+                  wx.hideLoading()
+                  that.setData({
+                    luckmain: res.data.luckmain
+                  })
+                  that.setTime()
+                }
+              })
+            },
+            fail: function(res) {},
+            complete: function(res) {},
+          })
+        }
+      })
+      // }
     } else {
       wx.navigateTo({
         url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/luckdraw/luckdraw' + "&data=" + that.data.id,
-        success: function (res) { 
+        success: function(res) {
           wx.showToast({
             title: '您未授权 ！',
             icon: 'none',
             duration: 1000,
             mask: true,
           })
-         },
-        fail: function (res) { },
-        complete: function (res) { },
+        },
+        fail: function(res) {},
+        complete: function(res) {},
       })
     }
   },
@@ -309,9 +338,9 @@ Page({
       userInfo: that.data.userinfo.userInfo
     }, 'POST').then(res => {
       console.log(res)
-      if(res.errno === 503){
+      if (res.errno === 503) {
         that.getaddressList()
-      } else if (res.errno === 17){
+      } else if (res.errno === 17) {
         wx.hideLoading()
         wx.showToast({
           title: '您已经领取过此奖品啦 ~ ',
@@ -341,7 +370,7 @@ Page({
         addressList: res.data
       })
       that.showModalAress()
-      
+
     })
   },
   selectAddress(e) {
@@ -357,12 +386,12 @@ Page({
         title: '提示',
         content: '确认收货地址为' + address.data.full_region + address.data.address + " , " + address.data.name + " , " + address.data.mobile + " 吗 ？",
         success: function(res) {
-          if(res.confirm){
+          if (res.confirm) {
             wx.showModal({
               title: '警告',
               content: '收货地址确认后不可修改，是否继续 ？',
               success: function(res) {
-                if(res.confirm){
+                if (res.confirm) {
                   wx.showLoading({
                     title: '订单生成中...',
                     mask: true
@@ -415,20 +444,20 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-    
+  onReady: function() {
+
   },
   toAddress() {
     wx.navigateTo({
       url: '/pages/ucenter/addressAdd/addressAdd',
-      success: function (res) {
+      success: function(res) {
 
       },
-      fail: function (res) { },
-      complete: function (res) { },
+      fail: function(res) {},
+      complete: function(res) {},
     })
   },
-  showModalAress: function () {
+  showModalAress: function() {
     // 显示遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -441,7 +470,7 @@ Page({
       animationDataAress: animation.export(),
       showModalStatusAress: true
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationDataAress: animation.export()
@@ -449,7 +478,7 @@ Page({
     }.bind(this), 200)
     wx.hideLoading()
   },
-  hideModalAress: function () {
+  hideModalAress: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 200,
@@ -461,7 +490,7 @@ Page({
     this.setData({
       animationDataAress: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationDataAress: animation.export(),
@@ -472,42 +501,42 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
     this.hideModalAress()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
     this.hideModalAress()
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

@@ -7,14 +7,14 @@ Page({
   data: {
     // status: true,
     paystatues:true,
-    // orderId: 0
+    orderId: 0
   },
   onLoad: function (options) {
     var that = this
     // 页面初始化 options为页面跳转所带来的参数
     console.log(options)
     that.setData({
-      // orderId: options.orderId || 24,
+      orderId: options.orderId || 0,
       paystatues: options.status
     })
     console.log(that.data.paystatues)
@@ -52,7 +52,10 @@ Page({
     })
   },
   payOrder() {
-    pay.payOrder(parseInt(this.data.orderId)).then(res => {
+    pay.payOrder(this.data.orderId).then(res => {
+      wx.redirectTo({
+         url: '/pages/payResult/payResult?status=true',
+      })
       this.setData({
         paystatues: true
       });

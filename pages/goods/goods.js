@@ -11,7 +11,7 @@ Page({
     power: 0,
     goods: {},
     gallery: [],
-    attribute: [],
+    // attribute: [],
     issueList: [],
     comment: [],
     brand: {},
@@ -29,9 +29,9 @@ Page({
     number: 1,
     checkedSpecText: '请选择规格数量',
     openAttr: false,
-    noCollectImage: "/static/images/icon_collect.png",
-    hasCollectImage: "/static/images/icon_collect_checked.png",
-    collectBackImage: "/static/images/icon_collect.png",
+    noCollectImage: "/image/like.png",
+    hasCollectImage: "/image/liked.png",
+    collectBackImage: "/image/like.png",
     is_Inviter: 0,
     auth: false,
     isdistribution: false,
@@ -64,24 +64,6 @@ Page({
       });
       // that.noraldisauth()
     }
-    // if (options.ids) {
-    //   console.log('被分享者进入')
-    //   that.setData({
-    //     id: parseInt(options.id),
-    //     Inviter_userid: JSON.parse(options.ids)
-    //   });
-    //   that.checkdisauth()
-
-    // }else {
-    //   console.log('正常用户进入')
-    //   that.setData({
-    //     id: parseInt(options.id),
-    //   });
-    //   that.noraldisauth()
-    // }
-    // console.log(that.data.Inviter_userid)
-    // let routee = getCurrentPages()
-    // console.log(routee[1].route)
     that.getGoodsInfo();
     util.request(api.CartGoodsCount).then(function (res) {
       if (res.errno === 0) {
@@ -92,27 +74,6 @@ Page({
     });
 
   },
-  // noraldisauth() {
-  //   let that = this
-  //   // console.log(app.globalData.userInfo)
-  //   if (app.globalData.token == "") {
-  //     // console.log('没有token')
-  //     that.setData({
-  //       power: 0,
-  //       auth: false
-  //     })
-  //   } else {
-  //     user.loginByWeixin().then(resp => {
-  //       console.log(resp)
-  //       that.setData({
-  //         power: 1,
-  //         auth: true,
-  //         userinfo: resp.data.userInfo
-  //       })
-  //       that.share_distribution()
-  //     })
-  //   }
-  // },
   onShareAppMessage: function () {
     let that = this
     console.log(that.data.goods.id)
@@ -122,6 +83,44 @@ Page({
       desc: that.data.goods.name,
       path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
       imageUrl: '../../image/logo.png',
+    }
+  },
+  bindGetUserInfo: function (e) {
+    let that = this
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+    })
+    if (e.detail.userInfo) {
+      console.log("允许授权")
+      // console.log(e.detail.userInfo)
+      try {
+        wx.setStorageSync('auth', true)
+      } catch (e) {
+      }
+      //缓存到本地已授权
+      that.setData({
+        auth: true
+      })
+      that.getGoodsInfo()
+      user.loginByWeixin().then(res => {
+        console.log(res)
+        wx.hideLoading()
+        app.globalData.userInfo = res.data.userInfo;
+        app.globalData.token = res.data.token;
+      })
+      //用户按了允许授权按钮
+    } else {
+      //用户按了拒绝按钮
+      console.log("拒绝授权")
+      that.setData({
+        auth: false
+      })
+      try {
+        wx.setStorageSync('auth', false)
+      } catch (e) {
+      }//缓存到本地未授权
+      wx.hideLoading()
     }
   },
   getGoodsInfo: function () {
@@ -134,7 +133,6 @@ Page({
           collage: res.data.collage,
           checkgoodsprice: res.data.info,
           gallery: res.data.gallery,
-          // attribute: res.data.attribute,
           issueList: res.data.issue,
           comment: res.data.comment,
           brand: res.data.brand,
@@ -162,7 +160,7 @@ Page({
         that.getGoodsRelated();
         that.checkdisauth()
         WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
-        wx.hideLoading()
+        // wx.hideLoading()
       }
     });
 
@@ -176,68 +174,56 @@ Page({
         });
       }
     });
-    wx.hideLoading()
+    setTimeout(() => {
+      wx.hideLoading()
+    },217)
   },
   checkdisauth() {
+    let that = this
     // wx.showLoading({
     //   title: '授权检测...',
     //   mask: true,
     // })
-    let that = this
-    console.log(that.data.Inviter_userid)
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res.userInfo)
-              // wx.showLoading({
-              //   title: '登录服务器...',
-              //   mask: true,
-              // })
-              user.loginByWeixin().then(resp => {
-                console.log(resp)
-                that.setData({
-                  auth: true,
-                  userinfo: resp.data.userInfo
-                })
-                console.log(that.data.Inviter_userid)
-                if (that.data.is_Inviter == '0') {
-                  that.share_distribution()
-                  console.log('进入用户已授权正常用户')
-                } else if (that.data.is_Inviter == '1') {
-                  try {
-                    wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
-                    console.log('进入用户为被分享者,已授权，分销信息已存入本地')
-                  } catch (e) {
-                    // console.log(e)
-                  }
-                  that.share_distribution()
-                }
-                // if (that.data.Inviter_userid.length == 0){
-                //   try {
-                //     var value = wx.getStorageSync('invitation')
-                //     console.log(value)
-                //     if (value) {
-                //       console.log("用户授权,读取本地分销缓存")
-                //       that.setData({
-                //         Inviter_userid: JSON.parse(value)
-                //       })
-                //     }
-                //   } catch (e) {
-                //   }
-                // }else {
-                //   console.log(that.data.Inviter_userid)
-                // }
-
-
-              })
+    try {
+      var value = wx.getStorageSync('auth')
+      if (value) {
+        if (value) {
+          user.loginByWeixin().then(resp => {
+            console.log(resp)
+            that.setData({
+              auth: true,
+              userinfo: resp.data.userInfo
+            })
+            console.log(that.data.Inviter_userid)
+            if (that.data.is_Inviter == '0') {
+              that.share_distribution()
+              console.log('进入用户已授权正常用户')
+            } else if (that.data.is_Inviter == '1') {
+              try {
+                wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
+                console.log('进入用户为被分享者,已授权，分销信息已存入本地')
+              } catch (e) {
+                // console.log(e)
+              }
+              that.share_distribution()
             }
+            // if (that.data.Inviter_userid.length == 0){
+            //   try {
+            //     var value = wx.getStorageSync('invitation')
+            //     console.log(value)
+            //     if (value) {
+            //       console.log("用户授权,读取本地分销缓存")
+            //       that.setData({
+            //         Inviter_userid: JSON.parse(value)
+            //       })
+            //     }
+            //   } catch (e) {
+            //   }
+            // }else {
+            //   console.log(that.data.Inviter_userid)
+            // }
           })
         } else {
-          console.log("未授权")
           that.setData({
             auth: false
           })
@@ -254,16 +240,18 @@ Page({
             }
             that.share_distribution()
           }
-          // try {
-          //   wx.setStorageSync('invitation', JSON.stringify(that.data.Inviter_userid))
-          //   console.log('用户未授权，分销信息已存入本地')
-          // } catch (e) {
-          //   // console.log(e)
-          // }
-          // that.share_distribution()          
+          // wx.navigateTo({
+          //   url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet',
+          //   success: function (res) { },
+          //   fail: function (res) { },
+          //   complete: function (res) { },
+          // })
         }
+        // Do something with return value
       }
-    })
+    } catch (e) {
+      // Do something when catch error
+    }
 
   },
   share_distribution() {
@@ -476,7 +464,7 @@ Page({
   power() {
     let that = this
     console.log(app.globalData.userInfo)
-    if (app.globalData.token == "") {
+    if (!that.data.auth) {
       that.setData({
         power: 0
       })
@@ -678,33 +666,6 @@ Page({
       mask: true,
     })
     this.power()
-    // wx.getSetting({
-    //   success: function (res) {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       wx.getUserInfo({
-    //         success: function (res) {
-    //           console.log(res.userInfo)
-    //           //用户已经授权过
-    //           user.loginByWeixin().then(res => {
-    //             console.log(res)
-    //             wx.hideLoading()
-    //             that.showModal()
-    //           }).catch(res => {
-    //             console.log(res)
-    //           })
-    //         }
-    //       })
-    //     } else {
-    //       wx.hideLoading()
-    //       wx.navigateTo({
-    //         url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
-    //         success: function (res) { },
-    //         fail: function (res) { },
-    //         complete: function (res) { },
-    //       })
-    //     }
-    //   }
-    // })
   },
   collect() {
     var that = this;
@@ -801,7 +762,7 @@ Page({
       title: '授权检测...',
       mask: true
     })
-    if (app.globalData.token == "") {
+    if (!that.data.auth) {
       wx.navigateTo({
         url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + that.data.route + "&data=" + that.data.goods.id,
         success: function (res) { },
@@ -948,6 +909,14 @@ Page({
       success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
+    })
+  },
+  openCustomerPage() {
+    wx.navigateTo({
+      url: '/pages/ucenter/customer/customer',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
     })
   },
   canelCart() {

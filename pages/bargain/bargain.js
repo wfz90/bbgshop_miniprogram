@@ -95,7 +95,9 @@ Page({
           wx.hideLoading()
         },1000)
       }else {
-
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 1000)
       }
       // that.checkbar(res)
       // wx.hideLoading()
@@ -532,7 +534,6 @@ Page({
   },
   setTimeloop(){
     var that = this
-    // console.log(that.data.userbargainList)
     var loop = setInterval(function (){
       for (var i = 0; i < that.data.userbargainList.length; i++) {
         var list = that.data.userbargainList[i]
@@ -540,15 +541,12 @@ Page({
           list.listtime = "0"
         }else{
           var time = parseInt(list.end_time) - new Date().getTime()
-          // console.log(util.timestampToDate(time)) 
           list.listtime = util.timestampToDate(time)
         }
       }
       that.setData({
         userbargainList: that.data.userbargainList
       })
-      // console.log(that.data.userbargainList)
-
     },1000)
     // var looptwo = setInterval(function () {
     //   that.checkouttime()      

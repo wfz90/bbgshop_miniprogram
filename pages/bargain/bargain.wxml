@@ -2,7 +2,6 @@
 <!-- <text>pages/Bargain/bargain.wxml</text> -->
 <view wx:if="{{auth}}">
 <view class='all' style='margin-bottom:126rpx;' wx:if="{{showscreen == 0}}" >
-
   <view class='bargain_all' wx:for="{{bargainList}}" wx:if="{{bargainList.length > 0}}" wx:key="{{item.id}}">
     <image class='bargain_img' src="{{item.goods.list_pic_url}}"></image>
     <view class='bargain_name'>{{item.goods.name}}</view>

@@ -25,7 +25,7 @@ Page({
     codeloading: false,
     codedisabled: false,
     checkdisabled: true,
-    sendcodetext: " 发送验证码 ",
+    sendcodetext: " 获取验证码 ",
     changeisabled: false,
   },
 
@@ -189,7 +189,7 @@ Page({
     var that = this
     if (this.data.inputMobile == "") {
       wx.showToast({
-        title: '输入手机号 ！',
+        title: '请先输入手机号 ！',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -258,7 +258,11 @@ Page({
     var that = this
     console.log(that.data.truesode)
     if (that.data.inputcode == '') {
-      util.showErrorToast('验证码为空！');
+      wx.showToast({
+        title: '您没有输入验证码 ！',
+        icon: 'none',
+        duration: 2000
+      })
     } else {
       //验证手机号
       // util.request(api.CheckSode,{

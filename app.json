@@ -42,7 +42,9 @@
     "pages/ucenter/bankcard/bankcard",
     "pages/ucenter/bingbankcard/bingbankcard",
     "pages/luckdraw/luckdraw",
-    "pages/luckdraw_all/luckdraw_all"
+    "pages/luckdraw_all/luckdraw_all",
+    "pages/Resagin_bargain/Resagin_bargain",
+    "pages/Resagin_bargain_goods/Resagin_bargain_goods"
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -35,7 +35,7 @@ Page({
     showRefundBox: false,
     showRefundTimeBox: false,
     timestate: 'null',
-    auth: false,
+    // auth: false,
     distributionData: [],
     userinfo: '',
 
@@ -58,28 +58,28 @@ Page({
     } catch (e) {
       // Do something when catch error
     }
-    console.log(app.globalData.token)
+    // console.log(app.globalData.token)
 
 
 
   },
   onShow() {
     let that = this
-    if (app.globalData.token == "") {
-      that.setData({
-        auth: false
-      })
-      wx.showToast({
-        title: '未授权！请在“我的”页点击头像授权!',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-      })
-    } else {
-      //用户已经授权过
-      that.setData({
-        auth: true
-      })
+    // if (app.globalData.token == "") {
+    //   that.setData({
+    //     auth: false
+    //   })
+    //   wx.showToast({
+    //     title: '未授权！请在“我的”页点击头像授权!',
+    //     icon: 'none',
+    //     duration: 2000,
+    //     mask: true,
+    //   })
+    // } else {
+    //   //用户已经授权过
+    //   that.setData({
+    //     auth: true
+    //   })
       wx.showLoading({
         title: '获取中...',
         mask: true,
@@ -89,7 +89,7 @@ Page({
         fail: function (res) { },
         complete: function (res) { },
       })
-    }
+    // }
   },
   getOrderList() {
     let that = this;
@@ -148,7 +148,9 @@ Page({
         url: '/pages/pay/pay?Price=' + orderPrice.orderPrice + '&orderId=' + orderPrice.orderId + '&payId= ' + orderPrice.payid,
       })
     } else if (orderPrice.payid == 1) {
-
+      wx.navigateTo({
+        url: '/pages/pay/pay?Price=' + orderPrice.orderPrice + '&orderId=' + orderPrice.orderId + '&payId= ' + orderPrice.payid,
+      })
     } else if (orderPrice.payid == 2) {
       if (orderPrice.collageType == 1) {
         util.request(api.SnFindOrder, {
@@ -780,7 +782,7 @@ Page({
     } catch (e) {
 
     }
-    if (that.data.auth) {
+    // if (that.data.auth) {
       util.request(api.OrderList, {
         index: tab
       }, 'POST').then(function (res) {
@@ -792,18 +794,18 @@ Page({
           });
         }
       });
-    } else {
-      wx.hideLoading()
-      wx.showToast({
-        title: '未授权！请在“我的”页点击头像授权!',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
-    }
+    // } else {
+    //   wx.hideLoading()
+    //   wx.showToast({
+    //     title: '未授权！请在“我的”页点击头像授权!',
+    //     icon: 'none',
+    //     duration: 2000,
+    //     mask: true,
+    //     success: function (res) { },
+    //     fail: function (res) { },
+    //     complete: function (res) { },
+    //   })
+    // }
     this.setData({
       activeTab: tab
     })

@@ -20,7 +20,8 @@ Page({
     Inviter_userid: [],
     Inviter_laster: '',
     isdistribution: false,
-    Inviter_locallaster: []
+    Inviter_locallaster: [],
+    scrollTop: 0,//滚动监听
   },
   onShareAppMessage: function () {
     let that = this
@@ -87,7 +88,35 @@ Page({
       mask: true,
     })
     that.getIndexData();
+    that.checkIsAuth();
   },
+  checkIsAuth() {
+    wx.getStorage({
+      key: 'auth',
+      success: function (res) {
+        console.log('存在')
+        console.log(res.data)
+      },
+      fail: function (res) { 
+        console.log('不存在')
+        wx.setStorage({
+          key: "auth",
+          data: false
+        })
+      },
+    })
+  },
+  back_to_top() {
+
+  },
+  // //滚动监听
+  // scroll(e) {
+  //   console.log(e)
+  //   // this.setData({
+  //   //   scrollTop: e.detail.scrollTop
+  //   // })
+  //   // console.log(this.data.scrollTop)
+  // },
   onReady: function () {
     // console.log("1111111")
     // 页面渲染完成

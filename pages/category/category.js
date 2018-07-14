@@ -3,10 +3,10 @@ var api = require('../../config/api.js');
 
 Page({
   data: {
-    // text:"这是一个页面"
     navList: [],
     goodsList: [],
     id: 0,
+    showSkeleton: true,//显示布局骨架
     currentCategory: {},
     scrollLeft: 0,
     scrollTop: 0,
@@ -20,7 +20,8 @@ Page({
     var that = this;
     wx.showLoading({
       title: '获取中...',
-      mask: true,
+      // mask: true,
+      showSkeleton: true
     })
     console.log(options)
     if (options.id) {
@@ -37,33 +38,21 @@ Page({
         });
       }
     });
-
-
     this.getCategoryInfo();
 
   },
   getCategoryInfo: function () {
     let that = this;
-    var pages = getCurrentPages();
-    var prePageRoute = pages[pages.length - 2].__route__;
-    console.log(pages, prePageRoute)
     util.request(api.GoodsCategory, { id: this.data.id })
       .then(function (res) {
           console.log(res)
         if (res.errno == 0) {
           that.setData({
-            // navList: res.data.brotherCategory,
-            currentCategory: res.data.currentCategory
+            currentCategory: res.data.currentCategory,
           });
-          if (prePageRoute == 'pages/catalog/catalog'){
-            that.setData({
-              navList: res.data.brotherCategory,
-            });
-          } else if (prePageRoute == 'pages/index/index'){
             that.setData({
               navList: res.data.brotherCategory.reverse(),
             });
-          }
           //nav位置
           let currentIndex = 0;
           let navListCount = that.data.navList.length;
@@ -79,7 +68,6 @@ Page({
             });
           }
           that.getGoodsList();
-
         } else {
           //显示错误信息
         }
@@ -91,7 +79,6 @@ Page({
   },
   onShow: function () {
     // 页面显示
-    console.log(1);
   },
   onHide: function () {
     // 页面隐藏
@@ -105,7 +92,12 @@ Page({
           that.setData({
             goodsList: res.data.goodsList,
           });
-          wx.hideLoading()
+          setTimeout(() => {
+            that.setData({
+              showSkeleton: false
+            });
+            wx.hideLoading()
+          },800)
         }else {
           wx.hideLoading()
           wx.showToast({
@@ -129,6 +121,11 @@ Page({
       title: '获取中...',
       mask: true,
     })
+    this.setData({
+      goodsList: {},
+      showSkeleton: true
+    })
+    console.log(this.data.showSkeleton)
     var that = this;
     var clientX = event.detail.x;
     var currentTarget = event.currentTarget;
@@ -144,7 +141,7 @@ Page({
     this.setData({
       id: event.currentTarget.dataset.id
     });
-
+    console.log(this.data.showSkeleton)
     this.getCategoryInfo();
   }
 })

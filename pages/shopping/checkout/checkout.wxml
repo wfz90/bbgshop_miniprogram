@@ -113,8 +113,12 @@
       <button class='backindex' bindtap="backindex">返回首页</button>
     </view> 
     <!-- <view class='backindextip' bindtap="backindextip">back</view> -->
-    <view class="order-total">
+    <view class='order_total_bar'>
+      <view class='price'>实付：￥ <span class="big">{{actualPrice}}</span></view>
+      <view class='acton' bindtap="submitOrder">去付款</view>
+    </view>
+    <!-- <view class="order-total">
         <view class="l">实付：￥{{actualPrice}}</view>
         <view class="r" bindtap="submitOrder">去付款</view>
-    </view>
+    </view> -->
 </view>

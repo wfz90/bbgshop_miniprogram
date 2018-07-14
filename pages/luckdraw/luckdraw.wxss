@@ -7,6 +7,25 @@
   width: 100%;
   height: 100%;
 }
+.content_area {
+  position: fixed;
+  height: calc(100vh - 80rpx);
+  /* top: 668rpx; */
+  /* left: 0rpx; */
+  /* bottom: 120rpx; */
+  /* margin-bottom: 120rpx; */
+}
+.fixed_btn {
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  width: 100vw;
+  border-radius: 0rpx;
+  background: #d15144;
+  color: #f4f4f4;
+  height: 80rpx;
+  line-height: 80rpx;
+}
 .outtime_tip {
   text-align: center;
   font-size: 26rpx;
@@ -45,10 +64,19 @@
   font-size: 19rpx;
   /* border: 1px solid #757575; */
 }
+.detail {
+  width: 750rpx;
+  height: auto;
+  background: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
 .detail_title {
   text-align: center;
   font-size: 32rpx;
   margin-top: 30rpx;
+  margin-bottom: 15rpx;
 }
 .luck_join_area {
   width: 100vw;
@@ -116,6 +144,7 @@
   width: 156rpx;
   padding: 0 ;
   text-align: center;
+  border: none;
   /* border: 1px solid black; */
   height: 156rpx;
   line-height: 156rpx;
@@ -167,6 +196,7 @@
   font-size: 16rpx;
   color: #757575;
   margin-top: 7vh;
+  margin-bottom: 2rpx;
 }
 
 .commodity_screen {

@@ -18,13 +18,10 @@ Page({
     skuvalue: '',
     goodsInfo: {},
     skuInfo: {},
+    userInfo: {},
     collageInfo: {},
     orderId: 0,
     is_pay: 0,
-
-
-
-  
   },
 
   /**
@@ -59,7 +56,7 @@ Page({
     })
   },
   findaddress(){
-    var that = this 
+    var that = this
     if (that.data.addressId == 0){
       wx.showToast({
         title: '请选择收货地址!',
@@ -68,8 +65,9 @@ Page({
         mask: true,
       })
     }else {
-      util.request(api.AddressDetail, { 
-        id: that.data.addressId }).then(res => {
+      util.request(api.AfterBargainSuccessAdressDetail, { 
+        id: that.data.addressId 
+        },'POST').then(res => {
           console.log(res)
         if (res.errno === 0) {
           that.setData({
@@ -205,13 +203,24 @@ Page({
   },
   getaddressList() {
     var that = this
-    that.showModalAress()
-    util.request(api.BarAddressList).then(res => {
-      console.log(res)
-      that.setData({
-        addressList: res.data
-      })
-    })
+    try {
+      var value = wx.getStorageSync('userInfo')
+      if (value) {
+        // Do something with return value
+        that.showModalAress()
+        util.request(api.AfterBargainSuccessAdressList,{
+          userId: value.id
+        },'POST').then(res => {
+          console.log(res)
+          that.setData({
+            addressList: res.data
+          })
+        })
+      }
+    } catch (e) {
+      // Do something when catch error
+    } 
+    
   },
   selectAddress(e) {
     var that = this

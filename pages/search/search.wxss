@@ -290,8 +290,10 @@ page{
 }
 
 .cate-item .item .img{
-  width: 302rpx;
-  height: 302rpx;
+  /* border: 1px solid black; */
+  margin-top: 8rpx;
+  width: 94%;
+  height: 336.625rpx;
 }
 
 .cate-item .item .name{

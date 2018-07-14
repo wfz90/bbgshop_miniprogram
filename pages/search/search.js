@@ -100,13 +100,16 @@ Page({
           // size: res.data.numsPerPage
         });
       }
-
+      wx.hideLoading()
       //重新获取关键词
       that.getSearchKeyword();
     });
   },
   onKeywordTap: function (event) {
-
+    wx.showLoading({
+      title: '搜索中...',
+      mask: true,
+    })
     this.getSearchResult(event.target.dataset.keyword);
 
   },
@@ -174,6 +177,10 @@ Page({
     this.getGoodsList();
   },
   onKeywordConfirm(event) {
+    wx.showLoading({
+      title: '搜索中...',
+      mask: true,
+    })
     this.getSearchResult(event.detail.value);
   }
 })

@@ -19,7 +19,10 @@
       <text class="text">收货地址在哪里</text>
     </view>
     <view class='tip'>长按左侧名字删除，点击右侧内容修改</view>
-    <view class="add-address" wx:if="{{auth}}" bindtap="addressAddOrUpdate" data-address-id="0">新建</view>
-    <view class="add-address" wx:if="{{!auth}}" bindtap="noauth" data-address-id="0">新建</view>
+    <view class="corner_btn_area" bindtap="addressAddOrUpdate">
+      <view class='corner_btn'>新建</view>
+    </view>
+    <!-- <view class="add-address" wx:if="{{auth}}" bindtap="addressAddOrUpdate" data-address-id="0">新建</view> -->
+    <!-- <view class="add-address" wx:if="{{!auth}}" bindtap="noauth" data-address-id="0">新建</view> -->
     
 </view>

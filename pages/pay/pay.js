@@ -13,7 +13,7 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     console.log(options)
     this.setData({
-      orderId: options.orderId,
+      orderId: options.orderId || 0,
       payId: options.payId || 0,
       actualPrice: (options.Price / 1).toFixed(2)
     })
@@ -72,6 +72,35 @@ Page({
             url: '/pages/payResult/payResult?status=true',
           })
         } else {
+          console.log('订单未支付')
+          wx.redirectTo({
+            url: '/pages/payResult/payResult?status=false&orderId=' + orderId,
+          })
+        }
+      })
+    } else if (that.data.payId == 1) {
+      pay.payOrder(orderId).then(res => {
+        console.log(res)
+        wx.hideLoading()
+        if (res.errMsg == "requestPayment:ok") {
+          var status = 201
+          util.request(api.PayBargainOrder, {
+            ordersn: orderId,
+            status: status
+          },'POST').then(function (res) {
+            if (res.errno === 0) {
+              console.log(res);
+              wx.redirectTo({
+                url: '/pages/payResult/payResult?status=true',
+              })
+            }else {
+              wx.redirectTo({
+                url: '/pages/payResult/payResult?status=false',
+              })
+            }
+            
+          });
+        } else {
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=false',
           })
@@ -112,11 +141,20 @@ Page({
     wx.showLoading({
       title: '核实是否支付...',
     })
+    if (Number(that.data.orderId) == 0) {
+      wx.showToast({
+        title: '异常 ! 请退出 ! ',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false
+    }
     util.request(api.CheckOrderIsPay,{
       orderId: that.data.orderId
     },'POST').then(rees => {
       console.log(rees)
-          if(rees.errno === 17){
+        if(rees.errno === 17){
             wx.showLoading({
           title: '价格核实...',
         })

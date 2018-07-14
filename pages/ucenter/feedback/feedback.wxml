@@ -20,6 +20,8 @@
       <!-- <image class="clear-icon" src="http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/clear-fb-dd9d604f86.png"></image> -->
     </view>
   </view>
-
-  <button class="fb-btn" bindtap='okfeedback'>提交</button>
+    <view class="corner_btn_area" bindtap="okfeedback">
+      <view class='corner_btn'>确定</view>
+    </view>
+  <!-- <button class="fb-btn" bindtap='okfeedback'>提交</button> -->
 </view>

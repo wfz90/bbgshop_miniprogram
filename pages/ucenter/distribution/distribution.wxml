@@ -46,27 +46,25 @@
 </view>
 <view class='mask_model' bindtap='hide_model' wx:if="{{show_mask}}"></view>
 <view class='show_model' wx:if="{{show_mask}}">
-  <view class='show_model_title'>申请成为分销员</view>
-  <!-- <view class='show_model_tip'>基本信息</view>
-  <view class='show_model_area'></view>
-  <view class='show_model_tip'>绑定信息</view> -->
-  <view class='show_model_area'>
-    <view class='show_model_area_item '>
-      <view class='show_model_area_item_left'>手机号:</view>
-      <view class='show_model_area_item_right'>
-        <input bindinput='phoneinput' placeholder-style='font-weight:normal' placeholder='输入手机号'></input>
+<view class='apply_dis_title'>申请成为分销员</view>
+  <view class='apply_dis_phone_area'>
+    <view class='apply_dis_phone_area_left'>手机号</view>
+    <input class='apply_dis_phone_area_input' bindinput='phoneinput' placeholder-style='font-weight:normal' placeholder='输入手机号'></input>
+  </view>
+    <view class='apply_dis_code_area'>
+      <view class='apply_dis_code_area_left'>
+        <view class='apply_dis_code_area_left_text'>
+          验证码
+        </view>
+         <!-- <view class='apply_dis_code_area_left'>验证码</view> -->
+     <input class='apply_dis_code_input' bindinput='phoneinput' placeholder-style='font-weight:normal' placeholder='输入短信验证码'></input> 
       </view>
-    </view>
-    <view class='show_model_area_item margintop'>
-      <view class='show_model_area_item_left'>验证码:</view>
-      <view class='show_model_area_item_righttwo'>
-        <input bindinput='codeinput' placeholder-style='font-weight:normal' placeholder='输入验证码'></input>
+      <view class='apply_dis_code_area_getbtn_area'>
+      <button class='apply_dis_code_area_getbtn' loading="{{codeloading}}" disabled="{{codedisabled}}" bindtap='getcode'>{{sendcodetext}}</button>
       </view>
-      <button class='getcodebtn' loading="{{codeloading}}" disabled="{{codedisabled}}" bindtap='getcode'>{{sendcodetext}}</button>
-    </view>
   </view>
   <view class='actionbuttom_area'>
-    <button class='btn' disabled="{{checkdisabled}}" bindtap="checked">确认</button>
+    <button class='btn' bindtap="checked">确认</button>
   </view>
 </view>
 <view wx:if='{{distributionInfo.length !== 0}}'>

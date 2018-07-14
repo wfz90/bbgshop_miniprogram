@@ -28,13 +28,15 @@ function payOrder(orderId) {
             resolve(res);
           },
           'fail': function (res) {
-            reject(res);
+            // console.log('订单未支付 1')
+            resolve(res);
           },
           'complete': function (res) {
             reject(res);
           }
         });
       } else {
+        // console.log('订单未支付 2')
         reject(res);
       }
     });

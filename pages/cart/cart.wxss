@@ -366,3 +366,148 @@ page{
     background: #b4282d;
     color: #fff;
 }
+/* 以下为重构的操作按钮样式 */
+.action_bottom_bar {
+  position: fixed;
+  bottom:0;
+  left:0;
+  height: 100rpx;
+  width: 100%;
+  background: #fff;
+  display: flex;
+}
+.action_bottom_bar .checkbox {
+  height: 100rpx;
+  /* border: 1px solid #333; */
+    /* padding-left: 60rpx; */
+    line-height: 34rpx;
+    margin: 0;
+    padding: 33rpx 33rpx 33rpx 66rpx;
+    background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/checkbox-0e09baa37e.png) no-repeat 20rpx 33rpx;
+    background-size: 34rpx;
+    font-size: 29rpx;
+}
+.action_bottom_bar .checked {
+  background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/checkbox-checked-822e54472a.png) no-repeat 20rpx 33rpx;
+    background-size: 34rpx;
+}
+.action_bottom_bar .total {
+  /* border: 1px solid #333; */
+  width: auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action_bottom_bar .total .big {
+  color: #fc2d2d;
+  font-size: 50rpx;
+  font-weight: bold;
+}
+.action_btn_area {
+  /* border: 1px solid #333; */
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  top: 0;
+  width: 340rpx;
+  height: 100rpx;
+}
+.action_btn_area .edit {
+  width: 140rpx;
+  /* border: 1px solid #000; */
+  height: 80rpx;
+  line-height: 82rpx;
+  padding: 0;
+  margin: 0;
+  margin-right: -5rpx; 
+  text-align: center;
+  padding-left: 25rpx;
+  font-size: 25rpx;
+  color: #f4f4f4;
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 0rpx;
+  border-bottom-right-radius: 0rpx;
+  letter-spacing: 3rpx;
+  background-image: linear-gradient(to right, #faaa00 0%, #ff7701 100%);
+  /* background-image: linear-gradient(to right, #ffca00 0%, #ff9105 100%); */
+}
+.action_btn_area .checkout {
+  text-align: center;
+  width: 180rpx;
+  height: 80rpx;
+  line-height: 82rpx;
+  padding: 0;
+  margin: 0;
+  margin-left: -5rpx;
+  padding-right: 25rpx;
+  font-size: 25rpx;
+  color: #f4f4f4;
+  /* text-align: center; */
+  border-top-left-radius: 0rpx;
+  border-bottom-left-radius: 0rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  letter-spacing: 3rpx;
+  background-image: linear-gradient(to right, #ff7701 0%, #fe4800 100%);
+}
+
+.action_btn_area .delete {
+  text-align: center;
+  width: 180rpx;
+  height: 80rpx;
+  line-height: 82rpx;
+  padding: 0;
+  margin: 0;
+  margin-left: -5rpx;
+  padding-right: 25rpx;
+  font-size: 25rpx;
+  color: #f4f4f4;
+  /* text-align: center; */
+  border-top-left-radius: 0rpx;
+  border-bottom-left-radius: 0rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  letter-spacing: 3rpx;
+  background-image: linear-gradient(to right, #9a9ba1 0%, #ae8b9c 100%);
+}
+.action_btn_area .sure {
+  text-align: center;
+  width: 140rpx;
+  height: 80rpx;
+  line-height: 82rpx;
+  padding: 0;
+  margin: 0;
+  margin-right: -5rpx;
+  padding-left: 25rpx;
+  font-size: 25rpx;
+  color: #f4f4f4;
+  /* text-align: center; */
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 0rpx;
+  border-bottom-right-radius: 0rpx;
+  letter-spacing: 3rpx;
+  background-image: linear-gradient(to right, #8baaaa 0%, #9a9ba1 100%);
+  /* background-image: linear-gradient(to right, #ff7701 0%, #fe4800 100%); */
+}
+.auth_btn {
+  position: fixed;
+  top: 55vh; 
+  left: 10vw;
+  width: 80vw;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 25rpx;
+  color: #f4f4f4;
+  /* text-align: center; */
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  letter-spacing: 3rpx;
+  background-image: linear-gradient(to right, #ff7701 0%, #fe4800 100%);
+  
+}

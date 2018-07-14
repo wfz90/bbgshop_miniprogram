@@ -352,3 +352,41 @@ page{
     color: #fff;
     font-size: 30rpx;
 }
+.order_total_bar {
+    position: fixed;
+    left:0;
+    bottom: 0;
+    height: 100rpx;
+    width: 100%;
+    background: #fff;
+    display: flex; 
+    align-items: center;
+}
+.order_total_bar .price {
+  border: 1px sold black;
+  padding: 0 25rpx;
+  font-size: 25rpx;
+}
+.order_total_bar .price .big{
+  /* border: 1px sold black; */
+  /* padding: 0 25rpx; */
+  font-size: 46rpx;
+  color: #fc2d2d;
+  font-weight: bold;
+}
+.order_total_bar .acton {
+  /* border: 1px solid #333; */
+  position: absolute;
+  right: 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #f4f4f4;
+  width: 220rpx;
+  font-size: 30rpx;
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  background-image: linear-gradient(to right, #ff7701 0%, #fe4800 100%);
+}

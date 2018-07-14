@@ -45,7 +45,7 @@
             <!-- <view class="btn_logis" wx:if="{{item.refund_is_success === 2}}">退款拒绝</view> -->
             <view class="btn_return" data-order-price="{{item.actual_price}}" data-order-id="{{item.order_sn}}" catchtap="refundOrder" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 0}}">申请退款</view>
             <view class="btn_return" data-order-id="{{item.id}}" data-collage-type='{{item.collage_type}}' catchtap="tocollagegoods" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 2 && item.collage_is_success == 0}}">查看拼团</view>
-            <view class="btn_return" data-order-id="{{item.id}}" catchtap="tocollagegoods" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 1}}">砍价成功，待发货</view>
+            <view class="btn_return" data-order-id="{{item.id}}" catchtap="" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 1}}">砍价成功，待发货</view>
             <view class="btn_return" data-order-id="{{item.id}}" data-type='0' wx:if="{{item.order_status === 201 && item.pay_id == 3}}">中奖订单，待发货</view>
             <view class="btn_return" catchtap="collagesuccess" wx:if="{{item.order_status === 201 && item.pay_id == 2 && item.collage_is_success == 1}}">拼团成功,待发货</view>
             <view class="btn_return" wx:if="{{item.order_status === 301 && item.pay_id == 2 && item.collage_is_success == 0 && item.collage_isouttime == 1 && item.refund_is_success == 0}}">拼团失败,超时,退款流程中</view>

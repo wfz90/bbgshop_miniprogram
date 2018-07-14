@@ -37,15 +37,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '跳转中...',
+      mask: true
+    })
     console.log(options.id)
     let routee = getCurrentPages()
     console.log(routee[0].route)
     this.setData({
       route: routee[0].route
-    })
-    wx.showLoading({
-      title: '跳转中...',
-      mask: true
     })
     this.setData({
       id: options.id
@@ -55,7 +55,7 @@ Page({
   },
   getopenid(){
     wx.showLoading({
-      title: '登录检测...',
+      title: '授权检测...',
       mask: true
     })
     var that = this
@@ -116,7 +116,7 @@ Page({
 
       that.setTimeloop()
       that.checkopenid()
-      wx.hideLoading()      
+      // wx.hideLoading()      
       console.log(that.data.userInfo)
     });
   },
@@ -181,10 +181,9 @@ Page({
         console.log(that.data.userInfo_in)        
         console.log(that.data.userInfo)  
         if (that.data.userInfo.weixin_openid == that.data.userInfo_in.sessionData.openid){
-          // console.log("9999")
           that.showModal()
-          // that.sharebtn()
         }else {
+          that.hideModal()
           util.request(api.FindIsCut, {
             userInfo_in: that.data.userInfo_in,
             bargoods: that.data.bargainInfo
@@ -214,13 +213,6 @@ Page({
 
     })
     wx.hideLoading()
-    // wx.showToast({
-    //   title: '成功！',
-    //   icon: 'none',
-    //   image: '',
-    //   duration: 2000,
-    //   mask: true,
-    // })
   },
   sharebtn(){
     var that = this
@@ -283,6 +275,8 @@ Page({
   },
   islaunch(){
     var that = this
+    console.log(that.data.userInfo_in)
+    console.log(that.data.userInfo)
     util.request(api.CheckIsLaunch, {
       userInfo_in: that.data.userInfo_in,
       userInfo: that.data.userInfo,

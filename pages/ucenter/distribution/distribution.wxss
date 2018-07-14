@@ -36,21 +36,110 @@
 .show_model {
   /* flex: 1; */
   position: fixed;
-  left: 15vw;
+  left: 12vw;
   top: 35vh; 
-  width: 70vw;
+  width: 76vw;
   /* height: 50vh; */
   z-index: 2000;
+  /* border: 1px solid black; */
   border-radius: 10rpx;
   background: rgba(255, 255, 255, 1)
 }
-.show_model_title {
+.apply_dis_title {
   /* border: 1px solid black; */
+  margin: 25rpx 30rpx;
+  letter-spacing: 3rpx;
+  margin-bottom: 25rpx;
+  padding: 15rpx 0;
+  padding-bottom: 35rpx;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #f2f2f2;
+  /* color: #2eac2d; */
+}
+.apply_dis_phone_area {
+  border: 1px solid #f2f2f2; 
+  border-radius: 10rpx;
+  margin: 10rpx 30rpx;
+  padding: 15rpx 20rpx;
+  height: calc(1.4rem + 30rpx);
+  line-height: 1.4rem;
+}
+.apply_dis_phone_area_left {
+  width: 15vw;
+  /* border: 1px solid #ddd;  */
+  font-size: 24rpx;
+  height: 1.5rem;
+  line-height: 1.55rem;
+  float: left;
+}
+.apply_dis_phone_area_input {
+  width: calc(100vw - 55vw);
+   /* border: 1px solid #ddd;  */
+  font-size: 24rpx;
+  height: 1.4rem;
+  line-height: 1.45rem;
+}
+.apply_dis_code_area {
+  display: inline-block;
+  /* border: 1px solid #ddd;  */
+  /* border-radius: 10rpx; */
+  /* margin: 15rpx; */
+  /* margin-right: 30vw; */
+  /* padding: 15rpx 20rpx ; */
+  /* height: calc(1.4rem + 30rpx);
+  line-height: 1.4rem; */
+} 
+.apply_dis_code_area_left {
+  float: left; 
+  border: 1px solid #f2f2f2; 
+  border-radius: 10rpx;
+  width: 45vw;
+  margin: 15rpx 30rpx; 
+  margin-right: 25rpx;
+  /* margin-right: 30vw;  */
+  padding: 15rpx 20rpx ; 
+  height: calc(1.4rem + 30rpx); 
+  line-height: 1.4rem;
+  
+}
+.apply_dis_code_area_getbtn_area {
+  width: calc(100vw - 24vw - 30rpx - 45vw - 54rpx);
+  margin: 15rpx 0 ;
+  float: left; 
+}
+.apply_dis_code_area_getbtn {
+  font-size: 22rpx;
+  height: calc(1.4rem + 30rpx); 
+  line-height: calc(1.4rem + 30rpx);
+  background: none;
+  /* padding: 8px */
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid #27b44b; 
+  color: #27b44b;
+}
+.apply_dis_code_area_left_text {
+  width: 15vw;
+   /* border: 1px solid #ddd;  */
+  font-size: 24rpx;
+  height: 1.5rem;
+  line-height: 1.55rem;
+  float: left;
+}
+.apply_dis_code_input {
+  width: 23vw;
+  /* border: 1px solid #ddd;  */
+  font-size: 24rpx;
+  height: 1.4rem;
+  line-height: 1.45rem;
+}
+/* .show_model_title {
   border-bottom: 1px solid #eee;
-  margin: 15rpx;
+  margin: 25rpx;
   margin-bottom: 5rpx;
-  padding: 15rpx;
-  padding-bottom: 20rpx;
+  padding: 25rpx;
+  padding-bottom: 25rpx;
   text-align: center;
   font-size: 30rpx;
   letter-spacing: 1rpx;
@@ -58,32 +147,34 @@
 }
 .show_model_tip {
   font-size: 20rpx;
-  margin:0 15rpx;
-  /* margin-top: -10rpx; */
+  margin:0 25rpx;
   margin-bottom: 5rpx;
-  
 }
 .show_model_area {
   margin:0 15rpx;
-  /* border: 1px solid beige; */
-}
+} */
 .actionbuttom_area {
-  margin: 10rpx 15rpx;
-  margin-top: 30rpx;
-  height: 60rpx;
+  margin: 8rpx 30rpx;
+  /* margin-top: 20rpx; */
+  height: 70rpx;
+  margin-bottom: 25rpx;
   /* border: 1px solid black; */
 }
 .btn {
-  height: 60rpx !important;
-  line-height: 60rpx !important;
-  font-size: 25rpx;
+  height: 70rpx !important;
+  line-height: 70rpx !important;
+  font-size: 28rpx;
+  background: #06be04;
+  color: #f4f4f4;
+  letter-spacing: 2rpx;
 }
-.show_model_area_item {
-  /* border: 1px solid black; */
-  /* border-bottom: 1px solid #ccc; */
+/* .show_model_area_item {
+  le
+}
+/* .show_model_area_item {
   height: 1.4rem;
-  margin-top: 25rpx;
-  /* font-weight: normal */
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
   line-height: 1.4rem;
 
 }
@@ -91,7 +182,6 @@
   margin-top: 20rpx;
 }
 .show_model_area_item_left {
-   /* border: 1px solid black;  */
   float: left;
   height: 1.4rem;
   font-weight: bold;
@@ -99,7 +189,7 @@
   padding: 0 10rpx;
   width: 32%;
   text-align: center;
-  font-size: 26rpx;
+  font-size: 28rpx;
 }
 .show_model_area_item_right {
   display: inline-block;
@@ -108,13 +198,11 @@
   font-size: 26rpx;
 }
 .show_model_area_item_righttwo {
-  /* border: 1px solid black; */
-  /* display: inline-block; */
   float: left;
   width: 35%;
   font-weight: bold;
-  font-size: 26rpx;
-}
+  font-size: 28rpx;
+} */
 .getcodebtn {
   width: 33%;
   /* left: 2%; */

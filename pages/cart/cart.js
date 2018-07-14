@@ -16,7 +16,8 @@ Page({
     },
     isEditCart: false,
     checkedAllStatus: true,
-    editCartList: []
+    editCartList: [],
+    auth:false,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -51,37 +52,85 @@ Page({
   },
   goLogin() {
     let that = this
-    if (app.globalData.token == "") {
-      that.setData({
-        auth: false
-      })
-      wx.showToast({
-        title: '未授权！请在“我的”页点击头像授权!',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-      })
-    }else {
-      //用户已经授权过
+    try {
+      var value = wx.getStorageSync('auth')
+      console.log(value)
+      if (value) {
+        that.setData({
+          auth: true
+        })
+        that.data.cartGoods = []
+        that.data.cartTotal = []
+        util.request(api.CartList).then(function (res) {
+          if (res.errno === 0) {
+            console.log(res.data);
+            that.setData({
+              cartGoods: res.data.cartList,
+              cartTotal: res.data.cartTotal
+            });
+          }
+          that.setData({
+            checkedAllStatus: that.isCheckedAll()
+          });
+        })
+        // user.loginByWeixin().then(res => {
+        //   console.log(res)
+        //   that.setData({
+        //     userinfo: res.data
+        //   })
+        //   wx.hideLoading()
+        //   app.globalData.userInfo = res.data.userInfo;
+        //   app.globalData.token = res.data.token;
+        // })
+        // Do something with return value
+      } else {
+        that.setData({
+          auth: false
+        })
+        // that.selectjoinpeople()
+        wx.hideLoading()
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
+  },
+  bindGetUserInfo: function (e) {
+    let that = this
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+    })
+    if (e.detail.userInfo) {
+      console.log("允许授权")
+      // console.log(e.detail.userInfo)
+      try {
+        wx.setStorageSync('auth', true)
+      } catch (e) {
+      }
+      //缓存到本地已授权
       that.setData({
         auth: true
       })
-      // that.againmoty()
-      that.data.cartGoods = []
-      that.data.cartTotal = []
-      util.request(api.CartList).then(function (res) {
-        if (res.errno === 0) {
-          console.log(res.data);
-          that.setData({
-            cartGoods: res.data.cartList,
-            cartTotal: res.data.cartTotal
-          });
-        }
-
-        that.setData({
-          checkedAllStatus: that.isCheckedAll()
-        });
+      // that.getGoodsInfo()
+      user.loginByWeixin().then(res => {
+        console.log(res)
+        that.goLogin()
+        wx.hideLoading()
+        app.globalData.userInfo = res.data.userInfo;
+        app.globalData.token = res.data.token;
       })
+      //用户按了允许授权按钮
+    } else {
+      //用户按了拒绝按钮
+      console.log("拒绝授权")
+      that.setData({
+        auth: false
+      })
+      try {
+        wx.setStorageSync('auth', false)
+      } catch (e) {
+      }//缓存到本地未授权
+      wx.hideLoading()
     }
   },
   onUnload: function () {

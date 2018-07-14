@@ -83,32 +83,6 @@ Page({
     let that = this;
     console.log(that.data.addressId)
     console.log(that.data.couponId)
-    // if (that.data.couponIdid == 0){
-    //   // console.log("that")
-    //   var conpig = 1
-    //   util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: conpig }).then(function (res) {
-    //     if (res.errno === 0) {
-    //       console.log(res.data);
-    //       that.setData({
-    //         goodsidList: res.data.checkedGoodsList,
-    //         addressInfo: res.data.addressInfo,
-    //         addressId: res.data.addressId,
-    //         checkedGoodsList: res.data.checkedGoodsList,
-    //         checkedAddress: res.data.checkedAddress,
-    //         actualPrice: res.data.actualPrice,
-    //         checkedCoupon: res.data.checkedCoupon,
-    //         couponList: res.data.couponList,
-    //         couponPrice: res.data.couponPrice,
-    //         freightPrice: (res.data.freightPrice).toFixed(2),
-    //         goodsTotalPrice: (res.data.goodsTotalPrice).toFixed(2),
-    //         orderTotalPrice: res.data.orderTotalPrice
-    //       });
-    //     }
-
-    //     wx.hideLoading();
-    //   });
-
-    // }else {
     util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId }).then(function (res) {
         if (res.errno === 0) {
           console.log(res.data);
@@ -128,7 +102,9 @@ Page({
 
         }
 
-        wx.hideLoading();
+        setTimeout(() => {
+          wx.hideLoading()
+        }, 217)
       });
 
     // }

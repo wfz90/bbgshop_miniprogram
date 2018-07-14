@@ -37,6 +37,33 @@ Page({
     }
     // console.log(typec)
     // 查看是否授权
+    // try {
+    //   var value = wx.getStorageSync('key')
+    //   if (value) {
+    //     // Do something with return value
+    //   }else {
+    //     try {
+    //       wx.setStorageSync('auth', 'false')
+    //     } catch (e) {
+    //     }
+    //   }
+    // } catch (e) {
+    //   // Do something when catch error
+    // }
+    // wx.getStorage({
+    //   key: 'auth',
+    //   success: function (res) {
+    //     // console.log('存在')
+    //     console.log(res.data)
+    //   },
+    //   fail: function (res) {
+    //     // console.log('不存在')
+    //     wx.setStorage({
+    //       key: "auth",
+    //       data: "false"
+    //     })
+    //   },
+    // })
     // wx.showLoading({
     //   title: '核实中...',
     //   mask: true,
@@ -49,6 +76,10 @@ Page({
             success: function (res) {
               console.log(res.userInfo)
               //用户已经授权过
+              try {
+                wx.setStorageSync('auth', 'true')
+              } catch (e) {
+              }//缓存到本地已授权
               user.loginByWeixin().then(res => {
                 console.log(res)
                 console.log(typec)
@@ -85,44 +116,17 @@ Page({
     if (e.detail.userInfo) {
       console.log("允许授权")
       console.log(e.detail.userInfo)
+      try {
+        wx.setStorageSync('auth', 'true')
+      } catch (e) {
+      }
+        //缓存到本地已授权
       user.loginByWeixin().then(res => {
         console.log(res)
         app.globalData.userInfo = res.data.userInfo;
         app.globalData.token = res.data.token;
-      //   try {
-      //     var value = wx.getStorageSync('invitation')
-      //     console.log(value)
-      //     if (value) {
-      //       console.log("用户授权,读取本地分销缓存")
-      //       that.setData({
-      //         // Inviter_userid: JSON.parse(value)
-      //         distributionData: JSON.parse(value) || ''
-      //       })
 
-            // if (that.data.distributionData !== '') {
-            //   console.log(that.data.distributionData)
-            //   console.log(res)
-            //   util.request(api.SetInviterMaster,{
-            //     nowuser: res.data.userInfo,
-            //     pasteruser: that.data.distributionData
-            //   },'POST').then(res => {
-            //     console.log(res)
-            //   try {
-            //     wx.removeStorageSync('invitation')
-            //   } catch (e) {
-            //     // Do something when catch error
-            //   }
-            //   })
-
-            // } else {
-            //   console.log('没有分销缓存')
-            // }
-          // }
-        // } catch (e) {
-        // }
       })
-
-
       if (that.data.route == ''){
         wx.switchTab({
           url: '/pages/index/index',
@@ -131,22 +135,6 @@ Page({
           complete: function (res) { },
         })
       }else {
-
-        // if (that.data.route == 'pages/goods/goods' && that.data.distributionData !== ''){
-        //   wx.redirectTo({
-        //     url: "/" + that.data.route + '?id=' + that.data.data + '&ids=' + that.data.distributionData,
-        //     success: function (res) { 
-        //       try {
-        //         wx.removeStorageSync('invitation')
-        //       } catch (e) {
-        //         // Do something when catch error
-        //       }
-        //      }, 
-        //     fail: function (res) { },
-        //     complete: function (res) { },
-        //   })
-
-        // }else {
           wx.redirectTo({
             url: "/" + that.data.route + '?id=' + that.data.data,
             success: function (res) { },
@@ -166,6 +154,10 @@ Page({
         duration: 2000,
         mask: true,
       })
+      try {
+        wx.setStorageSync('auth', 'false')
+      } catch (e) {
+      }//缓存到本地未授权
     }
   },
 

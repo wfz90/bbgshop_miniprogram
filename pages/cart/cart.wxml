@@ -42,12 +42,23 @@
       </view>
       <view class='tip'>共 {{cartGoods.length}} 件商品</view>
     </view>
-    <view class="cart-bottom">
+    <view class='action_bottom_bar'>
+      <view class="checkbox {{checkedAllStatus ? 'checked' : ''}}" bindtap="checkedAll">全选({{cartTotal.checkedGoodsCount}})</view>
+      <view class="total">￥ <span class="big">{{!isEditCart ? cartTotal.checkedGoodsAmount : ''}}</span></view>
+      <view class='action_btn_area'>
+        <view class="{{!isEditCart ? 'edit' : 'sure'}}" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
+        <view class="delete" bindtap="deleteCart" wx:if="{{isEditCart}}">删除({{cartTotal.checkedGoodsCount}})</view>
+        <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
+    <!-- </view>  -->
+      </view>
+    </view>
+    <!-- <view class="cart-bottom">
       <view class="checkbox {{checkedAllStatus ? 'checked' : ''}}" bindtap="checkedAll">全选({{cartTotal.checkedGoodsCount}})</view>
       <view class="total">￥<span class="redprice">{{!isEditCart ? cartTotal.checkedGoodsAmount : ''}}</span></view>
       <view class="delete" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
       <view class="checkout" style='background:#909399;' bindtap="deleteCart" wx:if="{{isEditCart}}">删除所选</view>
       <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
-    </view>
+    </view> -->
   </view>
 </view>
+<button wx:if="{{!auth}}" class='auth_btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
