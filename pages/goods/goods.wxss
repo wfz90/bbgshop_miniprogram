@@ -22,7 +22,7 @@ page {
   /* border: 1px solid #000; */
   /* height: 218rpx; */
   background: #fff;
-  margin-bottom: 15rpx;
+  /* margin-bottom: 15rpx; */
 }
 .scroll_goods_info .name {
   /* border: 1px solid #000; */
@@ -65,6 +65,41 @@ page {
   /* color: #dc3022; */
   font-size: 48rpx;
   padding-right: 10rpx;
+}
+/* //商品售出等信息区域 */
+.other_goods_info {
+  /* border: 1px solid #000; */
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #fafafa;
+  height: 52rpx;
+  line-height: 52rpx;
+  background: #fff;
+  /* padding: 0rpx 15rpx; */
+  margin-bottom: 15rpx;
+}
+.other_goods_info_left {
+  width: 33.32%;
+  float: left;
+  font-size:20rpx;
+  color: #757575;
+  padding: 0 20rpx;
+  text-align: left;
+}
+.other_goods_info_middle {
+  width: 33.32%;
+  float: left;
+  font-size:20rpx;
+  color: #757575;
+  /* padding: 0 12rpx; */
+  text-align: center;
+}
+.other_goods_info_right {
+  width: 33.32%;
+  float: left;
+  font-size:20rpx;
+  color: #757575;
+  padding: 0 20rpx;
+  text-align: right;
 }
 /* 商品表格栏区域 */
 .scroll_goods_tabler {
@@ -439,7 +474,7 @@ page {
   left: 0;
   right: 0;
   background: #fff;
-  box-shadow: 0px 0px 5px #888888;
+  box-shadow: 1rpx 1rpx 20rpx 1rpx #ddd; 
 }
 .bottom_btn_area .area {
   /* border: 1px solid #000;  */

@@ -57,7 +57,7 @@
           验证码
         </view>
          <!-- <view class='apply_dis_code_area_left'>验证码</view> -->
-     <input class='apply_dis_code_input' bindinput='phoneinput' placeholder-style='font-weight:normal' placeholder='输入短信验证码'></input> 
+     <input class='apply_dis_code_input' bindinput='codeinput' placeholder-style='font-weight:normal' placeholder='输入短信验证码'></input> 
       </view>
       <view class='apply_dis_code_area_getbtn_area'>
       <button class='apply_dis_code_area_getbtn' loading="{{codeloading}}" disabled="{{codedisabled}}" bindtap='getcode'>{{sendcodetext}}</button>

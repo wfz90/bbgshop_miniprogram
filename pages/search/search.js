@@ -32,7 +32,10 @@ Page({
     });
   },
   onLoad: function () {
-
+    wx.showLoading({
+      title: '加载中...',
+      mask: true,
+    })
     this.getSearchKeyword();
   },
 
@@ -45,7 +48,16 @@ Page({
           defaultKeyword: res.data.defaultKeyword,
           hotKeyword: res.data.hotKeywordList
         });
+        wx.hideLoading()
+      }else {
+        wx.showToast({
+          title: '异常 ！',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        })
       }
+      
     });
   },
 

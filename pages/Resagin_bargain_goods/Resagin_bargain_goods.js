@@ -44,11 +44,9 @@ Page({
       mask: true,
     })
     if (options.id) {
-      // console.log(options.id)
       that.setData({
         bargain_user_table_id: options.id
       })
-      // wx.hideLoading()
       that.findBargainInfo()
     } else {
       wx.hideLoading()

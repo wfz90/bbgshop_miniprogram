@@ -66,28 +66,29 @@
        5.贝堡商城可在法律法规允许范围内对活动规则进行解释；
     </text>
   </view>
-  <!-- <view class="goods_detail">
+   <view class="goods_detail">
     <view class='goods_detail_title'>┈ 详情 ┈</view>
     <import src="../../lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
-  </view> -->
-  <view class='other_goods'>
-    <view class='other_goods_title'>┈ 其他好物 ┈</view>
-    <view class="good-grid">
-      <view class="b">
-        <block wx:for="{{otherGoods}}" wx:key="{{item.id}}">
-          <view class="item">
-            <navigator url="../goods/goods?id={{item.id}}" class="a">
-              <image class="img" src="{{item.list_pic_url}}"></image>
-              <text class="name">{{item.name}}</text>
-              <text class="price">￥{{item.retail_price}}</text>
-            </navigator>
-          </view>
-        </block>
-      </view>
-    </view>
-  </view>
+  </view> 
 </view>
+<view class='other_goods'>
+  <view class='other_goods_title'>┈ 其他好物 ┈</view>
+</view>
+<view class='currency_goods_view_item'>
+  <navigator url="/pages/goods/goods?id={{item.id}}" class="currency_goods_view_item_a" wx:for="{{otherGoods}}" wx:key="{{item.id}}">
+       <image class="currency_goods_view_item_img" src="{{item.list_pic_url}}"></image>
+       <view class="currency_goods_view_item_name">{{item.name}}</view> 
+       <view class="currency_goods_view_item_price"> 
+         <view class='currency_goods_view_item_price_left'> ￥ 
+           <span class="currency_goods_view_item_price_price">{{item.retail_price}}</span> 
+         </view> 
+         <view class='currency_goods_view_item_price_right'>已售 {{item.have_pay_num}} </view> 
+       </view>  
+     </navigator>  
+</view>
+<view class='comy_tip' style='margin-bottom:5rpx;margin-top:15rpx;'>您已经到底啦 ~ </view>
+<view class='comy_tip'  style='margin-bottom:5rpx;'>贝堡网络 提供技术支持</view>
 <button class='shall_buttom' bindtap='toIndexPage'>
   去商城首页</button>
 <view class="commodity_screen" bindtap="hideShareModal" wx:if="{{showShareModalStatus}}"></view>

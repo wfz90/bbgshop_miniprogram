@@ -44,7 +44,8 @@
     "pages/luckdraw/luckdraw",
     "pages/luckdraw_all/luckdraw_all",
     "pages/Resagin_bargain/Resagin_bargain",
-    "pages/Resagin_bargain_goods/Resagin_bargain_goods"
+    "pages/Resagin_bargain_goods/Resagin_bargain_goods",
+    "pages/ucenter/luckdraw/luckdraw"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -55,31 +56,31 @@
   "tabBar": {
     "backgroundColor": "#fafafa",
     "borderStyle": "white",
-    "selectedColor": "#b4282d",
+    "selectedColor": "#ffc20f",
     "color": "#666",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/images/ic_menu_choice_nor.png",
-        "selectedIconPath": "static/images/ic_menu_choice_pressed.png",
+        "iconPath": "image/tab_home.png",
+        "selectedIconPath": "image/tab_home_select.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/catalog/catalog",
-        "iconPath": "static/images/ic_menu_sort_nor.png",
-        "selectedIconPath": "static/images/ic_menu_sort_pressed.png",
+        "iconPath": "image/tab_catelog.png",
+        "selectedIconPath": "image/tab_catelog_select.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/cart/cart",
-        "iconPath": "static/images/ic_menu_shoping_nor.png",
-        "selectedIconPath": "static/images/ic_menu_shoping_pressed.png",
+        "iconPath": "image/tab_cart.png",
+        "selectedIconPath": "image/tab_cart_select.png",
         "text": "购物车"
       },
       {
         "pagePath": "pages/ucenter/index/index",
-        "iconPath": "static/images/ic_menu_me_nor.png",
-        "selectedIconPath": "static/images/ic_menu_me_pressed.png",
+        "iconPath": "image/tab_my.png",
+        "selectedIconPath": "image/tab_my_select.png",
         "text": "我的"
       }
     ]

@@ -166,16 +166,29 @@ lastforth() {
 },
 allmoney() {
   let that = this
-  that.setData({
-    disvalue: that.data.cancatch_all,
-    applybtndisable: false
-  })
+  if (Number(that.data.cancatch_all) == 0){
+    that.setData({
+      disvalue: that.data.cancatch_all,
+      applybtndisable: true
+    })
+  }else {
+    that.setData({
+      disvalue: that.data.cancatch_all,
+      applybtndisable: false
+    })
+  }
+  
+  // that.input_money
 },
 input_money(e) {
   let that = this
   let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
   // console.log(parseInt(e.detail.value))
   if (Number(e.detail.value) == 0) {
+    that.setData({
+      applybtndisable: true
+    })
+  } else if (Number(e.detail.value) > Number(that.data.cancatch_all)) {
     that.setData({
       applybtndisable: true
     })

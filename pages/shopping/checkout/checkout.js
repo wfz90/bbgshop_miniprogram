@@ -25,11 +25,15 @@ Page({
     couponId: 0,
     // couponIdid: 0,
     selectconponlist:[],
+    userinfo: {},
   },
   onLoad: function (options) {
     wx.showLoading({
       title: '加载中...',
     })
+    // let route = getCurrentPages()
+    // var prevPage = route[route.length - 2]
+    // console.log(prevPage)
     // 页面初始化 options为页面跳转所带来的参数
     // console.log(options.goodsid)
     // this.setData({
@@ -40,10 +44,17 @@ Page({
       // console.log(addressId)
       if (addressId != '') {
         this.setData({
-          'addressId': addressId
+          addressId: addressId
         });
       }
 
+      var userInfo = wx.getStorageSync('userInfo'); 
+      // console.log(userinfo)
+      if (userInfo) {
+        this.setData({
+          userinfo: userInfo
+        });
+      }
       // var couponId = wx.getStorageSync('couponId');
       // if (couponId) {
       //   this.setData({
@@ -54,7 +65,7 @@ Page({
       var couponId = wx.getStorageSync('couponId');
       if (couponId) {
         this.setData({
-          'couponId': couponId
+          couponId: couponId
         });
       }
     } catch (e) {
@@ -83,7 +94,8 @@ Page({
     let that = this;
     console.log(that.data.addressId)
     console.log(that.data.couponId)
-    util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId }).then(function (res) {
+    // console.log(that.data.userinfo)
+    util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId, userId: that.data.userinfo.id },'POST').then(function (res) {
         if (res.errno === 0) {
           console.log(res.data);
           that.setData({
@@ -94,12 +106,11 @@ Page({
             // checkedCoupon: res.data.checkedCoupon,
             couponList: res.data.couponList,
             couponPrice: res.data.couponPrice,
-            freightPrice: (res.data.freightPrice).toFixed(2),
+            freightPrice: res.data.freightPrice,
             goodsTotalPrice: (res.data.goodsTotalPrice).toFixed(2),
             orderTotalPrice: res.data.orderTotalPrice
           });
           console.log(that.data.checkedGoodsList)
-
         }
 
         setTimeout(() => {
@@ -177,7 +188,14 @@ Page({
     // 页面渲染完成
     // console.log(this.data.checkedAddress)
     // console.log(this.data.couponIdid)
-   
+    // let that = this
+    // setTimeout(() => {
+    //   if (that.data.checkedGoodsList.length == 0) {
+    //     wx.navigateBack({
+    //       delta: 1,
+    //     })
+    //   }
+    // },5000)
   },
   onShow: function () {
     // 页面显示
@@ -255,7 +273,7 @@ Page({
     })
     console.log(this.data.checkedGoodsList)
     console.log(this.data.actualPrice)
-    util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId, postscript: this.data.freetext, GoodsList: this.data.checkedGoodsList}, 'POST').then(res => {
+    util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId, postscript: this.data.freetext, freightPrice: this.data.freightPrice, GoodsList: this.data.checkedGoodsList}, 'POST').then(res => {
       console.log(res)
       if (res.errno === 0) {
         console.log(res.data.orderInfo);

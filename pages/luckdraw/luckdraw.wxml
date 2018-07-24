@@ -8,9 +8,10 @@
 </swiper>
   <view class='luck_loop_desp'>
     <view class='luck_loop_desp_name'>奖品 ： {{luckmain.luck_goods_name}}</view>
+    <view class='luck_loop_desp_price'>价值：￥<span class="big" >{{luckmain.luck_goods_price}}</span></view>
     <view class='luck_loop_desp_time'>
       <span class="time_left">开奖时间 ： {{luckmain.open_local_time}}</span>
-      <span class="time_right"> 共 x{{luckmain.luck_goods_num}} 件奖品</span>
+      <span class="time_right"> 共 x{{luckmain.luck_goods_num}} 件奖品 </span>
     </view>
   </view>
   <view class='detail_title'>┈ 商品详情 ┈</view>

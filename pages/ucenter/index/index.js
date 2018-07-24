@@ -140,6 +140,21 @@ Page({
       complete: function(res) {},
     })
   },
+  jumpOrderIndex(e) {
+    let tab = e.currentTarget.dataset.index
+    let route = e.currentTarget.dataset.route
+    try {
+      wx.setStorageSync('tab', tab);
+    } catch (e) {
+
+    }
+    wx.navigateTo({
+      url: route,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
   exitLogin: function () {
     wx.showModal({
       title: '',

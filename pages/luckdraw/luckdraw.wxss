@@ -33,27 +33,44 @@
   font-weight: bold;
 }
 .luck_loop_desp {
-  /* border: 1px solid black; */
+   /* border: 1px solid black;  */
   /* height: 106rpx; */
-  padding: 10rpx 12rpx;
-  border-bottom: 1px solid #f4f4f4;
+  padding: 10rpx 14rpx;
+  border-bottom: 1px solid #fafafa;
 }
 .luck_loop_desp_name {
-  /* border: 1px solid black; */
-  line-height: 40rpx;
-  text-indent: 2em;
+   /* border: 1px solid black;  */
+  /* margin-top: 15rpx; */
+  padding: 15rpx 0;
+  line-height: 56rpx;
+  text-indent: 0.25em;
   /* min-height: 70rpx; */
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
-  font-size: 30rpx;
+  font-size: 35rpx;
+  font-weight: bold;
+}
+.luck_loop_desp_price {
+  /* border: 1px solid black; */
+  font-size: 22rpx;
+  color: #757575;
+  text-align: right;
+  margin-top: -22rpx;
+  border-bottom: 1px solid #fafafa;
+}
+.luck_loop_desp_price .big {
+  font-size: 45rpx;
+  color: #ff5566;
+  font-weight: bold;
 }
 .luck_loop_desp_time {
-  /* border: 1px solid black; */
-  margin-top: 15rpx;
-  font-size: 20rpx;
+   /* border: 1px solid black;  */
+  /* margin-top: 5rpx; */
+  padding-top: 15rpx;
+  font-size: 22rpx;
   color: #757575;
 }
 .time_left {

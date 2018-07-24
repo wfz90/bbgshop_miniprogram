@@ -9,7 +9,8 @@ Page({
     scrollLeft: 0,
     scrollTop: 0,
     goodsCount: 0,
-    scrollHeight: 0
+    scrollHeight: 0,
+    showSkeleton: false,
   },
   onLoad: function (options) {
     this.getCatalog();
@@ -70,9 +71,6 @@ Page({
     wx.showLoading({
       title: '获取中...',
       mask: true,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
     })
     var that = this;
     var currentTarget = event.currentTarget;

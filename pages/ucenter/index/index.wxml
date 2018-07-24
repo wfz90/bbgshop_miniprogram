@@ -1,107 +1,171 @@
-<view class="container">
+<!-- <view class="container">
   <view class="profile-info" bindtap="goLogin">
     <image class="avatar" src="{{userInfo.avatar}}"></image>
     <view class="info">
       <text class="name">{{userInfo.nickname}}</text>
-      <!-- <text class="level">{{userInfo.username}}</text> -->
     </view>
   </view>
-
   <view class="user-menu">
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/order/order'>
       <view class="a">
-        <text class="icon order"></text>
+        <image class="icon" src='../../../image/ucenter_order.png'></image>
         <text class="txt">我的订单</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/coupon/coupon'>
       <view class="a">
-        <text class="icon coupon"></text>
+        <image class="icon" src='../../../image/ucenter_coupon.png'></image>
         <text class="txt">我的优惠券</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/collect/collect'>
       <view class="a">
-        <text class="icon gift"></text>
+        <image class="icon" src='../../../image/ucenter_collect.png'></image>
         <text class="txt">我的收藏</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='../address/address'>
       <view class="a">
-        <text class="icon address"></text>
+        <image class="icon" src='../../../image/ucenter_address.png'></image>
         <text class="txt">地址管理</text>
       </view>
     </view>
-
-    <!-- <view class="item no-border">
-      <navigator url="url" class="a">
-        <text class="icon kefu"></text>
-        <text class="txt">会员福利</text>
-      </navigator>
-    </view> -->
-
     <view class="item" bindtap='jumpPage' data-route='../bingphone/bingphone'>
       <view class="a">
-        <text class="icon security"></text>
+        <image class="icon" src='../../../image/ucenter_bingphone.png'></image>
         <text class="txt">绑定手机</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/footprint/footprint'>
       <view class="a">
-        <text class="icon help"></text>
+        <image class="icon" src='../../../image/ucenter_footprint.png'></image>
         <text class="txt">我的足迹</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='../customer/customer'>
       <view class="a">
-        <text class="icon kefu"></text>
+        <image class="icon" src='../../../image/ucenter_constrem.png'></image>
         <text class="txt">联系客服</text>
       </view>
     </view>
-    <!-- <view class="item ">
-      <navigator url="../helpcenter/helpcenter" class="a">
-        <text class="icon help"></text>
-        <text class="txt">帮助中心</text>
-      </navigator>
-    </view> -->
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/feedback/feedback'>
       <view class="a">
-        <text class="icon feedback"></text>
+        <image class="icon" src='../../../image/ucenter_feedback.png'></image>
         <text class="txt">意见反馈</text>
       </view>
     </view>
-    <!-- <view class="item">
-      <navigator url="/pages/bargain/bargain" class="a">
-        <text class="icon coupon"></text>
-        <text class="txt">砍价</text>
-      </navigator>
-    </view> -->
     <view class="item" bindtap='jumpPage' data-route='/pages/Resagin_bargain/Resagin_bargain'>
       <view class="a">
-        <text class="icon coupon"></text>
+        <image class="icon" src='../../../image/ucenter_bargain.png'></image>
         <text class="txt">砍价</text>
       </view>
     </view>
      <view class="item" bindtap='jumpPage' data-route='/pages/couponCenter/couponcenter'>
       <view class="a">
-        <text class="icon coupon"></text>
+        <image class="icon" src='../../../image/ucenter_couponcenter.png'></image>
         <text class="txt">领券中心</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='/pages/ucenter/distribution/distribution'>
       <view class="a">
-        <text class="icon coupon"></text>
+        <image class="icon" src='../../../image/ucenter_distribution.png'></image>     
         <text class="txt">分销中心</text>
       </view>
     </view>
     <view class="item" bindtap='jumpPage' data-route='../bingbankcard/bingbankcard'>
       <view class="a">
-        <text class="icon security"></text>
+        <image class="icon" src='../../../image/ucenter_bank.png'></image>      
         <text class="txt">绑定银行卡</text>
       </view>
     </view>
   </view>
-
-  <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
+</view> -->
+<image class='index_top_area' bindtap="goLogin" >
+  <image class='index_top_avatar' src="{{userInfo.avatar}}"></image>
+  <view class='index_top_nickname'>{{userInfo.nickname}}</view>
+  <view class='index_top_desc' wx:if="{{userInfo.mobile && userInfo.mobile !== 0}}">{{userInfo.mobile}}</view>
+  <!-- <view class='index_top_desc' wx:if="{{!userInfo.mobile || userInfo.mobile == 0}}">用户未绑定手机号</view> -->
+</image>
+<view class='order_middle_area'>
+  <view class='order_middle_row' bindtap='jumpPage' data-route='/pages/ucenter/order/order'>
+    <view class='order_middle_row_left'>我的订单</view>
+    <image class='order_middle_row_right' src='../../../image/arrows.png'></image>
+  </view>
+  <view class='order_middle_column'>
+    <view class='order_middle_column_item' bindtap='jumpOrderIndex' data-index='0' data-route='/pages/ucenter/order/order'>
+      <image class='order_middle_column_item_image' src='../../../image/1.png'></image>
+      <view class='order_middle_column_item_text'>待付款</view>
+    </view>
+    <view class='order_middle_column_item' bindtap='jumpOrderIndex' data-index='1' data-route='/pages/ucenter/order/order'>
+      <image class='order_middle_column_item_image' src='../../../image/2.png'></image>
+      <view class='order_middle_column_item_text'>待发货</view>
+    </view>
+    <view class='order_middle_column_item' bindtap='jumpOrderIndex' data-index='2' data-route='/pages/ucenter/order/order'>
+      <image class='order_middle_column_item_image' src='../../../image/3.png'></image>
+      <view class='order_middle_column_item_text'>待收货</view>
+    </view>
+    <view class='order_middle_column_item' bindtap='jumpOrderIndex' data-index='3' data-route='/pages/ucenter/order/order'>
+      <image class='order_middle_column_item_image' src='../../../image/4.png'></image>
+      <view class='order_middle_column_item_text'>已完成</view>
+    </view>
+    <view class='order_middle_column_item' bindtap='jumpOrderIndex' data-index='4' data-route='/pages/ucenter/order/order'>
+      <image class='order_middle_column_item_image' src='../../../image/5.png'></image>
+      <view class='order_middle_column_item_text'>退款/售后</view>
+    </view>
+  </view>
+</view>
+<view class='box_middle_tip'>
+  <view class='order_middle_row_left'>其他服务</view>
+    <!-- <image class='order_middle_row_right transformd' src='../../../image/arrows.png' ></image> -->
+</view>
+<view class='box_bottom_area'>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/coupon/coupon'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_coupon.png'></image>
+    <view class='box_bottom_item_text'>我的优惠券</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='../address/address'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_address.png'></image>
+    <view class='box_bottom_item_text'>地址管理</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/collect/collect'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_collect.png'></image>
+    <view class='box_bottom_item_text'>我的收藏</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/footprint/footprint'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_footprint.png'></image>
+    <view class='box_bottom_item_text'>我的足迹</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='../bingphone/bingphone'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_bingphone.png'></image>
+    <view class='box_bottom_item_text'>绑定手机</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='../bingbankcard/bingbankcard'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_bank.png'></image>
+    <view class='box_bottom_item_text'>绑定银行卡</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/Resagin_bargain/Resagin_bargain'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_bargain.png'></image>
+    <view class='box_bottom_item_text'>砍价</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/luckdraw/luckdraw'>
+    <image class='box_bottom_item_image' src='../../../image/lucky.png'></image>
+    <view class='box_bottom_item_text'>抽奖</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/distribution/distribution'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_distribution.png'></image>
+    <view class='box_bottom_item_text'>分销中心</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/couponCenter/couponcenter'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_couponcenter.png'></image>
+    <view class='box_bottom_item_text'>领券中心</view>
+  </view>
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='/pages/ucenter/feedback/feedback'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_feedback.png'></image>
+    <view class='box_bottom_item_text'>意见反馈</view>
+  </view> 
+  <view class='box_bottom_item' bindtap='jumpPage' data-route='../customer/customer'>
+    <image class='box_bottom_item_image' src='../../../image/ucenter_constrem.png'></image>
+    <view class='box_bottom_item_text'>联系客服</view>
+  </view>
 </view>
 <button wx:if="{{!auth}}" class='auth_btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"></button>

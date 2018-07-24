@@ -35,10 +35,13 @@ page {
 }
 
 .catalog .nav .item.active {
-  color: #ab2b2b;
+  color: #ff990f;
   font-size: 34.5rpx;
   font-weight: bold;
-  border-left: 6rpx solid #ab2b2b;
+  /* padding-left: 12rpx; */
+  border-left: 6rpx solid #ff990f;
+  /* border-bottom: 6rpx solid #ff990f; */
+  /* border-top: 6rpx solid #ff990f; */
 }
 
 .catalog .cate {

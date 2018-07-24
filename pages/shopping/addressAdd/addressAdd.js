@@ -277,37 +277,89 @@ Page({
     let that = this;
     let address = this.data.address;
     // console.log(that.data.address.district_id)
-    if (that.data.address.name == '') {
-      util.showErrorToast('请输入姓名');
+    if (!that.data.address.name) {
+      wx.showToast({
+        title: '请输入姓名 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else if (that.data.address.name && that.data.address.name == '') {
+      wx.showToast({
+        title: '请输入姓名 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
     if (typeof (address.district_id) == "undefined" || address.district_id == 0) {
-      util.showErrorToast('请输入省市区');
+      wx.showToast({
+        title: '请输入省市区 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
 
-    if (that.data.address.full_region == '') {
-      util.showErrorToast('请输入详细地址');
+    if (!that.data.address.address) {
+      wx.showToast({
+        title: '请输入详细地址 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else if (that.data.address.address && that.data.address.address == '') {
+      wx.showToast({
+        title: '请输入详细地址 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
 
-    if (that.data.address.mobile == '') {
-        util.showErrorToast('请输入手机号码');
+    if (!that.data.address.mobile) {
+      wx.showToast({
+        title: '请输入手机号码 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
-    } else if (that.data.address.mobile.length > 11){
-      util.showErrorToast('手机号码错误！');
+    } else if (that.data.address.mobile && (that.data.address.mobile == '' || that.data.address.mobile.length == 0)) {
+      wx.showToast({
+        title: '请输入手机号码 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
-    }else {
+    } else if (that.data.address.mobile && that.data.address.mobile.length > 11) {
+      wx.showToast({
+        title: '手机号码错误 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else {
       util.request(api.BingPhoneText, {
         Phone: that.data.address.mobile
       }, 'POST').then(function (res) {
         console.log(res)
-        if (res.errno === 1001){
-          util.showErrorToast('手机号格式错误');
-           return false;
-        }else {
-
-          
+        if (res.errno === 1001) {
+          wx.showToast({
+            title: '手机号格式错误 ！',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+          })
+          return false;
+        } else {
           util.request(api.AddressSave, {
             id: address.id,
             name: that.data.address.name,

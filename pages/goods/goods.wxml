@@ -14,72 +14,81 @@
       <view class='extra_price'>￥{{goods.extra_price}}</view>
     </view>
   </view>
-  <view class="scroll_goods_tabler" bindtap='checkpower' data-type='0'>
-    <view class="text">选择：{{checkedSpecText}}</view>
-    <image class="arrow" src="../../static/images/address_right.png" background-size="cover"></image>
-  </view>
-  <view class="scroll_goods_tabler" style='border-bottom: 1px solid #fafafa;' bindtap='toindex' data-type='0'>
-    <image src="../../image/logo.png" class='scroll_goods_tabler_logo'></image>
-    <view class="scroll_goods_tabler_text">贝堡全球购</view>
-    <image class="scroll_goods_tabler_arrow" src="../../static/images/address_right.png" background-size="cover"></image>
-  </view>
-  <view class='scroll_goods_comments' wx:if="{{comment.count > 0}}">
-    <navigator url="../comment/comment?goodsid={{goods.id}}" class='comment_count_title'>
-      <view class='title_count'>评价({{comment.count > 999 ? '999+' : comment.count}})</view>
-      <view class='see_all'>查看全部</view>
-    </navigator>
-    <view class='comment_user_area'>
-      <image class='user_avatar' src="{{comment.data.avatar}}"></image>
-      <view class='user_nickname'>{{comment.data.nickname}}</view>
-      <view class="add_time">{{comment.data.add_time}}</view>
+  <view class='other_goods_info'>
+    <view class='other_goods_info_left'>运费 ￥{{goods.freight_price}} </view>
+    <view class='other_goods_info_middle'>已售 {{goods.have_pay_num}} </view>
+    <view class='other_goods_info_right'>库存 {{goods.goods_number
+      <=0 ? 1 : goods.goods_number}} </view>
     </view>
-    <view class="comment_content">
-      {{comment.data.content}}
+    <view class="scroll_goods_tabler" bindtap='checkpower' data-type='0'>
+      <view class="text">选择：{{checkedSpecText}}</view>
+      <image class="arrow" src="../../static/images/address_right.png" background-size="cover"></image>
     </view>
-    <view class="comment_image_area" wx:if="{{comment.data.pic_list.length > 0}}">
-      <image class="comment_image_area_img" wx:for="{{comment.data.pic_list}}" wx:key="{{item.id}}" src="{{item.pic_url}}"></image>
+    <view class="scroll_goods_tabler" style='border-bottom: 1px solid #fafafa;' bindtap='toindex' data-type='0'>
+      <image src="../../image/logo.png" class='scroll_goods_tabler_logo'></image>
+      <view class="scroll_goods_tabler_text">贝堡全球购</view>
+      <image class="scroll_goods_tabler_arrow" src="../../static/images/address_right.png" background-size="cover"></image>
     </view>
-  </view>
-  <view class="scroll_goods_detail">
-    <view class="title">┈ 商品详情 ┈</view>
-  </view>
-  <import src="../../lib/wxParse/wxParse.wxml" />
-  <view class="detail">
-    <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
-  </view>
-  <view class="goods_problem">
-    <view class="h">
-      <view class="line"></view>
-      <text class="title">常见问题</text>
+    <view class='scroll_goods_comments' wx:if="{{comment.count > 0}}">
+      <navigator url="../comment/comment?goodsid={{goods.id}}" class='comment_count_title'>
+        <view class='title_count'>评价({{comment.count > 999 ? '999+' : comment.count}})</view>
+        <view class='see_all'>查看全部</view>
+      </navigator>
+      <view class='comment_user_area'>
+        <image class='user_avatar' src="{{comment.data.avatar}}"></image>
+        <view class='user_nickname'>{{comment.data.nickname}}</view>
+        <view class="add_time">{{comment.data.add_time}}</view>
+      </view>
+      <view class="comment_content">
+        {{comment.data.content}}
+      </view>
+      <view class="comment_image_area" wx:if="{{comment.data.pic_list.length > 0}}">
+        <image class="comment_image_area_img" wx:for="{{comment.data.pic_list}}" wx:key="{{item.id}}" src="{{item.pic_url}}"></image>
+      </view>
     </view>
-    <view class="b">
-      <view class="item" wx:for="{{issueList}}" wx:key="{{item.id}}">
-        <view class="question-box">
-          <text class="spot"></text>
-          <text class="question">{{item.question}}</text>
-        </view>
-        <view class="answer">
-          {{item.answer}}
+    <view class="scroll_goods_detail">
+      <view class="title">┈ 商品详情 ┈</view>
+    </view>
+    <import src="../../lib/wxParse/wxParse.wxml" />
+    <view class="detail">
+      <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
+    </view>
+    <view class="goods_problem">
+      <view class="h">
+        <view class="line"></view>
+        <text class="title">常见问题</text>
+      </view>
+      <view class="b">
+        <view class="item" wx:for="{{issueList}}" wx:key="{{item.id}}">
+          <view class="question-box">
+            <text class="spot"></text>
+            <text class="question">{{item.question}}</text>
+          </view>
+          <view class="answer">
+            {{item.answer}}
+          </view>
         </view>
       </view>
     </view>
-  </view>
-  <view class="goods_problem" wx:if="{{relatedGoods.length > 0}}">
-    <view class="h" style='margin-bottom:5rpx;'>
-      <view class="line"></view>
-      <text class="title">大家都在看</text>
+    <view class="goods_problem" wx:if="{{relatedGoods.length > 0}}">
+      <view class="h" style='margin-bottom:5rpx;'>
+        <view class="line"></view>
+        <text class="title">大家都在看</text>
+      </view>
+      <view class="currency_goods_view_item" wx:if="{{relatedGoods.length > 0}}">
+        <navigator url="/pages/goods/goods?id={{item.id}}" class="currency_goods_view_item_a" wx:for="{{relatedGoods}}" wx:key="{{item.id}}">
+          <image class="currency_goods_view_item_img" src="{{item.list_pic_url}}"></image>
+          <view class="currency_goods_view_item_name">{{item.name}}</view>
+          <view class="currency_goods_view_item_price">
+            <view class='currency_goods_view_item_price_left'> ￥
+              <span class="currency_goods_view_item_price_price">{{item.retail_price}}</span>
+            </view>
+            <view class='currency_goods_view_item_price_right'>已售 {{item.have_pay_num}} </view>
+          </view>
+        </navigator>
+      </view>
     </view>
-    <view class="currency_goods_view_item" wx:if="{{relatedGoods.length > 0}}">
-      <navigator url="/pages/goods/goods?id={{item.id}}" class="currency_goods_view_item_a" wx:for="{{relatedGoods}}" wx:key="{{item.id}}">
-        <image class="currency_goods_view_item_img" src="{{item.list_pic_url}}"></image>
-        <view class="currency_goods_view_item_name">{{item.name}}</view>
-        <view class="currency_goods_view_item_price">￥
-          <span class="currency_goods_view_item_price_price">{{item.retail_price}}</span>
-        </view>
-      </navigator>
-    </view>
-  </view>
-  <view class='comy_tip'>贝堡网络 提供技术支持</view>
+    <view class='comy_tip'>贝堡网络 提供技术支持</view>
 </scroll-view>
 <view class='bottom_btn_area'>
   <view class='area customer' bindtap='openCustomerPage'>

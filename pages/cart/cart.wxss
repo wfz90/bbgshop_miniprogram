@@ -373,7 +373,9 @@ page{
   left:0;
   height: 100rpx;
   width: 100%;
-  background: #fff;
+  background: #fafafa; 
+  box-shadow: 1rpx 1rpx 20rpx 1rpx #ddd;
+  border-bottom: 1px solid #eee;
   display: flex;
 }
 .action_bottom_bar .checkbox {

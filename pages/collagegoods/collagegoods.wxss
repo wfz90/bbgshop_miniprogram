@@ -1,6 +1,6 @@
 /* pages/collagegoods/collagegoods.wxss */
 page {
-  background: #eee;
+  /* background: #eee; */
 }
 .all {
   /* position: relative; */
@@ -278,18 +278,17 @@ page {
  border: 1px solid #000;
 } */
 .other_goods {
-  /* background: #fff; */
-  /* border: 1px solid black; */
-  /* background: #eee; */
-  /* text-align: left; */
+  /* border: 1px solid #000; */
+  width: 100%;
+  background: #eee;
+  margin-bottom: 15rpx;
 }
 .other_goods_title {
+  height: 68rpx;
+  line-height: 68rpx;
   text-align: center;
-   font-size: 38rpx;
-   color: #757575;
-   background: #fff;
-   padding-bottom: 15rpx;
-   margin-bottom: 5rpx;
+  font-size: 38rpx;
+  background: #fff;
 }
 /* .other_goods_pice {
    float: left; 
@@ -492,40 +491,35 @@ button[plain]{
   line-height: 34rpx;
   font-size: 19rpx;
 }
-.other_action_btnarea {
-  position: fixed;
-  right: 5vw;
-  bottom: 7vw;
-  height: 128rpx;
-  /* width: 300rpx; */
-  
-  /* border: 1px solid #000; */
-  z-index: 1999;
-}
 .other_action_toindex {
+   position: fixed;
+  z-index: 1999;
+  /* border: 1px solid #333; */
+  bottom: 120rpx;
+  right: 20rpx;
   font-size: 22rpx;
-  color: #e73700;
-  padding: 0 25rpx;
-  /* width: 100%; */
-  height: 56rpx;
-  line-height: 56rpx;
-  text-align: center;
-  background: #fff466;
-  font-weight: bold;
-  border-radius: 22rpx;
-  box-shadow: 0px -0px 1px 1px #fffddd inset;
+  padding: 5rpx 15rpx;
+  border-radius: 12rpx;
+  color: #f4f4f4;
+  height:44rpx;
+  line-height:34rpx;
+  /* font-weight: bold; */
+  background: rgba(244, 67, 54, .8);
+  letter-spacing: 1rpx;
 }
 .other_action_tobargain {
+  position: fixed;
+  z-index: 1999;
+  /* border: 1px solid #333; */
+  bottom: 65rpx;
+  right: 20rpx;
   font-size: 22rpx;
-  color: #e73700;
-  margin-top: 10rpx;
-  padding: 0 25rpx;
-  /* width: 100%; */
-  height: 56rpx;
-  line-height: 56rpx;
-  text-align: center;
-  background: #fff466;
-  font-weight: bold;
-  border-radius: 22rpx;
-  box-shadow: 0px -0px 1px 1px #fffddd inset;
+  padding: 5rpx 15rpx;
+  border-radius: 12rpx;
+  color: #f4f4f4;
+  height:44rpx;
+  line-height:34rpx;
+  /* font-weight: bold; */
+  background: rgba(244, 67, 54, .8);
+  letter-spacing: 1rpx;
 }

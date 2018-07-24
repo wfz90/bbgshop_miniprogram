@@ -76,26 +76,29 @@
        4.贝堡商城可在法律法规允许范围内对活动规则进行解释；
     </text>
   </view>
-  <!-- <view class="goods_detail">
+   <view class="goods_detail">
     <view class='goods_detail_title'>┈ 详情 ┈</view>
     <import src="../../lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
-  </view> -->
-  <view class='other_goods_title'>┈ 其他好物 ┈</view>
-  <view class='other_goods'>
-  <!-- 213657895204 -->
-     <view class="currency_goods_view_item" wx:if="{{otherGoods.length > 0}}">
-      <navigator class="currency_goods_view_item_a {{(iindex + 1) % 2 == 0 ? 'currency_goods_view_item_b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{otherGoods}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="{{iitem.id}}" wx:key="{{iitem.id}}">
-         <image class="currency_goods_view_item_img" src="{{iitem.list_pic_url}}"></image> 
-        <view class="currency_goods_view_item_name">{{iitem.name}}</view> 
-        <view class="currency_goods_view_item_price">￥
-          <span class="currency_goods_view_item_price_price">{{iitem.retail_price}}</span>
-        </view> 
-      </navigator>
-    </view> 
-    
-  </view>
+  </view> 
 </view>
+<view class='other_goods'>
+  <view class='other_goods_title'>┈ 其他好物 ┈</view>
+</view>
+<view class='currency_goods_view_item'>
+  <navigator url="/pages/goods/goods?id={{item.id}}" class="currency_goods_view_item_a" wx:for="{{otherGoods}}" wx:key="{{item.id}}">
+       <image class="currency_goods_view_item_img" src="{{item.list_pic_url}}"></image>
+       <view class="currency_goods_view_item_name">{{item.name}}</view> 
+       <view class="currency_goods_view_item_price"> 
+         <view class='currency_goods_view_item_price_left'> ￥ 
+           <span class="currency_goods_view_item_price_price">{{item.retail_price}}</span> 
+         </view> 
+         <view class='currency_goods_view_item_price_right'>已售 {{item.have_pay_num}} </view> 
+       </view>  
+     </navigator>  
+</view>
+<view class='comy_tip' style='margin-bottom:5rpx;margin-top:15rpx;'>您已经到底啦 ~ </view>
+<view class='comy_tip'  style='margin-bottom:5rpx;'>贝堡网络 提供技术支持</view>
 
 <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
 <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
@@ -131,10 +134,13 @@
  <view class='bottom_reltext'>
   贝堡网络提供技术支持
 </view> -->
-<view class='bottom_text'>
+<!-- <view class='bottom_text'>
   贝堡网络 提供技术支持
-</view>
-<view class='other_action_btnarea'>
+</view> -->
+<view class='other_action_toindex' bindtap='toindex'>去商城首页</view>
+<view class='other_action_tobargain' bindtap='tocollage'>我也要发起拼团</view>
+
+<!-- <view class='other_action_btnarea'>
   <view class='other_action_toindex' bindtap='toindex'>去商城首页</view>
   <view class='other_action_tobargain' bindtap='tocollage'>我也要发起拼团</view>
-</view>
+</view> -->

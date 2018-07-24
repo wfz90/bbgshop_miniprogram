@@ -884,7 +884,7 @@ Page({
           console.log(res)
           let obj = {}
           obj = res
-          obj.img = "https://resource.bbgshop.com" + res.imageURL
+          obj.img = "http://resource.bbgshop.com" + res.imageURL
           that.data.refund_uploadimg.push(obj)
           that.setData({
             refund_uploadimg: that.data.refund_uploadimg

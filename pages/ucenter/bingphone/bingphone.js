@@ -150,6 +150,7 @@ Page({
   checked: function () {
     var that = this
     console.log(that.data.truesode)
+    console.log(that.data.inputMobile)
     if (that.data.inputcode == '') {
       util.showErrorToast('验证码为空！');
     } else {
@@ -163,9 +164,11 @@ Page({
           util.showErrorToast('验证码错误！');
         }else {
         //  console.log("124879")
+        console.log(that.data.inputMobile)
           util.request(api.BingPhoneBing,{
             bingphone: that.data.inputMobile,
-          }).then(function(res){
+            userid: that.data.userinfo.id
+          },'POST').then(function(res){
             console.log(res)
             if ( res.data.Findresult === 1){
               wx.showToast({

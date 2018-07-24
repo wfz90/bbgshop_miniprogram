@@ -1,6 +1,6 @@
 /**app.wxss**/
 page {
-  height: 100%;
+  /* height: 100%; */
   /* font-family: "HYShiGuangTiW"; */
    font-family: PingFangSC-Light,helvetica,'Heiti SC'; 
   /* font-variant: small-caps; */
@@ -155,21 +155,27 @@ view,text{
   background: #eee;
 }
 .currency_goods_view_item {
-  /* border: 1px solid black; */
-  height: auto; 
+   /* border: 1px solid black;  */
+   /* margin-top: 5rpx; */
+  height: auto;  
   text-align: center;
-  /* background: #eee; */
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* height: 300rpx; */
+   background: #f4f4f4; 
   /* width: 750rpx; */
 }
 .currency_goods_view_item_a {
-   /* border: 1px solid black;  */
-  float: left;
+    /* border: 1px solid black;   */
+  /* float: left; */
   width: 49%;
   border-radius: 10rpx;
-  /* height: 510rpx; */
+  height: 515rpx; 
   background: #fff;
   margin-left: 0.68%; 
-  margin-bottom: 4.75rpx;
+  margin-bottom: 2.75rpx;
+  margin-top: 2.75rpx;
 }
 .currency_goods_view_item_b {
   /* border: 1px solid black;
@@ -202,13 +208,29 @@ view,text{
 }
 .currency_goods_view_item_price {
   /* border: 1px solid black; */
-  width: 100%;
-  color: #dc3022;
+  width: 88%;
   font-weight: bold;
+  color: #dc3022;
   font-size: 22rpx;
   padding-bottom: 8rpx;
+  margin: auto;
+  height: 56rpx;
+  line-height: 56rpx;
   /* ma */
   /* margin-top: 15.25rpx; */
+}
+/* .currency_goods_view_item_price  */
+.currency_goods_view_item_price_left {
+  float: left;
+  color: #dc3022;
+}
+.currency_goods_view_item_price_right {
+  float: right;
+  /* width: 50%; */
+  /* height: 56rpx; */
+  line-height: 70rpx;
+  color: #aaa;
+  font-size: 16rpx;
 }
 .currency_goods_view_item_price_price {
   font-size: 35rpx;

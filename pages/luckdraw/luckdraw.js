@@ -99,9 +99,8 @@ Page({
         that.setData({
           luckmain: res.data.luckmain
         })
-        WxParse.wxParse('goodsDetail', 'html', res.data.luckmain.luck_goods_detail, that);
         that.setTime()
-        
+        WxParse.wxParse('goodsDetail', 'html', res.data.luckmain.luck_goods_detail, that);
       }
     })
   },
@@ -157,7 +156,7 @@ Page({
       console.log("允许授权")
       // console.log(e.detail.userInfo)
       try {
-        wx.setStorageSync('auth', 'true')
+        wx.setStorageSync('auth', true)
       } catch (e) {}
       //缓存到本地已授权
       that.setData({
@@ -182,7 +181,7 @@ Page({
         auth: false
       })
       try {
-        wx.setStorageSync('auth', 'false')
+        wx.setStorageSync('auth', false)
       } catch (e) {} //缓存到本地未授权
       wx.hideLoading()
     }
@@ -235,7 +234,7 @@ Page({
       mask: true,
     })
     let that = this
-    if (that.data.auth) {
+    // if (that.data.auth) {
       // if (that.data.luckmain.have_join_people_num >= that.data.luckmain.luck_people_num) {
       //   wx.hideLoading()
       //   wx.showToast({
@@ -296,21 +295,21 @@ Page({
         }
       })
       // }
-    } else {
-      wx.navigateTo({
-        url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/luckdraw/luckdraw' + "&data=" + that.data.id,
-        success: function(res) {
-          wx.showToast({
-            title: '您未授权 ！',
-            icon: 'none',
-            duration: 1000,
-            mask: true,
-          })
-        },
-        fail: function(res) {},
-        complete: function(res) {},
-      })
-    }
+    // } else {
+    //   wx.navigateTo({
+    //     url: '/pages/AwxChageUserInfoGet/wxChageUserInfoGet?route=' + 'pages/luckdraw/luckdraw' + "&data=" + that.data.id,
+    //     success: function(res) {
+    //       wx.showToast({
+    //         title: '您未授权 ！',
+    //         icon: 'none',
+    //         duration: 1000,
+    //         mask: true,
+    //       })
+    //     },
+    //     fail: function(res) {},
+    //     complete: function(res) {},
+    //   })
+    // }
   },
   seeall_joiner() {
     let that = this
@@ -364,7 +363,9 @@ Page({
       fail: function(res) {},
       complete: function(res) {},
     })
-    util.request(api.BarAddressList).then(res => {
+    util.request(api.AfterBargainSuccessAdressList,{
+      userId: that.data.userinfo.userInfo.id
+    },'POST').then(res => {
       console.log(res)
       that.setData({
         addressList: res.data
@@ -377,7 +378,7 @@ Page({
     var that = this
     console.log(e.currentTarget.dataset.addressid)
     var addressid = e.currentTarget.dataset.addressid
-    util.request(api.BarAddressDetail, {
+    util.request(api.AfterBargainSuccessAdressDetail, {
       id: addressid
     }, 'POST').then(res => {
       console.log(res)

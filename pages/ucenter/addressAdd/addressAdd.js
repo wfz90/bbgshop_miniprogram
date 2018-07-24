@@ -3,12 +3,12 @@ var api = require('../../../config/api.js');
 var app = getApp();
 Page({
   data: {
-    name:'',
-    mobile:'',
+    name: '',
+    mobile: '',
     district_id: "",
-    full_region:"",
+    full_region: "",
     address: {
-      id:0,
+      id: 0,
       province_id: 0,
       city_id: 0,
       district_id: 0,
@@ -20,10 +20,24 @@ Page({
     },
     addressId: 0,
     openSelectRegion: false,
-    selectRegionList: [
-      { id: 0, name: '省份', parent_id: 1, type: 1 },
-      { id: 0, name: '城市', parent_id: 1, type: 2 },
-      { id: 0, name: '区县', parent_id: 1, type: 3 }
+    selectRegionList: [{
+        id: 0,
+        name: '省份',
+        parent_id: 1,
+        type: 1
+      },
+      {
+        id: 0,
+        name: '城市',
+        parent_id: 1,
+        type: 2
+      },
+      {
+        id: 0,
+        name: '区县',
+        parent_id: 1,
+        type: 3
+      }
     ],
     regionType: 1,
     regionList: [],
@@ -45,7 +59,7 @@ Page({
       name: event.detail.value
     });
   },
-  bindinputAddress (event){
+  bindinputAddress(event) {
     let address = this.data.address;
     address.address = event.detail.value;
     this.setData({
@@ -53,7 +67,7 @@ Page({
       full_region: event.detail.value
     });
   },
-  bindIsDefault(){
+  bindIsDefault() {
     let address = this.data.address;
     address.is_default = !address.is_default;
     this.setData({
@@ -62,7 +76,9 @@ Page({
   },
   getAddressDetail() {
     let that = this;
-    util.request(api.AddressDetail, { id: that.data.addressId }).then(function (res) {
+    util.request(api.AddressDetail, {
+      id: that.data.addressId
+    }).then(function(res) {
       console.log(res)
       if (res.errno === 0) {
         that.setData({
@@ -112,10 +128,24 @@ Page({
       this.getRegionList(address.city_id);
     } else {
       this.setData({
-        selectRegionList: [
-          { id: 0, name: '省份', parent_id: 1, type: 1 },
-          { id: 0, name: '城市', parent_id: 1, type: 2 },
-          { id: 0, name: '区县', parent_id: 1, type: 3 }
+        selectRegionList: [{
+            id: 0,
+            name: '省份',
+            parent_id: 1,
+            type: 1
+          },
+          {
+            id: 0,
+            name: '城市',
+            parent_id: 1,
+            type: 2
+          },
+          {
+            id: 0,
+            name: '区县',
+            parent_id: 1,
+            type: 3
+          }
         ],
         regionType: 1
       })
@@ -125,7 +155,7 @@ Page({
     this.setRegionDoneStatus();
 
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     console.log(options)
     if (options.id) {
@@ -138,7 +168,7 @@ Page({
     this.getRegionList(1);
 
   },
-  onReady: function () {
+  onReady: function() {
 
   },
   selectRegionType(event) {
@@ -147,14 +177,14 @@ Page({
     let selectRegionList = that.data.selectRegionList;
 
     //判断是否可点击
-    if (regionTypeIndex + 1 == this.data.regionType || (regionTypeIndex - 1 >= 0 && selectRegionList[regionTypeIndex-1].id <= 0)) {
+    if (regionTypeIndex + 1 == this.data.regionType || (regionTypeIndex - 1 >= 0 && selectRegionList[regionTypeIndex - 1].id <= 0)) {
       return false;
     }
 
     this.setData({
       regionType: regionTypeIndex + 1
     })
-    
+
     let selectRegionItem = selectRegionList[regionTypeIndex];
 
     this.getRegionList(selectRegionItem.parent_id);
@@ -228,7 +258,7 @@ Page({
     address.city_name = selectRegionList[1].name;
     address.district_name = selectRegionList[2].name;
     address.full_region = selectRegionList.map(item => {
-      return item.name+"  ";
+      return item.name + "  ";
     }).join('');
 
     this.setData({
@@ -247,7 +277,9 @@ Page({
   getRegionList(regionId) {
     let that = this;
     let regionType = that.data.regionType;
-    util.request(api.RegionList, { parentId: regionId }).then(function (res) {
+    util.request(api.RegionList, {
+      parentId: regionId
+    }).then(function(res) {
       if (res.errno === 0) {
         that.setData({
           regionList: res.data.map(item => {
@@ -268,7 +300,7 @@ Page({
     //   district_id: address.district_id
     // });
   },
-  cancelAddress(){
+  cancelAddress() {
     // wx.navigateTo({
     //   url: '/pages/ucenter/address/address',
     // })
@@ -296,35 +328,88 @@ Page({
     let that = this;
     // console.log(this.data.address)
     let address = that.data.address;
-    // console.log(that.data.address.district_id)
-
-    if (that.data.address.name == '') {
-      util.showErrorToast('请输入姓名');
+    console.log(address)
+    if (!that.data.address.name){
+      wx.showToast({
+        title: '请输入姓名 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else if (that.data.address.name && that.data.address.name == '') {
+      wx.showToast({
+        title: '请输入姓名 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
-    if (typeof (address.district_id) == "undefined" || address.district_id == 0) {
-      util.showErrorToast('请输入省市区');
+    if (typeof(address.district_id) == "undefined" || address.district_id == 0) {
+      wx.showToast({
+        title: '请输入省市区 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
 
-    if (that.data.address.full_region == '') {
-      util.showErrorToast('请输入详细地址');
+    if (!that.data.address.address) {
+      wx.showToast({
+        title: '请输入详细地址 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else if (that.data.address.address && that.data.address.address == '') {
+      wx.showToast({
+        title: '请输入详细地址 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     }
 
-    if (that.data.address.mobile == '') {
-      util.showErrorToast('请输入手机号码');
+    if (!that.data.address.mobile) {
+      wx.showToast({
+        title: '请输入手机号码 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
-    } else if (that.data.address.mobile.length > 11) {
-      util.showErrorToast('手机号码错误！');
+    } else if (that.data.address.mobile && (that.data.address.mobile == '' || that.data.address.mobile.length == 0)) {
+      wx.showToast({
+        title: '请输入手机号码 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
+      return false;
+    } else if (that.data.address.mobile && that.data.address.mobile.length > 11) {
+      wx.showToast({
+        title: '手机号码错误 ！',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+      })
       return false;
     } else {
       util.request(api.BingPhoneText, {
         Phone: that.data.address.mobile
-      }, 'POST').then(function (res) {
+      }, 'POST').then(function(res) {
         console.log(res)
         if (res.errno === 1001) {
-          util.showErrorToast('手机号格式错误');
+          wx.showToast({
+            title: '手机号格式错误 ！',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+          })
           return false;
         } else {
           util.request(api.AddressSave, {
@@ -336,13 +421,10 @@ Page({
             district_id: address.district_id,
             address: that.data.address.address,
             is_default: address.is_default,
-          }, 'POST').then(function (res) {
+          }, 'POST').then(function(res) {
             console.log(res)
             if (res.errno === 0) {
               wx.setStorageSync("addressId", address.id)
-              // wx.reLaunch({
-              //   url: '/pages/ucenter/index/index',
-              // })
               wx.navigateBack({
                 delta: 1,
               })
@@ -354,15 +436,15 @@ Page({
     }
   },
 
-  onShow: function () {
+  onShow: function() {
     // 页面显示
 
   },
-  onHide: function () {
+  onHide: function() {
     // 页面隐藏
 
   },
-  onUnload: function () {
+  onUnload: function() {
     // 页面关闭
 
   }

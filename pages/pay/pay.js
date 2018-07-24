@@ -32,6 +32,11 @@ Page({
   onUnload: function () {
     // 页面关闭
     console.log('页面关闭')
+    // setTimeout(() => {
+    //   wx.navigateBack({
+    //     delta: 1,
+    //   })
+    // },1000)
     // wx.showModal({
     //   title: '提示',
     //   content: '订单已生成，你真的要取消支付吗 ？',

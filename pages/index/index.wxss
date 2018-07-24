@@ -59,9 +59,10 @@ page{
 }
 /* 以下为抽奖样式 （多条） */
 .luckdraw_area {
-  /* border: 1px solid #333; */
-  border-bottom: 1px solid #f4f4f4; 
-  height: 218rpx;
+   /* border: 1px solid #333;  */
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #fafafa;
+  height: 238rpx;
   background: #fff;
   width: 100%;
   margin: 0 auto;
@@ -71,28 +72,31 @@ page{
   display: inline-block;
   position: relative;
   white-space: normal;
-  border-top: 1px solid #eee;  
-  border-right: 1px solid #f4f4f4;
+  /* border-top: 1px solid #eee;   */
+   border-right: 1px solid #fafafa; 
   width: 88%;
-  height: 218px;
+  height: 238rpx;
 }
 .luckdraw_item_image {
-  /* border: 1px solid #333; */
+   /* border: 1px solid #333;  */
+  /* position: absolute; */
   position: absolute;
   left: 10rpx;
-  top: 8rpx;
-  width: 200rpx;
-  height: 200rpx;
+  top: 7rpx;
+  width: 220rpx;
+  height: 220rpx;
 }
-.luckdraw_item_name {
-  /* border: 1px solid #333;     */
+ .luckdraw_item_name { 
+   /* border: 1px solid #333;      */
   position: absolute;
-  left: 220rpx;
-  width: calc(500rpx - 10%);
-  /* right: 10rpx; */
-  top: 8rpx;
+  left: 240rpx;
+  /* width: calc(500rpx - 10%); */
+   right: 10rpx; 
+  top: 12rpx;
   height: 78rpx;
-  line-height: 38rpx;
+  line-height: 42rpx;
+  text-indent: 0.75rem;
+  font-weight: bold;
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -101,93 +105,14 @@ page{
   font-size: 28rpx;
 }
 .luckdraw_item_des {
-  /* border: 1px solid #333;   */
+   /* border: 1px solid #333;    */
   position: absolute;
-  left: 220rpx;
-  width: calc(500rpx - 13%);
-  /* right: 10rpx; */
-  top: 94rpx;
-  height: 66rpx;
-  line-height: 66rpx;
-  text-align: center;
-  color: #757575;
-  /* overflow : hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  -webkit-box-orient: vertical; */
-  font-size: 22rpx;
-}
-.luckdraw_item_opentime {
-     /* border: 1px solid #333;   */
-  position: absolute;
-  left: 220rpx;
-  top: 176rpx;
-  /* bottom: 10rpx; */
-  font-size: 19rpx;
-  color: #757575;
+  left: 240rpx;
+  /* width: calc(500rpx - 13%); */
+   right: 10rpx; 
+  top: 136rpx;
   height: 32rpx;
   line-height: 32rpx;
-}
-.luckdraw_item_joinbtn {
-    /* border: 1px solid #333;  */
-  position: absolute;
-  right: 10rpx;
-  top: 171rpx;
-  height: 40rpx;
-  line-height: 40rpx;
-  font-size: 26rpx;
-  background: #f6695e;
-  color: #f4f4f4;
-}
-/* 以下为抽奖样式 （单条） */
-.luckdraw_area_one {
-   /* border: 1px solid #333;  */
-  border-bottom: 1px solid #f4f4f4;
-  background: #fff; 
-  height: 218rpx;
-  width: 98%;
-  margin: 0 auto;
-}
-.luckdraw_item_one {
-  /* border: 1px solid #333; */
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.luckdraw_item_one_image {
-  /* border: 1px solid #333; */
-  position: absolute;
-  left: 10rpx;
-  top: 8rpx;
-  width: 200rpx;
-  height: 200rpx;
-}
-.luckdraw_item_one_name {
-  /* border: 1px solid #333;  */
-  position: absolute;
-  left: 220rpx;
-  width: 500rpx;
-  /* right: 10rpx; */
-  top: 8rpx;
-  height: 78rpx;
-  line-height: 38rpx;
-  overflow : hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; 
-  -webkit-box-orient: vertical;
-  font-size: 28rpx;
-}
-.luckdraw_item_one_des {
-  /* border: 1px solid #333;  */
-  position: absolute;
-  left: 220rpx;
-  width: 500rpx;
-  /* right: 10rpx; */
-  top: 94rpx;
-  height: 66rpx;
-  line-height: 66rpx;
   text-align: right;
   color: #757575;
   /* overflow : hidden;
@@ -197,11 +122,103 @@ page{
   -webkit-box-orient: vertical; */
   font-size: 22rpx;
 }
-.luckdraw_item_one_opentime {
-  /* border: 1px solid #333;  */
+.luckdraw_item_opentime {
+  /* border: 1px solid #333;    */
   position: absolute;
-  left: 220rpx;
-  bottom: 10rpx;
+  left: 240rpx;
+  /* top: 176rpx; */
+   bottom: 15rpx; 
+  font-size: 19rpx;
+  color: #757575;
+  height: 32rpx;
+  line-height: 32rpx;
+}
+.luckdraw_item_joinbtn {
+  /* border: 1px solid #333;   */
+  position: absolute;
+  right: 10rpx;
+  bottom: 15rpx;
+  height: 40rpx;
+  width: 150rpx;
+  padding: 0rpx 15rpx;
+  line-height: 40rpx;
+  font-size: 26rpx;
+  background: #f6695e;
+  color: #f4f4f4;
+}
+/* 以下为抽奖样式 （单条） */
+.luckdraw_area_one {
+  /* border: 1px solid #333;   */
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #fafafa;
+  background: #fff; 
+  height: 238rpx;
+  width: 98%;
+  margin: 0 auto;
+}
+.luckdraw_item_one {
+   /* border: 1px solid #333;  */
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.luckdraw_item_one_image {
+   /* border: 1px solid #333;  */
+  position: absolute;
+  left: 10rpx;
+  top: 7rpx;
+  width: 220rpx;
+  height: 220rpx;
+}
+.luckdraw_item_one_name {
+   /* border: 1px solid #333;   */
+  position: absolute;
+  left: 240rpx;
+  /* width: 500rpx; */
+  right: 10rpx; 
+  top: 15rpx;
+  height: 78rpx;
+  line-height: 42rpx;
+  text-indent: 0.75rem;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.luckdraw_item_one_des {
+  /* border: 1px solid #333;   */
+  position: absolute;
+  left: 240rpx;
+  /* width: 500rpx; */
+  right: 10rpx; 
+  top: 136rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: right;
+  color: #757575;
+  font-size: 22rpx;
+}
+.luckdraw_item_one_price {
+  /* border: 1px solid #333;   */
+  position: absolute;
+  left: 240rpx;
+  /* width: 500rpx; */
+  right: 10rpx; 
+  top: 96rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: right;
+  color: #757575;
+  font-size: 22rpx;
+}
+.luckdraw_item_one_opentime {
+   /* border: 1px solid #333;   */
+  position: absolute;
+  left: 240rpx;
+  bottom: 15rpx;
   font-size: 22rpx;
   color: #757575;
   height: 32rpx;
@@ -211,7 +228,7 @@ page{
   /* border: 1px solid #333;  */
   position: absolute;
   right: 10rpx;
-  bottom: 6rpx;
+  bottom: 12rpx;
   height: 45rpx;
   line-height: 45rpx;
   font-size: 26rpx;
@@ -366,4 +383,19 @@ page{
   font-weight: bold;
   background: rgba(244, 67, 54, .8);
   letter-spacing: 1rpx;
+}
+.luckdraw_item_joinbtn.join_btn {
+  background: #ff5566;
+  color: #f4f4f4;
+}
+.luckdraw_item_joinbtn.see_btn {
+  background: #4b96bd;
+  color: #f4f4f4;
+}
+.luckdraw_item_joinbtn.after_btn {
+  background: #5dd4a4;
+  color: #f4f4f4;
+}
+.currency_title_view_title_area {
+  margin-top: 10rpx;
 }

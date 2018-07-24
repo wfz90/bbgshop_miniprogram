@@ -216,7 +216,7 @@ Page({
           }, 'POST').then(function (res) {
             console.log(res)
             wx.showToast({
-              title: res.data.message,
+              title: '短信已发送 ！',
               icon: 'none',
               duration: 2000
             })
@@ -270,39 +270,50 @@ Page({
       //   code: that.data.inputcode,
       // }, 'POST').then(function (res){
       //   console.log(res)
-      if (that.data.truesode !== that.data.inputcode) {
-        util.showErrorToast('验证码错误 ！');
-      } else {
-        //  console.log("124879")
-        util.request(api.BingPhoneBing, {
-          bingphone: that.data.inputMobile,
-        }).then(function (res) {
-          console.log(res)
-          if (res.data.Findresult === 1) {
-            setTimeout(() => {
-              util.request(api.ApplyDistribution, {
-                phone: that.data.inputMobile,
-              }, 'POST').then(res => {
-                console.log(res)
-                that.finddistribinfo()
-                that.hide_model()
-              })
-            util.request(api.BingPhoneFind).then(function (res) {
-                console.log(res)
-                that.setData({
-                  userinfo: res.data.Result
+      try {
+        var value = wx.getStorageSync('userInfo')
+        if (value) {
+          // Do something with return value
+          if (that.data.truesode !== that.data.inputcode) {
+            util.showErrorToast('验证码错误 ！');
+          } else {
+            console.log(that.data.inputMobile)
+            util.request(api.BingPhoneBing, {
+              bingphone: that.data.inputMobile,
+              userid: value.id
+            }, 'POST').then(function (res) {
+              console.log(res)
+              if (res.errno == 0) {
+                setTimeout(() => {
+                  util.request(api.ApplyDistribution, {
+                    phone: that.data.inputMobile,
+                    userid: value.id
+                  }, 'POST').then(ress => {
+                    console.log(ress)
+                    that.finddistribinfo()
+                    that.hide_model()
+                  })
+                  util.request(api.BingPhoneFind).then(function (resd) {
+                    console.log(resd)
+                    that.setData({
+                      userinfo: resd.data.Result
+                    })
+                  });
+                }, 1000)
+                wx.showToast({
+                  title: '分销员申请已提交 ！',
+                  icon: 'none',
+                  duration: 2000
                 })
-              });
-            },1000)
-            wx.showToast({
-              title: '分销员申请已提交 ！',
-              icon: 'none',
-              duration: 2000
-            })
 
+              }
+            })
           }
-        })
+        }
+      } catch (e) {
+        // Do something when catch error
       }
+      
       // })
     }
   },

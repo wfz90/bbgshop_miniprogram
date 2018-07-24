@@ -164,6 +164,7 @@ module.exports = {
   DelBankCard: ApiRootUrl + 'bankcard/delbankcard',//删除英银行卡
 
   //抽奖
+  SelectAllLuckList: ApiRootUrl + 'luckdraw/selectallluckdrawlist',//'我的'界面查找所有抽奖的商品
   FindLuckDrawInfo: ApiRootUrl + 'luckdraw/findinfo',//进入抽奖页面查询抽奖详情
   CheckUserIsJoin: ApiRootUrl + 'luckdraw/checkisjoin',//进入抽奖页面检测用户是否参与抽奖
 
