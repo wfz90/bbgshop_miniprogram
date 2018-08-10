@@ -3,6 +3,22 @@
   padding: 20rpx;
   margin-bottom: 88rpx;
 }
+.detail {
+  position: fixed;
+  /* left: 0; */
+  right: 20rpx;
+  /* padding: 30rpx; */
+  width: calc(100vw - 40rpx);
+  /* line-height: 1.45rem; */
+  /* padding-top: 150rpx; */
+  /* text-indent: 0.75rem; */
+  /* w */
+  /* bottom: 0; */
+  /* border: 1px solid black; */
+  /* bottom: 88rpx; */
+  /* overflow-y: auto; */
+  height: calc(100vh - 90rpx);
+}
 .textstyle {
   font-size:24rpx;
   line-height: 54rpx;
@@ -37,7 +53,7 @@
   /* flex: 1; */
   position: fixed;
   left: 12vw;
-  top: 35vh; 
+  top: 22vh; 
   width: 76vw;
   /* height: 50vh; */
   z-index: 2000;
@@ -79,6 +95,9 @@
   font-size: 24rpx;
   height: 1.4rem;
   line-height: 1.45rem;
+}
+.apply_dis_phone_area_input.no_width {
+  width: 100%
 }
 .apply_dis_code_area {
   display: inline-block;

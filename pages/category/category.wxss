@@ -1,19 +1,30 @@
+page{
+  margin-top: 0 !important;
+}
 .container{
     background: #fafafa;
+    height: 100%;
 }
 .cate-nav{
     position: fixed;
+    /* position: sticky; */
     left:0;
     top:0;
     z-index: 1000;
+    box-shadow: 1rpx 1rpx 20rpx 1rpx #ddd; 
 }
+/* .fixed {
+  position: fixed;
+  top:0;
+  left:0;
+} */
 .comy_tip_gory {
   margin: 20rpx;
 }
 
 /* 以下为布局骨架 */
 .skeleton_cate_item {
-  margin-top: 94rpx;
+  margin-top: 88rpx;
   height: auto;
   overflow: hidden;
 }
@@ -86,12 +97,14 @@
   color: #757575;
   background: #fff;
   padding-top: 33vh;
+  padding-bottom: calc(67vh - 270rpx)
 }
 .cate-nav-body{
     height: 84rpx;
     white-space: nowrap;   
     background: #fff;
     border-top: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
     overflow: hidden;
 }
 
@@ -119,7 +132,7 @@
 }
 
 .cate-item{
-    margin-top: 94rpx;
+    margin-top: 88rpx;
     height: auto;
     overflow: hidden;
 }
@@ -136,9 +149,9 @@
 .cate-item .h .name{
     display: block;
     height: 35rpx;
-    margin-bottom: 18rpx;
+    margin-bottom: 20rpx;
     font-size: 30rpx;
-    color: #333;
+    color: rgb(90, 90, 90);
 }
 
 .cate-item .h .desc{

@@ -41,5 +41,9 @@ App({
       avatar: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
     },
     token: '',
+  },
+  CorporateData: {
+    name: 'dw',
+    title: '德威商城·乐家家国际超市'
   }
 })

@@ -1,0 +1,16 @@
+/* pages/ucenter/AftersaleGuide/AftersaleGuide.wxss */
+.no_guide {
+  text-align: center;
+  padding-top: 45vh;
+  color: #757575;
+  font-size: 24rpx;
+}
+.detail {
+  /* padding: 20rpx; */
+  /* border: 1px solid black; */
+  /* position: fixed; */
+  /* right: 20rpx; */
+  /* width: calc(100vw - 40rpx); */
+  /* line-height: 1.45rem; */
+  /* height: 100vh; */
+}

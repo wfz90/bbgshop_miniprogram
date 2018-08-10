@@ -25,8 +25,15 @@
       <image class="arrow" src="../../static/images/address_right.png" background-size="cover"></image>
     </view>
     <view class="scroll_goods_tabler" style='border-bottom: 1px solid #fafafa;' bindtap='toindex' data-type='0'>
-      <image src="../../image/logo.png" class='scroll_goods_tabler_logo'></image>
-      <view class="scroll_goods_tabler_text">贝堡全球购</view>
+
+
+      <image wx:if="{{CorporateName == 'dw'}}" src="../../image/CorporateData/dw_goods_simple.png" class='scroll_goods_tabler_logo'></image>
+      <view class="scroll_goods_tabler_text" wx:if="{{CorporateName == 'dw'}}">德威商城·乐家家国际超市</view>
+      <image wx:if="{{CorporateName == 'bbg'}}" src="../../image/CorporateData/bbg_goods_simple.png" class='scroll_goods_tabler_logo'></image>
+      <view class="scroll_goods_tabler_text" wx:if="{{CorporateName == 'bbg'}}">贝堡商城</view>
+       <image wx:if="{{CorporateName == 'yt'}}" src="../../image/CorporateData/yt_goods_simple.png" class='scroll_goods_tabler_logo'></image>
+      <view class="scroll_goods_tabler_text" wx:if="{{CorporateName == 'yt'}}">易天商城吊桥路店</view>
+
       <image class="scroll_goods_tabler_arrow" src="../../static/images/address_right.png" background-size="cover"></image>
     </view>
     <view class='scroll_goods_comments' wx:if="{{comment.count > 0}}">
@@ -91,10 +98,10 @@
     <view class='comy_tip'>贝堡网络 提供技术支持</view>
 </scroll-view>
 <view class='bottom_btn_area'>
-  <view class='area customer' bindtap='openCustomerPage'>
+  <button class='area customer' open-type='contact'>
     <image class="icon" src="/image/coumse.png"></image>
     <view class='text'>客服</view>
-  </view>
+  </button>
   <view class="area collect" bindtap="closeAttrOrCollect">
     <image class="icon" src="{{ collectBackImage }}"></image>
     <view class='text'>收藏</view>

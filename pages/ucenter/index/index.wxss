@@ -11,6 +11,10 @@ page{
   bottom: 0;
   opacity: 0;
 }
+.index_top_level .background.red {
+  /* color: gold; */
+  letter-spacing: 2rpx;
+}
 /* 重构的index样式 */
 .index_top_area {
   /* border:1px solid black; */
@@ -51,6 +55,39 @@ page{
   height: 69rpx;
   line-height: 69rpx;
   /* font-weight: bold; */
+}
+.index_top_level {
+  position: absolute;
+  /* border: 1px solid black; */
+  font-size: 20rpx;
+  right: 30rpx;
+  top: 46rpx;
+  height: 69rpx;
+  line-height: 69rpx;
+  font-weight: bold;
+  color: #ff5566;
+}
+.index_top_level .background {
+    font-size: 20rpx;
+  background: #ff5566;
+  color: #fafafa;
+  padding: 8rpx 15rpx;
+  border-radius: 10rpx;
+}
+/* .index_top_level {
+  position: absolute;
+  top: 62rpx;
+  right: 15rpx;
+  font-size: 20rpx;
+  background: #ff5566;
+  color: #fafafa;
+  padding: 5rpx 15rpx;
+  border-radius: 10rpx;
+} */
+.index_top_level .big{
+  font-size: 26rpx;
+  font-weight: bold;
+  color: gold;
 }
 .order_middle_area {
   /* border: 1px solid black; */
@@ -133,6 +170,9 @@ page{
   height: auto;
   background: #fff;
 }
+button[class="box_bottom_item"]::after {
+  border: 0;
+} 
 .box_bottom_item {
   width: 187.5rpx;
   height: 142rpx;

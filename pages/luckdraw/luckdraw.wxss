@@ -9,7 +9,7 @@
 }
 .content_area {
   position: fixed;
-  height: calc(100vh - 80rpx);
+  height: calc(100vh - 120rpx);
   /* top: 668rpx; */
   /* left: 0rpx; */
   /* bottom: 120rpx; */
@@ -23,8 +23,8 @@
   border-radius: 0rpx;
   background: #d15144;
   color: #f4f4f4;
-  height: 80rpx;
-  line-height: 80rpx;
+  height: 120rpx;
+  line-height: 120rpx;
 }
 .outtime_tip {
   text-align: center;

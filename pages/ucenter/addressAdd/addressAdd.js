@@ -41,8 +41,29 @@ Page({
     ],
     regionType: 1,
     regionList: [],
-    selectRegionDone: false
+    selectRegionDone: false,
+    // date: '',
+    // time: '00:00',
   },
+  // bindDateChange(e){
+  //   // console.log(event)
+  //   this.setData({
+  //     date: e.detail.value
+  //   })
+  //   this.timeReload()
+  // },
+  // bindTimeChange(e) {
+  //   this.setData({
+  //     time: e.detail.value
+  //   })
+  //   this.timeReload()
+  // },
+  // timeReload() {
+  //   let reloadtime = this.data.date + ' ' + this.data.time
+  //   console.log(reloadtime)
+  //   let reloadtime_unix = new Date(reloadtime).getTime()
+  //   console.log(reloadtime_unix)
+  // },
   bindinputMobile(event) {
     let address = this.data.address;
     address.mobile = event.detail.value;

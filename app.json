@@ -45,12 +45,17 @@
     "pages/luckdraw_all/luckdraw_all",
     "pages/Resagin_bargain/Resagin_bargain",
     "pages/Resagin_bargain_goods/Resagin_bargain_goods",
-    "pages/ucenter/luckdraw/luckdraw"
+    "pages/ucenter/luckdraw/luckdraw",
+    "pages/ucenter/collage/collage",
+    "pages/ucenter/level_page/level_page",
+    "pages/ucenter/NoviceGuide/NoviceGuide",
+    "pages/ucenter/AftersaleGuide/AftersaleGuide"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "贝堡商城",
+    "enablePullDownRefresh": false,
+    "navigationBarTitleText": "德威商城·乐家家国际超市",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

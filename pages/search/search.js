@@ -67,7 +67,7 @@ Page({
       keyword: e.detail.value,
       searchStatus: false
     });
-    this.getHelpKeyword();
+    // this.getHelpKeyword();
   },
   getHelpKeyword: function () {
     let that = this;

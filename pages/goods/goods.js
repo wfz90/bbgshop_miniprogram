@@ -37,7 +37,8 @@ Page({
     isdistribution: false,
     Inviter_locallaster: '',
     Inviter_laster: '',
-    Inviter_userid: []
+    Inviter_userid: [],
+    CorporateName: '',
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -52,7 +53,8 @@ Page({
       that.setData({
         is_Inviter: 1,
         id: parseInt(options.id),
-        Inviter_userid: JSON.parse(options.ids)
+        Inviter_userid: JSON.parse(options.ids),
+        CorporateName: app.CorporateData.name
       });
       // that.checkdisauth()
 
@@ -61,6 +63,7 @@ Page({
       that.setData({
         is_Inviter: 0,
         id: parseInt(options.id),
+        CorporateName: app.CorporateData.name
       });
       // that.noraldisauth()
     }
@@ -78,12 +81,29 @@ Page({
     let that = this
     console.log(that.data.goods.id)
     console.log(that.data.Inviter_locallaster)
-    return {
-      title: '贝堡商城',
-      desc: that.data.goods.name,
-      path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
-      imageUrl: '../../image/logo.png',
+    if (that.data.CorporateName == 'bbg'){
+      return {
+        title: '贝堡商城',
+        desc: that.data.goods.name,
+        path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+        imageUrl: '../../image/CorporateData/bbg_share_logo.png',
+      }
+    }else if (that.data.CorporateName == 'dw') {
+      return {
+        title: '德威商城·乐家家国际超市',
+        desc: that.data.goods.name,
+        path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+        imageUrl: '../../image/CorporateData/dw_share_logo.png',
+      }
+    } else if (that.data.CorporateName == 'yt') {
+      return {
+        title: '易天商城吊桥路店',
+        desc: that.data.goods.name,
+        path: '/pages/goods/goods?id=' + that.data.goods.id + '&ids=' + that.data.Inviter_locallaster,
+        imageUrl: '../../image/CorporateData/yt_share_logo.png',
+      }
     }
+    
   },
   bindGetUserInfo: function (e) {
     let that = this
@@ -161,6 +181,7 @@ Page({
         that.checkdisauth()
         WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
         // wx.hideLoading()
+        console.log(that.goodsDetail)
       }
     });
 
@@ -738,7 +759,7 @@ Page({
   },
   onShow: function () {
     // 页面显示
-
+    this.hideModal()
   },
   onHide: function () {
     // 页面隐藏

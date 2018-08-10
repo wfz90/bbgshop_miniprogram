@@ -28,9 +28,10 @@ page {
   /* border: 1px solid #000; */
   text-align: center;
   padding: 15rpx 20rpx;
-  font-size: 32rpx;
+  padding-top: 35rpx;
+  font-size: 38rpx;
   font-weight: bold;
-  letter-spacing: 1rpx;
+  /* letter-spacing: 1rpx; */
   line-height: 46rpx;
 }
 .scroll_goods_info .desc {
@@ -484,9 +485,13 @@ page {
   justify-content: center;
   bottom: 0;
   /* left: 0; */
+  background: #fff;
   width: 100rpx;
   height: 100rpx;
 }
+button[class="area customer"]::after {
+  border: 0;
+} 
 .customer {
   left: 0rpx;
 }

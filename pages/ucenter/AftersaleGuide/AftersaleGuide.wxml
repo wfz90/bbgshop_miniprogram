@@ -1,0 +1,10 @@
+<!--pages/ucenter/AftersaleGuide/AftersaleGuide.wxml-->
+<view class='no_guide' wx:if="{{have_guide.length == 0}}">
+  还没有售后指南 !
+</view>
+<view class='' wx:if="{{have_guide.length > 0}}">
+  <scroll-view scroll-y class="detail">
+    <import src="../../../lib/wxParse/wxParse.wxml" />
+    <template is="wxParse" data="{{wxParseData:guide.nodes}}" />
+  </scroll-view>
+</view>

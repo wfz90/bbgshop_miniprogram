@@ -75,45 +75,45 @@ function payCollageOrder(orderId) {
   });
 }
 
-// function payOrder(orderId) {
-//   console.log(orderId)
-//   return new Promise(function (resolve, reject) {
-//     util.request(api.PayCollageUserOrder, {
-//       orderId: orderId
-//     }).then((res) => {
-//       console.log(res)
-//       wx.hideLoading()
-//       if (res.errno === 0) {
-//         const payParam = res.data;
-//         wx.requestPayment({
-//           'timeStamp': payParam.timeStamp,
-//           'nonceStr': payParam.nonceStr,
-//           'package': payParam.package,
-//           'signType': payParam.signType,
-//           'paySign': payParam.paySign,
-//           'success': function (res) {
-//             resolve(res);
-//           },
-//           'fail': function (res) {
-//             reject(res);
-//           },
-//           'complete': function (res) {
-//             reject(res);
-//           }
-//         });
-//       } else {
-//         reject(res);
-//       }
-//     });
-//   });
-// }
+function payRechangeOrder(orderId) {
+  console.log(orderId)
+  return new Promise(function (resolve, reject) {
+    util.request(api.payRechangeOrder, {
+      orderId: orderId
+    },"POST").then((res) => {
+      console.log(res)
+      wx.hideLoading()
+      if (res.errno === 0) {
+        const payParam = res.data;
+        wx.requestPayment({
+          'timeStamp': payParam.timeStamp,
+          'nonceStr': payParam.nonceStr,
+          'package': payParam.package,
+          'signType': payParam.signType,
+          'paySign': payParam.paySign,
+          'success': function (res) {
+            resolve(res);
+          },
+          'fail': function (res) {
+            reject(res);
+          },
+          'complete': function (res) {
+            reject(res);
+          }
+        });
+      } else {
+        reject(res);
+      }
+    });
+  });
+}
 
 
 
 module.exports = {
   payOrder,
   payCollageOrder,
-  // payUserCollageOrder,
+  payRechangeOrder,
 };
 
 

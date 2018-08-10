@@ -3,9 +3,12 @@ var api = require('../../config/api.js');
 
 Page({
   data: {
-    navList: [],
-    categoryList: [],
-    currentCategory: {},
+    // navList: [],
+    // categoryList: [],
+    // currentCategory: {},
+    allcatelog: [],
+    bindid: 0,
+    selectindex: 0,
     scrollLeft: 0,
     scrollTop: 0,
     goodsCount: 0,
@@ -13,38 +16,45 @@ Page({
     showSkeleton: false,
   },
   onLoad: function (options) {
-    this.getCatalog();
-  },
-  getCatalog: function () {
-    //CatalogList
-    let that = this;
+    // this.getCatalog();
     wx.showLoading({
-      title: '加载中...',
-    });
-    util.request(api.CatalogList).then(function (res) {
-      console.log(res)
-        that.setData({
-          navList: res.data.categoryList,
-          currentCategory: res.data.currentCategory
-        });
-        wx.hideLoading();
-      });
-    // util.request(api.GoodsCount).then(function (res) {
-    //   that.setData({
-    //     goodsCount: res.data.goodsCount
-    //   });
-    // });
-
+      title: '获取中...',
+      mask: true,
+    })
+    this.getAllCatelog(0)
   },
-  getCurrentCategory: function (id) {
-    let that = this;
-    util.request(api.CatalogCurrent, { id: id })
-      .then(function (res) {
-        that.setData({
-          currentCategory: res.data.currentCategory
-        });
-        wx.hideLoading()
-      });
+  getAllCatelog(typec){
+    let that = this
+    util.request(api.getAllCatelog,'POST').then(function (res) {
+      console.log(res)
+      that.setData({
+        allcatelog: res.data.main_catelog,
+        bindid: res.data.main_catelog[that.data.selectindex].id,
+        activelist: res.data.main_catelog[that.data.selectindex]
+      })
+      wx.hideLoading()
+      if (typec == 1){
+        wx.stopPullDownRefresh()
+        wx.showToast({
+          title: '更新成功 ！',
+          icon: 'none',
+          duration: 500,
+          mask: true,
+        })
+      } 
+    })
+  },
+   //下拉刷新
+  onPullDownRefresh: function () {
+    let that = this
+    // if(op == '0'){
+    // this.checkauth('1')
+    wx.showLoading({
+      title: '更新中...',
+      mask: true,
+    })
+    that.getAllCatelog(1)
+    // that.getCatalog();
   },
   onReady: function () {
     // 页面渲染完成
@@ -58,27 +68,19 @@ Page({
   onUnload: function () {
     // 页面关闭
   },
-  getList: function () {
-    var that = this;
-    util.request(api.ApiRootUrl + 'api/catalog/' + that.data.currentCategory.cat_id)
-      .then(function (res) {
-        that.setData({
-          categoryList: res.data,
-        });
-      });
-  },
   switchCate: function (event) {
-    wx.showLoading({
-      title: '获取中...',
-      mask: true,
-    })
     var that = this;
     var currentTarget = event.currentTarget;
-    if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
-      wx.hideLoading()
-      return false;
+    that.setData({
+      bindid: event.currentTarget.dataset.id,
+      selectindex: event.currentTarget.dataset.index,
+    })
+    for (let j = 0; j < that.data.allcatelog.length; j++) {
+      if (event.currentTarget.dataset.id == that.data.allcatelog[j].id){
+        that.setData({
+          activelist: that.data.allcatelog[j]
+        })
+      }
     }
-
-    this.getCurrentCategory(event.currentTarget.dataset.id);
   }
 })

@@ -81,7 +81,7 @@
 
   </view> -->
   <scroll-view scroll-y style="height: 50vh;">
-  <view class="point_list" wx:for="{{pointgoods}}" wx:key="{{item.id}}">
+  <view class="point_list" wx:for="{{pointgoods}}" bindtap='togoodspage' data-id='{{item.id}}' wx:key="{{item.id}}">
       <image class='coupon_list_img' src='{{item.list_pic_url}}'>
       </image>
       <view class='coupon_list_name' >

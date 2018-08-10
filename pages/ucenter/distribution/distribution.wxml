@@ -1,43 +1,9 @@
 <!--pages/ucenter/distribution/distribution.wxml-->
 <view wx:if='{{distributionInfo.length == 0}}'>
-  <view class='all'>
-    <text class='textstyle'>
-      小伙伴，欢迎加入我们
-    </text>
-    <text class='textstyle'>
-      我们是贝堡全球购的运营团队，竭诚为你的销售工作提供完善的支持。
-    </text>
-    <text class='textstyle'>
-        我们诚挚邀请你加入我们的销售员推广计划，无任何成本即可成为贝堡全球购的销售 员，一起分享收获的喜悦。你只需将高品质商品分享推荐给他人，收获他人的感谢的同时，挣得属于自己的利润。
-    </text>
-    <text class='textstyle'>
-      1. 业绩说明
-      1）买家通过销售员分享链接成交，即算作销售员的业绩；
-      2）订单交易完成前发生退款的订单，相应的销售员业绩将扣除相应的退款金额；
-      3）仅在线支付的订单算作业绩，不包括货到付款订单。
-    </text>
-    <text class='textstyle'>
-      2. 结算说明
-      1）推广订单，获得8%的业绩提成；
-      2））另外，邀请他人成为分销员，您可以终身获得额外的2%邀请佣金分成；
-    </text>
-    <text class='textstyle'>
-      3. 其他说明
-      1）分享前，请确定商品页面有【···】按钮；
-      2）销售过程中有任何疑问，请直接在微信公众号内询问或直接致电；
-      3）已售出商品的任何售后问题，由本商城处理；
-      4）不传播或者扩散有关于政治、色情等任何违法的信息，一经发现，直接踢你出局，如果触犯任何法律相关问题，商城不负任何责任；
-      5）以上内容解释权归本商城所有。
-    </text>
-    <text class='textstyle'>
-      4. 联系方式
-      1）联络人：缪经理
-      2）手机：0519-89888898
-    </text>
-    <text class='textstyle'>
-      无论是销售、对账，还是结算问题，请通过以上方式咨询。
-    </text>
-  </view>
+    <scroll-view scroll-y class="detail">
+      <import src="../../../lib/wxParse/wxParse.wxml" />
+      <template is="wxParse" data="{{wxParseData:rulestext.nodes}}" />
+    </scroll-view>
   <button class='becomedistribution' bindtap='becomedistribution' disabled='{{!auth || is_apply == "1"}}'>申请成为分销员
     <span wx:if="{{!auth}}" style="font-size:22rpx;">（未授权）</span>
     <span wx:if="{{is_apply == '1'}}" style="font-size:22rpx;">（申请已提交，请耐心等待审核）</span>
@@ -48,6 +14,14 @@
 <view class='show_model' wx:if="{{show_mask}}">
 <view class='apply_dis_title'>申请成为分销员</view>
   <view class='apply_dis_phone_area'>
+    <view class='apply_dis_phone_area_left'>国家区号</view>
+    <picker bindchange="bindPickerChange" value="{{AreacodeArray_index}}" range="{{AreacodeArray}}" >
+    <view class="apply_dis_phone_area_input no_width" style='color:#757575'>
+      {{AllAreacodeArray[AreacodeArray_index].country_name_chinese}}  +{{AllAreacodeArray[AreacodeArray_index].phone_code}}
+    </view>
+  </picker>
+  </view>
+    <view class='apply_dis_phone_area'>
     <view class='apply_dis_phone_area_left'>手机号</view>
     <input class='apply_dis_phone_area_input' bindinput='phoneinput' placeholder-style='font-weight:normal' placeholder='输入手机号'></input>
   </view>
@@ -56,7 +30,6 @@
         <view class='apply_dis_code_area_left_text'>
           验证码
         </view>
-         <!-- <view class='apply_dis_code_area_left'>验证码</view> -->
      <input class='apply_dis_code_input' bindinput='codeinput' placeholder-style='font-weight:normal' placeholder='输入短信验证码'></input> 
       </view>
       <view class='apply_dis_code_area_getbtn_area'>
@@ -76,8 +49,8 @@
   <!-- <view class='back_img'> -->
     <!-- <view class='distribution_title'>分销员中心</view> -->
     <view class='top_area'>
-      <image class='top_area_avatar' src='{{userInfo.avatarUrl}}'></image>
-      <view class='top_area_nickname'>{{userInfo.nickName}}</view>
+      <image class='top_area_avatar' src='{{userInfo.avatar}}'></image>
+      <view class='top_area_nickname'>{{userInfo.nickname}}</view>
       <view class='top_area_addtime'>加入时间: {{add_local_time}}</view>
     </view>
 

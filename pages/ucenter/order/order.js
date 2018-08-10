@@ -10,7 +10,7 @@ Page({
     refund_orderid: '',
     refund_orderprice: '',
     refund_resond: '',
-    nav_item: ['待付款', '待发货', '待收货', '已完成', '处理中'],
+    nav_item: ['待付款', '待发货', '待收货', '已完成', '退款/售后'],
     refund_nologarray: ['全额退款'],
     refund_logarray: ['全额退款', '部分退款'],
     refund_index: 0,
@@ -602,9 +602,12 @@ Page({
       that.setData({
         userinfo: res.data.userInfo
       })
-      util.request(api.CheckIsDistributionHaveFather, {}, 'POST').then(res => {
-        console.log(res)
-        if (res.errno === 555 || res.errno === 444) {
+      that.setdistributionOwnDis(sn)
+      util.request(api.CheckIsDistributionHaveFather, {
+        userId: res.data.userInfo.id
+      }, 'POST').then(ress => {
+        console.log(ress)
+        if (ress.errno === 555 || ress.errno === 444) {
           try {
             var value = wx.getStorageSync('invitation')
             console.log(value)
@@ -621,7 +624,7 @@ Page({
           } catch (e) {
 
           }
-        } else if(res.errno === 666 || res.errno === 777){
+        } else if(ress.errno === 666 || ress.errno === 777){
           that.setDistriPrice(sn)
         }
       })
@@ -663,6 +666,26 @@ Page({
       console.log(res)
       if(res){
         wx.hideLoading()
+      }
+    })
+  },
+  setdistributionOwnDis(sn){
+    let that = this
+    console.log(that.data.userinfo.id)
+    util.request(api.SetDistributionOwnDis,{
+      userId: that.data.userinfo.id,
+      sn:sn
+    },'POST').then(res => {
+      console.log(res)
+      if(res.errno === 999) {
+        console.log('设置分销员自身提成成功 ！')
+      }else{
+        wx.showToast({
+          title: '异常 ！',
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        })
       }
     })
   },

@@ -21,6 +21,12 @@ Page({
     couponPrice: 0.00,     //优惠券的价格
     orderTotalPrice: 0.00,  //订单总价
     actualPrice: 0.00,     //实际需要支付的总价
+    rules_value: '未参与优惠活动',//优惠活动减免
+    userDiscount_Value: '未参与等级优惠',//用户等级减免
+    // supplier_ids: '',//供货商的id 字符串
+    is_Identity: 0,//是否需要身份信息
+    IdentityInput: '',//身份信息
+    userDiscount_Price: 0.00,
     addressId: 0,
     couponId: 0,
     // couponIdid: 0,
@@ -79,8 +85,14 @@ Page({
     this.setData({
       freetext:event.detail.value
     })
-    console.log(this.data.freetext)
+    // console.log(this.data.freetext)
 
+  },
+  IdentityInput(e){
+    this.setData({
+      IdentityInput: e.detail.value
+    })
+    // console.log(this.data.IdentityInput)
   },
   backindex(){
     wx.switchTab({
@@ -103,12 +115,17 @@ Page({
             checkedGoodsList: res.data.checkedGoodsList,
             checkedAddress: res.data.checkedAddress,
             actualPrice: res.data.actualPrice,
+            rules_value: res.data.rules_value,
+            userDiscount_Value: res.data.userDiscount_Value,
+            userDiscount_Price: res.data.userDiscount_Price,
+            // supplier_ids: res.data.supplier_ids,
             // checkedCoupon: res.data.checkedCoupon,
             couponList: res.data.couponList,
             couponPrice: res.data.couponPrice,
             freightPrice: res.data.freightPrice,
             goodsTotalPrice: (res.data.goodsTotalPrice).toFixed(2),
-            orderTotalPrice: res.data.orderTotalPrice
+            orderTotalPrice: res.data.orderTotalPrice,
+            is_Identity: res.data.is_Identity
           });
           console.log(that.data.checkedGoodsList)
         }
@@ -230,6 +247,21 @@ Page({
   },
   submitOrder: function () {
     var that = this
+    if (that.data.is_Identity == 1){
+      let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+      if (!reg.test(that.data.IdentityInput)){
+        wx.showToast({
+          title: '身份证信息有误 ！',
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        })
+        return false
+        
+      }else {
+        console.log('身份证正确')
+      }
+    }
     if (this.data.addressId <= 0) {
       util.showErrorToast('请选择收货地址');
       return false;
@@ -273,7 +305,20 @@ Page({
     })
     console.log(this.data.checkedGoodsList)
     console.log(this.data.actualPrice)
-    util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId, postscript: this.data.freetext, freightPrice: this.data.freightPrice, GoodsList: this.data.checkedGoodsList}, 'POST').then(res => {
+    util.request(api.OrderSubmit, { 
+      addressId: this.data.addressId, 
+      couponId: this.data.couponId, 
+      postscript: this.data.freetext, 
+      freightPrice: this.data.freightPrice,
+      couponPrice: this.data.couponPrice,
+      goodsTotalPrice: this.data.goodsTotalPrice,
+      actualPrice: this.data.actualPrice,
+      GoodsList: this.data.checkedGoodsList,
+      userId: this.data.userinfo.id,
+      userDiscount_Price: this.data.userDiscount_Price,
+      IdentityInput: this.data.IdentityInput
+      // supplier_ids: this.data.supplier_ids
+      }, 'POST').then(res => {
       console.log(res)
       if (res.errno === 0) {
         console.log(res.data.orderInfo);

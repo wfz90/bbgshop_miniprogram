@@ -1,4 +1,5 @@
 /**app.wxss**/
+@import "lib/wxParse/wxParse.wxss";
 page {
   /* height: 100%; */
   /* font-family: "HYShiGuangTiW"; */
@@ -11,7 +12,7 @@ page {
 .container {
   box-sizing: border-box;
   background-color: #f4f4f4;
-} 
+}
 
 view,image,text,navigator{
   box-sizing: border-box;
@@ -21,10 +22,17 @@ view,image,text,navigator{
 }
 
 view,text{
-  font-size: 29rpx;
-  color: #333;
+  /* font-size: 29rpx; */
+  /* color: #333; */
 }
-
+.currency_goods_view_title_area_banner {
+  width: 98%;
+  border-radius: 8rpx;
+  margin: 0 auto;
+  margin-top: 15rpx;
+  margin-left: 1%;
+  height: 350rpx;
+}
 .second_corner_btn_area {
   /* border: 1px solid #000; */
   margin-top: 15rpx;

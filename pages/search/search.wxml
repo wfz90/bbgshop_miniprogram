@@ -2,7 +2,7 @@
   <view class="search-header">
     <view class="input-box">
       <image class="icon" src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/search2-2fb94833aa.png"></image>
-      <input name="input" class="keywrod" focus="true" value="{{keyword}}" confirm-type="search" bindinput="inputChange" bindfocus="inputFocus" bindconfirm="onKeywordConfirm" confirm-type="search" placeholder="{{defaultKeyword.keyword}}" />
+      <input name="input" class="keywrod" focus="true" value="{{keyword}}" confirm-type="search" bindinput="inputChange" bindfocus="inputFocus" bindconfirm="onKeywordConfirm" confirm-type="search" placeholder="搜索商品" placeholder-style='font-size:24rpx;'/>
       <image class="del" wx:if="{{keyword}}" bindtap="clearKeyword" src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/clearIpt-f71b83e3c2.png"></image>
     </view>
     <view class="right" bindtap="closeSearch">取消</view>
@@ -51,9 +51,12 @@
       <navigator class="currency_goods_view_item_a {{(iindex + 1) % 2 == 0 ? 'currency_goods_view_item_b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="{{iitem.id}}" wx:key="{{iitem.id}}">
         <image class="currency_goods_view_item_img" src="{{iitem.list_pic_url}}"></image>
         <view class="currency_goods_view_item_name">{{iitem.name}}</view>
-        <view class="currency_goods_view_item_price">￥
+        <view class="currency_goods_view_item_price">
+        <view class='currency_goods_view_item_price_left'> ￥
           <span class="currency_goods_view_item_price_price">{{iitem.retail_price}}</span>
         </view>
+        <view class='currency_goods_view_item_price_right'>已售 {{iitem.have_pay_num}} </view>
+      </view>
       </navigator>
     </view>
     <!-- <view class="cate-item">

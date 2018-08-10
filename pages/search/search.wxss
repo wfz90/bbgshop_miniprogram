@@ -35,6 +35,7 @@ page{
     line-height: 59rpx;
     padding: 0 20rpx;
     background: #f4f4f4;
+    border-radius: 10rpx;
 }
 
 .search-header .icon{
@@ -125,14 +126,18 @@ page{
     line-height: 48rpx;
     padding:0 15rpx;
     border: 1px solid #999;
-    margin: 0 31.25rpx 31.25rpx 0;
+    border-radius: 10rpx;
+    margin: 0 31.25rpx 20.25rpx 0;
     font-size: 24rpx;
     color: #333;
 }
 
 .serach-keywords .item.active{
-    color: #b4282d;
-    border: 1px solid #b4282d;
+    color: #ff5566;
+    border: 1px solid #ff5566;
+    font-size: 26rpx;
+    border-radius: 10rpx;
+    font-weight: bold;
 }
 
 .shelper-list{

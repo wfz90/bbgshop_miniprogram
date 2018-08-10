@@ -1,6 +1,9 @@
 // pages/ucenter/distribution/distribution.js
+var WxParse = require('../../../lib/wxParse/wxParse.js');
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
+var user = require('../../../services/user.js');
+
 const app = getApp();
 Page({
 
@@ -8,6 +11,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    AreacodeArray_index: 215,//区号下标
+    AreacodeArray: [],//区号列表
+    AllAreacodeArray: [],
     userInfo: {},
     add_local_time: '0000/00/00',
     auth:false,
@@ -27,6 +33,7 @@ Page({
     checkdisabled: true,
     sendcodetext: " 获取验证码 ",
     changeisabled: false,
+    selectedcountry: {},
   },
 
   /**
@@ -41,6 +48,7 @@ Page({
       title: '检测中...',
       mask: true,
     })
+    that.getDisRules()
     // 查看是否授权
     wx.getSetting({
       success: function (res) {
@@ -49,12 +57,16 @@ Page({
           wx.getUserInfo({
             success: function (res) {
               console.log(res.userInfo)
-              that.setData({
-                auth: true,
-                userInfo: res.userInfo
+              user.loginByWeixin().then(res => {
+                console.log(res)
+                that.setData({
+                  auth: true,
+                  userInfo: res.data.userInfo
+                })
+                that.finddistribinfo()
+                wx.hideLoading()
               })
-              that.finddistribinfo()
-              wx.hideLoading()
+
             }
           })
         } else {
@@ -66,22 +78,53 @@ Page({
       }
     })
   },
-  // refundcatch(e) {
-  //   console.log(e)
-  //   let id = e.currentTarget.dataset.id
-  //   wx.showModal({
-  //     title: '提示',
-  //     content: '是否撤回此条申请记录 ？',
-  //     success: function (res) {
-  //       if (res.confirm) {
-  //         // console.log('用户点击确定')
+  bindPickerChange(e) {
+    console.log(e)
+    let that = this
+      this.setData({
+        AreacodeArray_index: e.detail.value,
+        selectedcountry: that.data.AllAreacodeArray[e.detail.value]
+      })
+  },
+  getcountrycode(){
+    let that = this
+    util.request(api.GetCountryCode, {
 
-  //       } else if (res.cancel) {
-  //         // console.log('用户点击取消')
-  //       }
-  //     }
-  //   })
-  // },
+    }, 'POST').then(res => {
+      console.log(res)
+      if (res.errno == 0) {
+        for (let i = 0; i < res.data.length;i++){
+          // console.log(i)
+          that.data.AreacodeArray.push(" [ " + res.data[i].country_code + ' ] ' + res.data[i].country_name_chinese + '-' + res.data[i].country_name_english)
+        } 
+        that.setData({
+          AreacodeArray: that.data.AreacodeArray,
+          AllAreacodeArray: res.data,
+          selectedcountry: res.data[that.data.AreacodeArray_index]
+        })
+      } else {
+        wx.showToast({
+          title: '获取失败 ！',
+          icon: 'none',
+          duration: 2000,
+        })
+      }
+
+    })
+    
+  },
+  getDisRules() {
+    let that = this
+    util.request(api.GetDisRules, {
+
+    }, 'POST').then(res => {
+      console.log(res)
+      // that.setData({
+      //   rules_text: res.data.rules_text
+      // })
+      WxParse.wxParse('rulestext', 'html', res.data.rules_text, that);
+    })
+  },
   tocatch() {
     // console.log('9987897987')
     wx.navigateTo({
@@ -97,7 +140,7 @@ Page({
   finddistribinfo() {
     let that = this
     util.request(api.FindDistributionInfo,{
-
+      orderId: that.data.userInfo.id
     },'POST').then(res => {
       console.log(res)
       if(res.errno === 17){
@@ -128,7 +171,7 @@ Page({
       list.add_localtime = util.timestampToTime(list.add_time)
       // console.log(that.data.disgoods[i].add_localtime)
     }
-    that.data.distributionInfo[0].localrate = Number(that.data.distributionInfo[0].rate * 100).toFixed(2)
+    that.data.distributionInfo[0].localrate = Number(that.data.distributionInfo[0].rate * 1).toFixed(2)
     that.data.distributionInfo[0].localprice = Number(that.data.distributionInfo[0].price * 1).toFixed(2)
     if (Number(that.data.distributionInfo[0].localprice) > Number(that.data.distributionInfo[0].can_withdraw_cash)){
       that.setData({
@@ -177,6 +220,7 @@ Page({
   },
   becomedistribution() {
     let that = this
+    that.getcountrycode()
     that.setData({
       show_mask: true
     })
@@ -197,7 +241,8 @@ Page({
       // return false;
     } else {
       util.request(api.BingPhoneText, {
-        Phone: that.data.inputMobile
+        Phone: that.data.inputMobile,
+        selectedcountry: that.data.selectedcountry
       }, 'POST').then(function (res) {
         console.log(res)
         if (res.errno === 1001) {
@@ -207,23 +252,122 @@ Page({
             duration: 1000,
             mask: true,
           })
-        }
-        else {
+        }else if (res.data.type === 1) {
+          //发送国际短信
+          console.log('发送国际短信')
+          util.request(api.SedAbroadSode, {
+            phone: that.data.inputMobile,
+            selectedcountry: that.data.selectedcountry
+          }, 'POST').then(function (res) {
+            console.log(res)
+            if (res.errno === 0) {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                duration: 2000
+              })
+              if (res.data.message == '短信发送成功 ！') {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }, 2000)
+              } else {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '异常状态 ！ 短信发送失败 ！',
+                    icon: 'none',
+                    duration: 2000,
+                  })
+                }, 2000)
+              }
+
+              console.log(res.data.num)
+              that.setData({
+                truesode: res.data.num
+              })
+            } else {
+              wx.showToast({
+                title: '短信发送失败 ！',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+              })
+            }
+          })
+          //按钮倒计时
+          var second = that.data.second;
+          that.setData({
+            sendcodetext: second + '秒',
+            codedisabled: true,
+            codeloading: true,
+            checkdisabled: false,
+          })
+          const timer = setInterval(() => {
+            second--;
+            if (second) {
+              that.setData({
+                sendcodetext: second + '秒',
+                codedisabled: true,
+                codeloading: true,
+              })
+            } else {
+              clearInterval(timer);
+              that.setData({
+                sendcodetext: ' 获取验证码 ',
+                codedisabled: false,
+                codeloading: false,
+              })
+            }
+          }, 1000);
+          
+        } else if (res.data.type === 0){
+          //发送国内短信
+          console.log('发送国内短信')
           //验证手机号
           //发送验证码
-          util.request(api.SedSode, {
+          util.request(api.SedDomesticSode, {
             phone: that.data.inputMobile
           }, 'POST').then(function (res) {
             console.log(res)
-            wx.showToast({
-              title: '短信已发送 ！',
-              icon: 'none',
-              duration: 2000
-            })
-            console.log(res.data.num)
-            that.setData({
-              truesode: res.data.num
-            })
+            if (res.errno === 0) {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                duration: 2000
+              })
+              if (res.data.message == '短信发送成功 ！') {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '您即将收到一条来自' + app.CorporateData.title + '的短信，请注意查收 ！',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                }, 2000)
+              } else {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '异常状态 ！ 短信发送失败 ！',
+                    icon: 'none',
+                    duration: 2000,
+                  })
+                }, 2000)
+              }
+
+              console.log(res.data.num)
+              that.setData({
+                truesode: res.data.num
+              })
+            } else {
+              wx.showToast({
+                title: '短信发送失败 ！',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+              })
+            }
           })
           //按钮倒计时
           var second = that.data.second;
@@ -280,6 +424,7 @@ Page({
             console.log(that.data.inputMobile)
             util.request(api.BingPhoneBing, {
               bingphone: that.data.inputMobile,
+              selectedcountry: that.data.selectedcountry,
               userid: value.id
             }, 'POST').then(function (res) {
               console.log(res)
@@ -287,6 +432,7 @@ Page({
                 setTimeout(() => {
                   util.request(api.ApplyDistribution, {
                     phone: that.data.inputMobile,
+                    selectedcountry: that.data.selectedcountry,
                     userid: value.id
                   }, 'POST').then(ress => {
                     console.log(ress)

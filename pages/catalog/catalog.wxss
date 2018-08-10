@@ -107,7 +107,7 @@ page {
   overflow: hidden;
 }
 
-.catalog .bd .item {
+.catalog .bd .iitem {
   display: block;
   float: left;
   height: 216rpx;
@@ -115,16 +115,16 @@ page {
   margin-right: 34rpx;
 }
 
-.catalog .bd .item.last {
+.catalog .bd .iitem.last {
   margin-right: 0;
 }
 
-.catalog .bd .item .icon {
+.catalog .bd .iitem .icon {
   height: 144rpx;
   width: 144rpx;
 }
 
-.catalog .bd .item .txt {
+.catalog .bd .iitem .txt {
   display: block;
   text-align: center;
   font-size: 24rpx;

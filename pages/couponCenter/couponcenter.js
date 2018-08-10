@@ -169,6 +169,14 @@ Page({
     })
 
   },
+  togoodspage(e){
+    wx.navigateTo({
+      url: '/pages/goods/goods?id=' + e.currentTarget.dataset.id,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
   bindinputcoupon(e){
     var that = this
     console.log(e)

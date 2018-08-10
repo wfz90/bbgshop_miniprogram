@@ -3,7 +3,7 @@
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="{{item.id}}">
       <navigator url="{{item.link}}">
-        <image src="{{item.image_url}}" background-size="cover"></image>
+        <image lazy-load src="{{item.image_url}}" background-size="cover"></image>
       </navigator>
     </swiper-item>
   </swiper>
@@ -15,7 +15,7 @@
   </view>
   <view class="icon_bar">
     <navigator class="icon_bar_item" url="{{item.url}}" wx:for="{{channel}}" wx:key="{{item.id}}">
-      <image class='icon_bar_img' src="{{item.icon_url}}"></image>
+      <image lazy-load class='icon_bar_img' src="{{item.icon_url}}"></image>
     </navigator>
   </view>
   <!-- 123 -->
@@ -31,7 +31,6 @@
     </view>
     <view class='luckdraw_area_one' wx:if="{{luckdraw.length == 1}}">
       <view class='luckdraw_item_one' bindtap='toluckdrawpage' data-id='{{luckdraw[0].id}}'>
-        <!-- <view class='luckdraw_item_tip'></view> -->
         <image class='luckdraw_item_one_image' src='{{luckdraw[0].luck_goods_pic}}'></image>
         <view class='luckdraw_item_one_name'> 奖品 ： {{luckdraw[0].luck_goods_name}}</view>
         <view class='luckdraw_item_one_des'>已有 {{luckdraw[0].have_join_people_num}} 人参与， x {{luckdraw[0].luck_goods_num}} 件奖品， 满
@@ -49,7 +48,6 @@
     </view>
     <scroll-view scroll-x class="luckdraw_area" wx:if="{{luckdraw.length > 1}}">
       <view class='luckdraw_item' wx:for='{{luckdraw}}' wx:key='{{item.id}}' bindtap='toluckdrawpage' data-id='{{item.id}}'>
-        <!-- <image class='luckdraw_item_tip' src='../../image/tip.png'></image> -->
         <image class='luckdraw_item_image' src='{{item.luck_goods_pic}}'></image>
         <view class='luckdraw_item_name'> 奖品 ： {{item.luck_goods_name}}</view>
         <view class='luckdraw_item_des'>参与 {{item.have_join_people_num}} 人，奖品 x {{item.luck_goods_num}}，满
@@ -65,9 +63,43 @@
         <button class='luckdraw_item_joinbtn after_btn' wx:if="{{item.is_out_time == 1 && item.is_open == 1}}">查看抽奖</button>
       </view>
     </scroll-view>
-
-    <!-- </view> -->
   </view>
+
+    <view class="currency_title_view_title_area" wx:if="{{collage.length > 0}}">
+    <view class="currency_title_view_title_area_h">
+      拼团
+    </view>
+    <view class='luckdraw_area_one' wx:if="{{collage.length == 1}}">
+      <view class='luckdraw_item_one' bindtap='tocollagepage' data-id='{{collage[0].goodsid}}'>
+        <image class='luckdraw_item_one_image' src='{{collage[0].main_img}}'></image>
+        <view class='luckdraw_item_one_name'> {{collage[0].goods_name}}</view>
+        <view class='luckdraw_item_one_des'>已有 {{collage[0].purchased_num}} 人参与， 满
+          <span style="color:#ff6f00;font-weight:bold;font-size:32rpx">{{collage[0].least_coll_num}}</span> 人拼团成功</view>
+        <view class='luckdraw_item_one_price'>原价: ￥
+          <span style="color:#ff6f00;font-weight:bold;font-size:32rpx">{{collage[0].retail_price}}</span>，拼团价: ￥
+          <span style="color:#ff5566;font-weight:bold;font-size:32rpx">{{collage[0].collage_price}}</span>
+        </view>
+        <view class='luckdraw_item_opentime'> 拼团持续 <span class="big">{{collage[0].user_duration_time / 3600000}}</span> 小时</view>
+        <button class='luckdraw_item_joinbtn join_btn'>立即拼团</button>
+      </view>
+    </view>
+    <scroll-view scroll-x class="luckdraw_area" wx:if="{{collage.length > 1}}">
+      <view class='luckdraw_item' wx:for='{{collage}}' wx:key='{{item.id}}' bindtap='tocollagepage' data-id='{{item.goodsid}}'>
+        <image class='luckdraw_item_image' src='{{item.main_img}}'></image>
+        <view class='luckdraw_item_name'> {{item.goods_name}}</view>
+        <view class='luckdraw_item_des'>已有 {{item.purchased_num}} 人参与， 满
+          <span style="color:#ff6f00;font-weight:bold;font-size:32rpx">{{item.least_coll_num}}</span> 人拼团成功</view>
+        <view class='luckdraw_item_one_price'>原价: ￥
+          <span style="color:#ff6f00;font-weight:bold;font-size:32rpx">{{item.retail_price}}</span>，拼团价: ￥
+          <span style="color:#ff5566;font-weight:bold;font-size:32rpx">{{item.collage_price}}</span>
+        </view>
+        <view class='luckdraw_item_opentime'> 拼团持续 <span class="big">{{item.user_duration_time / 3600000}}</span> 小时</view>
+        <button class='luckdraw_item_joinbtn join_btn'>立即拼团</button>
+      </view>
+    </scroll-view>
+  </view>
+
+
   <view class="currency_title_view_title_area" style='margin-top:10rpx;' wx:key="{{item.id}}" wx:if="{{newGoods.length > 0}}">
     <view class="currency_title_view_title_area_h">
       新品首发
@@ -98,6 +130,7 @@
         <!-- <view class="text"> -->
         <view class="hot_goods_area_item_name">{{item.name}}</view>
         <view class="hot_goods_area_item_desc">{{item.goods_brief}}</view>
+        <view class='hot_goods_area_item_desc_soled'>已售 {{item.have_pay_num}} </view>
         <view class="hot_goods_area_item_price">￥
           <span class="currency_goods_view_item_price_price">{{item.retail_price}}</span>
         </view>
@@ -106,13 +139,14 @@
       </navigator>
     </view>
   </view>
-  <view class="currency_goods_view_title_area" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
-    <view class="currency_goods_view_title_area_h">
+  <view class="currency_goods_view_title_area" wx:for="{{floorGoods}}" wx:key="{{item.id}}">  
+    <image wx:if="{{item.banner_url}}" class='currency_goods_view_title_area_banner' bindtap='tocategorypage' data-id='{{item.id}}' src='{{item.banner_url}}'></image>
+    <view wx:if="{{!item.banner_url}}" class="currency_goods_view_title_area_h">
       {{item.name}}
     </view>
     <view class="currency_goods_view_item" wx:if="{{item.goodsList.length > 0}}">
       <navigator class="currency_goods_view_item_a {{(iindex + 1) % 2 == 0 ? 'currency_goods_view_item_b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{item.goodsList}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="{{iitem.id}}">
-        <image class="currency_goods_view_item_img" src="{{iitem.list_pic_url}}"></image>
+        <image lazy-load class="currency_goods_view_item_img" src="{{iitem.list_pic_url}}"></image>
         <view class="currency_goods_view_item_name">{{iitem.name}}</view>
         <view class="currency_goods_view_item_price">
           <view class='currency_goods_view_item_price_left'> ￥

@@ -1,6 +1,7 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var user = require('../../../services/user.js');
+
 var app = getApp();
 
 Page({
@@ -9,6 +10,7 @@ Page({
     userinfoinfo: '',
     route: '',
     auth: false,
+    CorporateName: '',
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -49,7 +51,7 @@ Page({
 
     let userInfo = wx.getStorageSync('userInfo');
     let token = wx.getStorageSync('token');
-
+    
     // 页面显示
     if (userInfo && token) {
       app.globalData.userInfo = userInfo;
@@ -58,6 +60,7 @@ Page({
 
     this.setData({
       userInfo: app.globalData.userInfo,
+      CorporateName: app.CorporateData.name
     });
 
   },

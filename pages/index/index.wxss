@@ -50,11 +50,12 @@ page{
   position: fixed;
   bottom: 50rpx;
   right: 50rpx;
-  width: 60rpx;
-  height: 60rpx;
-  border: 1px solid #666;
+  width: 50rpx;
+  height: 50rpx;
+  border: 1px solid #aaa;
+  color: 1px solid #aaa;
   border-radius: 50%;
-  padding: 10rpx;
+  padding: 6rpx;
   z-index: 999
 }
 /* 以下为抽奖样式 （多条） */
@@ -110,7 +111,7 @@ page{
   left: 240rpx;
   /* width: calc(500rpx - 13%); */
    right: 10rpx; 
-  top: 136rpx;
+  top: 138rpx;
   height: 32rpx;
   line-height: 32rpx;
   text-align: right;
@@ -133,6 +134,11 @@ page{
   height: 32rpx;
   line-height: 32rpx;
 }
+.luckdraw_item_opentime .big {
+  font-weight: bold;
+  color: #4b96bd;
+  font-size: 23rpx;
+}
 .luckdraw_item_joinbtn {
   /* border: 1px solid #333;   */
   position: absolute;
@@ -149,7 +155,7 @@ page{
 /* 以下为抽奖样式 （单条） */
 .luckdraw_area_one {
   /* border: 1px solid #333;   */
-  border-top: 1px solid #fafafa;
+  border-top: 1px solid #f4f4f4;
   border-bottom: 1px solid #fafafa;
   background: #fff; 
   height: 238rpx;
@@ -194,7 +200,7 @@ page{
   left: 240rpx;
   /* width: 500rpx; */
   right: 10rpx; 
-  top: 136rpx;
+  top: 138rpx;
   height: 32rpx;
   line-height: 32rpx;
   text-align: right;
@@ -207,7 +213,7 @@ page{
   left: 240rpx;
   /* width: 500rpx; */
   right: 10rpx; 
-  top: 96rpx;
+  top: 100rpx;
   height: 32rpx;
   line-height: 32rpx;
   text-align: right;
@@ -290,12 +296,13 @@ page{
 }
 .hot_goods_area_item_name {
   position: absolute;
+  /* border: 1px solid black; */
   left: 300rpx;
-  right: 4rpx;
-  top: 4rpx;
+  right: 8rpx;
+  top: 12rpx;
   font-size: 30rpx;
   line-height: 40rpx;
-  height: 84rpx;
+  height: 82rpx;
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -308,7 +315,7 @@ page{
   position: absolute;
   left: 300rpx;
   right: 4rpx;
-  top: 92rpx;
+  top: 102rpx;
   font-size: 22rpx;
   line-height: 32rpx;
   height: 64rpx;
@@ -333,7 +340,15 @@ page{
   padding-right: 20rpx;
   /* border: 1px solid #333; */
 }
-
+.hot_goods_area_item_desc_soled {
+  position: absolute;
+  left: 300rpx;
+  /* right: 4rpx; */
+  bottom: 14rpx;
+  color: #aaa;
+  font-size: 16rpx;
+  font-weight: bold;
+}
 
 /* .new_goods_view_item */
 .seemore{

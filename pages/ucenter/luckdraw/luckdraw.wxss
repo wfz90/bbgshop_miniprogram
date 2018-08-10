@@ -32,9 +32,15 @@ page {
   /* border: 1px solid black; */
   top: 10rpx;
   text-indent: 1.25em;
-  height: 100rpx;
+  height: 84rpx;
   line-height: 42rpx;
   font-size: 30rpx;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
 }
 /* .luck_goods_box_desp {
   position: absolute;
