@@ -17,6 +17,7 @@ page {
   line-height: 68rpx;
   /* padding: 0 25rpx; */
   position: relative;
+  color: #444;
   /* display: flex; */
   /* align-items: center; */
 }
@@ -100,6 +101,7 @@ page {
   font-size: 27rpx;
   line-height: 34rpx;
   height: 70rpx;
+  color: #444;
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

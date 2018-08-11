@@ -22,6 +22,7 @@ Page({
     // auth:false,
     show_mask: false,
     AreacodeArray_index: 215,//区号下标
+    selectedcountry: {},
     AreacodeArray: [],//区号列表
     AllAreacodeArray: [],
   },
@@ -36,6 +37,13 @@ Page({
       mask: true,
     })
       that.findphone();
+  },
+  startBingPhone(){
+    let that = this
+    that.getcountrycode()
+    that.setData({
+      show_mask: true
+    })
   },
   bindPickerChange(e) {
     console.log(e)
@@ -84,8 +92,10 @@ Page({
         that.setData({
           isbing:false,
           userinfo: res.data.Result,
-          bingisnottext: "您还没有绑定手机号！"
+          bingisnottext: "您还没有绑定手机号！",
+          show_mask: true
         })
+        that.getcountrycode()
       }else {
         that.setData({
           isbing: true,
@@ -298,6 +308,7 @@ Page({
                 console.log(res)
                 that.setData({
                   show_mask: false,
+                  isbing: true,
                   inputMobile: '',
                   inputcode: '',
                   userinfo: res.data.Result
@@ -345,6 +356,7 @@ Page({
       show_mask: false,
       inputMobile: '',
       inputcode: '',
+      selectedcountry: []
     })
   },
   /**

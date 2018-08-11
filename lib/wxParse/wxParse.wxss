@@ -17,9 +17,6 @@
     color: #666;
     line-height: 1.25rem;
 }
-view{
-    /* word-break:break-all; overflow:auto; */
-}
 .ql-align-center {
   text-align: center;
 }

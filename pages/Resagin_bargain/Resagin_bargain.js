@@ -338,6 +338,7 @@ Page({
       content: '是否确认发起 ' + that.data.thisbargoods.goods_name + "*****" + that.data.checkedSpecText + "*****款的砍价，发起后砍价商品和规格不可更改！",
       success: function(res) {
         if (res.confirm) {
+          console.log(that.data.checkgoods)
           util.request(api.SetUserLaunchBargain, {
             userInfo: that.data.userInfo,
             bargoods: that.data.thisbargoods,
@@ -549,6 +550,7 @@ Page({
         var obj = checkedNameValue[i].valueId
         value2.push(obj)
       }
+      value2 = value2.sort()
       console.log(value2)
       util.request(api.FindBarValues, {
         data: value2

@@ -268,6 +268,8 @@
 }
 .middle_area {
   width: 100%;
+  font-size: 29rpx;
+  color: #444;
   border-top: 1px solid #fbfbfb;
   border-bottom: 1px solid #fbfbfb;
   height: calc(2.5rem + 22rpx);
@@ -342,6 +344,8 @@
 }
 .middle_bottom_area {
   /* border: 1px solid #333;    */
+  color: #444;
+  font-size: 29rpx;
   border-bottom: 1px solid #fbfbfb;
   /* height: 38vh; */
   padding: 10rpx 20rpx;
@@ -371,6 +375,7 @@
 .middle_bottom_noitem {
   width: 100%;
   text-align: center;
+  font-size: 26rpx;
   margin-top: 5vh;
 }
 .middle_bottom_item {

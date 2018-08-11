@@ -29,10 +29,11 @@ page {
   text-align: center;
   padding: 15rpx 20rpx;
   padding-top: 35rpx;
-  font-size: 38rpx;
+  font-size: 40rpx;
   font-weight: bold;
+  color: #222;
   /* letter-spacing: 1rpx; */
-  line-height: 46rpx;
+  line-height: 50rpx;
 }
 .scroll_goods_info .desc {
   /* border: 1px solid #000; */
@@ -109,21 +110,22 @@ page {
   background: #fff;
   /* border-bottom: 1px solid #eee;  */
   width: 100%;
-  height: 68rpx;
-  line-height: 68rpx;
+  height: 78rpx;
+  line-height: 78rpx;
+  color: #444;
   margin: 0 auto;
 }
 .scroll_goods_tabler .text {
   float: left;
   padding-left: 20rpx;
-  font-size: 24rpx;
+  font-size: 27rpx;
 }
 .scroll_goods_tabler .arrow {
   float: right;
   width: 42rpx;
   height: 42rpx;
   margin-right: 8rpx;
-  margin-top: 12.85rpx; 
+  margin-top: 16.85rpx; 
 }
 .scroll_goods_tabler_logo {
   float: left;
@@ -132,7 +134,7 @@ page {
   height: 52rpx;
   margin-left: 20rpx;
   /* margin-right: -16rpx;  */
-  margin-top: 8rpx;
+  margin-top: 12rpx;
 }
 .scroll_goods_tabler_text {
   float: left;
@@ -252,6 +254,7 @@ page {
   left: 300rpx;
   top: 90rpx;
   font-size: 28rpx;
+  color: #444;
   /* color: #E02E24; */
 }
 
@@ -371,7 +374,8 @@ page {
   /* line-height: 78rpx; */
   text-align: center;
   background: #fff;
-  font-size: 36rpx;
+  font-size: 34rpx;
+  color: #333;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
 }
@@ -410,6 +414,8 @@ page {
   display: inline-block;
   position: absolute;
   top: 56.125rpx;
+  font-size: 34rpx;
+  color: #333;
   left: 0;
   z-index: 3;
   height: 33rpx;

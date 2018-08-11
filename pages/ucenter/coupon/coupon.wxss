@@ -22,6 +22,8 @@ page{
   background: #fff;
   line-height: 78rpx;
   text-align: center;
+  font-size: 29rpx;
+  color: #444;
   border-top: 1px #efefef solid;
   box-shadow: 1rpx 1rpx 20rpx 5rpx #ddd; 
 }
@@ -60,6 +62,7 @@ page{
 .List_noitem {
   margin: 30vh auto;
   text-align: center;
+  font-size: 26rpx;
   color: #757575;
 }
 .List_item_left{

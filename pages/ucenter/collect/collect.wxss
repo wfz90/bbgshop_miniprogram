@@ -72,6 +72,12 @@ page{
   font-size: 33rpx;
   font-weight: bold;
 }
+.tips {
+    font-size: 24rpx;
+  color: #757575;
+  text-align: center;
+  padding-top: 45vh;
+}
 /* .container{
     background: #f4f4f4;
     min-height: 100%;

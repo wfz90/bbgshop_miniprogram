@@ -347,8 +347,12 @@ Page({
       })
       return false;
     } else {
+      let selectedcountry = {}
+      let phone_code = 86
+      selectedcountry.phone_code = phone_code
       util.request(api.BingPhoneText, {
-        Phone: that.data.address.mobile
+        Phone: that.data.address.mobile,
+        selectedcountry: selectedcountry
       }, 'POST').then(function (res) {
         console.log(res)
         if (res.errno === 1001) {

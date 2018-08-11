@@ -442,6 +442,7 @@ page {
   width: 50%;
   margin: 20rpx 0 ;
   height: 60rpx;
+  color: #444;
   line-height: 60rpx;
   text-align: center;
   float: left;

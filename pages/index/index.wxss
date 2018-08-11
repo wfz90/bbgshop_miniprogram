@@ -95,6 +95,7 @@ page{
    right: 10rpx; 
   top: 12rpx;
   height: 78rpx;
+  color: #333;
   line-height: 42rpx;
   text-indent: 0.75rem;
   font-weight: bold;
@@ -183,6 +184,7 @@ page{
   /* width: 500rpx; */
   right: 10rpx; 
   top: 15rpx;
+  color: #333;
   height: 78rpx;
   line-height: 42rpx;
   text-indent: 0.75rem;
@@ -303,6 +305,7 @@ page{
   font-size: 30rpx;
   line-height: 40rpx;
   height: 82rpx;
+  color: #222;
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

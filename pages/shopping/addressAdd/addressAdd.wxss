@@ -14,6 +14,8 @@ page{
     padding-left: 31.25rpx;
     border-bottom: 1px solid #d9d9d9;
     display: flex;
+    font-size: 29rpx;
+    color: #444;
     align-items: center;
     padding-right: 31.25rpx;
 }

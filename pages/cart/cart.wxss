@@ -544,6 +544,8 @@ page {
 
 .action_bottom_bar .total {
   /* border: 1px solid #333; */
+  font-size: 29rpx;
+  color: #333;
   width: auto;
   display: flex;
   justify-content: center;

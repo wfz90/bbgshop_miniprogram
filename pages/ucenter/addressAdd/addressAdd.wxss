@@ -12,6 +12,8 @@ page{
 .add-address .form-item{
     height: 116rpx;
     padding-left: 31.25rpx;
+    font-size: 29rpx;
+    color: #444;
     border-bottom: 1px solid #f4f4f4;
     display: flex;
     align-items: center;

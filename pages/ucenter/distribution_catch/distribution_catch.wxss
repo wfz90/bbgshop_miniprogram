@@ -1,6 +1,8 @@
 /* pages/ucenter/distribution_catch/distribution_catch.wxss */
 page {
   background: #fefefe;
+  font-size: 29rpx;
+  
 }
 .catch_top {
   margin-top: 8rpx;
@@ -15,9 +17,9 @@ page {
   /* border: 1px solid black; */
   height: 78rpx;
   font-size: 28rpx;
-  line-height: 78rpx;
+  line-height: 80rpx;
   padding:0 20rpx;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .catch_top_right {
   float: right;
@@ -41,6 +43,7 @@ page {
   position: absolute;
   left: 20rpx;
   top: 20rpx;
+  font-size: 28rpx;
 }
 .catch_middle_price_area {
    /* border: 1px solid black;  */

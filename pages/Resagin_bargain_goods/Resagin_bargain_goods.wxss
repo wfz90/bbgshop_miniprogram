@@ -274,7 +274,8 @@ button[plain]{
   height: 68rpx;
   line-height: 68rpx;
   text-align: center;
-  font-size: 38rpx;
+  font-size: 34rpx;
+  color: #444;  
   background: #fff;
 }
 .other_goods_goods {

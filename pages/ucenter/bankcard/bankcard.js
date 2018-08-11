@@ -85,6 +85,10 @@ Page({
       that.setData({
          bingbtnable: false
       })
+    }else {
+      that.setData({
+        bingbtnable: true
+      })
     }
   },
   bindPickerChange(e) {
